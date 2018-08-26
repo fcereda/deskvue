@@ -1,5 +1,9 @@
 export default {
 	
+	isPropOn(prop) {
+		return prop || (prop === '')
+	},
+
 	getComponentClasses(props, possibleClasses) {
 		let classes = []
 		possibleClasses.forEach(thisClass => {

@@ -14,6 +14,7 @@
 import utils from './utils.js'
 
 const booleanProps = [
+	'active',
 	'primary',
 	'secondary',
 	'success',
@@ -33,7 +34,7 @@ const booleanProps = [
 
 export default {
 
-	props: booleanProps,
+	props: booleanProps, 
 
 	computed: {
 
@@ -45,8 +46,8 @@ export default {
 
 	methods: {
 
-		_buttonClass: function () {
-			return this.classes.join(' ')
+		updateClasses: function () {
+			this.classes = utils.getComponentClasses(this, booleanProps)
 		},
 
 		onclick: function () {
@@ -59,6 +60,14 @@ export default {
 		return {
 			classes: utils.getComponentClasses(this, booleanProps)
 		}
+	},
+
+	mounted: function () {
+		booleanProps.forEach(prop => {
+			this.$watch(prop, function () {
+				this.updateClasses()
+			})
+		})
 	}
 
 }

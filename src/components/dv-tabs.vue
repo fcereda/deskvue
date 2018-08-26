@@ -1,22 +1,88 @@
 <template>
 
-<div>
+<div :style="tabStyle">
 	<ul class="dv-tab">
-		<slot></slot>
-	    <li class="dv-tab-button"><button class="dv-button circle small short no-focus">+</button></li>
+		<li 
+			class="dv-tab-item" 
+			:class="tab.active ? 'active' : ''"
+			v-for="tab in tabs"
+			@click="onclick(tab)"
+		>{{ tab.title }}</li> 
+	    <li class="dv-tab-button"><button class="dv-button circle small short no-focus" @click="onAddBtnClick">+</button></li>
 	</ul>
+	<div 
+		class="dv-tab-content" 
+		:class="{border: showContentBorder}"
+	><slot></slot>
+	</div>
 </div>
 
 </template>
 
 <script>
 
+import utils from './utils.js'
+
 export default {
 
-	props: ['value'],
+	props: ['value', 'content-border', 'width'],
+
+	computed: {
+		tabStyle: function () {
+			if (this.width)
+				return `width:${this.width};`
+			return ''
+		}
+	},
 
 	data: function () {
-		return {}
+		return {
+			showContentBorder: utils.isPropOn(this.contentBorder),
+			tabs: [],
+			currentActiveTab: null
+		}
+	},
+
+	methods: {
+
+		addTab: function (title, tabContent) {
+			let newTab = {
+				title, 
+				tabContent,
+				active: false
+			}
+			//this.tabs.splice(0, 0, newTab)
+			this.tabs.push(newTab)
+			this.showTab(newTab)
+		},
+
+		removeTab: function (title, id) {
+			let tabToRemove = this.tabs.find(tab => tab.id == id || tab.title == title)
+			let index = this.tabs.indexOf(tabToRemove)
+			this.tabs.splice(index, 1)
+		},
+
+		showTab: function (tab) {
+			console.log('entrou em showTab')
+			if (this.currentActiveTab) {
+				this.currentActiveTab.active = false
+				this.currentActiveTab.tabContent.active = false
+			}	
+			tab.active = true
+			tab.tabContent.active = true
+			this.currentActiveTab = tab
+		},
+
+		onclick: function (tab) {
+			console.log(tab)
+			this.showTab(tab)
+			this.$emit('input', this.tabs.indexOf(tab))
+		},
+
+		onAddBtnClick: function () {
+			this.$emit('add')
+		}
+
 	}
 
 }
@@ -90,7 +156,19 @@ li.dv-tab-item:focus {
 .dv-tab-button {
   float:right;
   font-size:14px;
-  }  	
+}  	
+
+.dv-tab-content {
+	padding: 1em;
+}
+
+$tab-content-border: 1px solid #aaa;
+
+.dv-tab-content.border {
+	border-left: $tab-content-border;
+	border-right: $tab-content-border;
+	border-bottom: $tab-content-border;
+}
     
 .dv-badge {
     display:inline-block;

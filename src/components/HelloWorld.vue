@@ -58,6 +58,22 @@
         </dv-button>
     </dv-btn-group>    
 
+    <br><br>
+
+    <dv-btn-group 
+    	type="radio"
+        @input="onBtnGroupInput"
+        :value="btnGroupRadioValue"
+	>
+    	<dv-button 	
+    	    warning
+    	    :active="btnGroupRadioValue == i-1"
+    	    v-for="i in 12"
+    	    @click=""
+    	>{{ i }}</dv-button>
+    </dv-btn-group>
+    
+
     <h3>Tags</h3>
 
     <div>
@@ -66,6 +82,7 @@
         	:value="tag.text" 
         	:primary="tag.primary ? 'primary': false"
         	:warning="tag.text == warningTag"
+        	close
         	@click="clickTag(tag.text)"
         	@close="closeTag(tag.text)"
         ></dv-tag>
@@ -73,10 +90,16 @@
 
     <h3>Tabs</h3>
 
-    <dv-tabs :value="1">
-    	<dv-tab-item>Code</dv-tab-item>
-    	<dv-tab-item :active="1" class="active">Issues</dv-tab-item>
-    	<dv-tab-item>Pull requestes</dv-tab-item>
+    <dv-tabs :value="currentTab" width="600px" content-border @input="setTab" @add="addTab">
+    	<dv-tab-item title="Code">Tab: code</dv-tab-item>
+    	<dv-tab-item title="Issues">These are the issues found with your code:</dv-tab-item>
+    	<dv-tab-item title="Pull requestes">Here you have your pull requests:</dv-tab-item>
+    	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>'"></dv-tab-item>
+    	<dv-tab-item 
+    		v-for="tab in additionalTabs" 
+    		:title="tab.title"
+    		v-html="tab.html"
+    	></dv-tab-item>	
     </dv-tabs>
 
     Ainda temos muito que fazer nos tabs!
@@ -152,7 +175,10 @@ export default {
       			'Lula', 'Bolsonaro', 'Ciro', 'Alckmin', 'Marina', 'Dias', 'Meirelles', 'Daciolo'
     		],   
     		primaryTag: '',
-    		warningTag: ''
+    		warningTag: '',
+    		currentTab: 1,
+	   		btnGroupRadioValue: -1,
+	   		additionalTabs: [],
 		} 
 
     },
@@ -172,6 +198,12 @@ export default {
 	         this.clicked = index;
 	    },
 
+	    onBtnGroupInput: function (e) {
+	    	console.log('btngroupinput')
+	    	console.log(e)
+	    	this.btnGroupRadioValue = e
+	    },
+
     	testCallback: function () {
     		console.log('Hello World')
     	},
@@ -186,6 +218,18 @@ export default {
     	closeTag: function (tag) {
     		let index = this.tags.indexOf(tag)
     		this.tags.splice(index, 1)
+    	},
+
+    	setTab: function (e) {
+    		this.currentTab = e
+    	},
+
+    	addTab: function () {
+    		this.additionalTabs.push({
+    			title: 'New Tab',
+    			html: '<h3>This is a new tab</h3>Random number: ' + Math.random()
+    		})
+    		console.log(this.additionalTabs)
     	}
 
     }

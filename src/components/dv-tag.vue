@@ -4,7 +4,7 @@
     	:class="tagClass" 
     	@click.stop="$emit('click', value)"
     >
-      <span class="dv-tag-text">{{ tagText }}</span><button class="close-icon" @click.stop="$emit('close', value)">×</button>
+      <span class="dv-tag-text">{{ tagText }}</span><button v-if="closeable" class="close-icon" @click.stop="$emit('close', value)">×</button>
     </div>
 </template>  
 
@@ -24,16 +24,20 @@ const booleanProps = [
 
 export default {
 
-	props: ['value', 'text', ...booleanProps],
+	props: ['value', 'text', 'close', ...booleanProps],
 
 	computed: {
+
+		closeable: function () {
+			return this.close || this.close == ''
+		},
 
 		tagText: function () {
 			return this.text || this.value
 		},
 
 		tagClass: function () {
-			return this.classes.join(' ')
+			return this.classes.join(' ') + (this.closeable ? '' : ' not-close')
 		}
 	},
 
@@ -46,8 +50,7 @@ export default {
 	},
 
 	data: function () {
-		console.log('classes: ')
-		console.log(utils.getComponentClasses(this, booleanProps))
+		console.log(this.close)
 		return {
 			classes: utils.getComponentClasses(this, booleanProps)
 		}
@@ -85,10 +88,18 @@ export default {
 	cursor: default;
 	margin-right:0.25em;
 }  
+
+.dv-tag.not-close {
+	padding-right: 8px;
+}
   
 .dv-tag > .dv-tag-text {
     display:inline-block;
 }  
+
+.dv-tag > .dv-tag-text {
+	margin: 0.25em;
+}
 
 .dv-tag.primary,
 .dv-tag.danger,

@@ -1,4 +1,4 @@
-# deskvue
+# DeskVue
 
 ## Project setup
 ```
@@ -19,4 +19,4 @@ npm run build
 ```
 npm run lint
 ```
-# DeskVue
+
