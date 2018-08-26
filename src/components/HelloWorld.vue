@@ -6,6 +6,81 @@
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
+
+    <h3>Menu</h3>
+    <dv-menu 
+    	:items="menuItems"
+    	size="medium"
+    	border
+    	@click="onMenuClick"
+    ></dv-menu>	
+
+    <h3>Buttons</h3>
+
+    <dv-button primary wide>Hello</dv-button>
+    <dv-button warning class="warning">Warning</dv-button>
+    <dv-button danger>Error</dv-button>
+    <dv-button success>Done</dv-button>
+    <dv-button primary>Primary</dv-button>
+    <dv-button secondary>Secondary</dv-button>  
+    <dv-button info wide>Info</dv-button>  
+    <br><br>
+    <dv-button class="ml-2" @click="counter += 1">OK {{ counter }} </dv-button>
+    <dv-button wide @click="clicked = (clicked+1) % 9">Cancel {{ clicked }}</dv-button>
+    <dv-button wide no-focus>No focus</dv-button>    
+    <br><br>
+    RunKit:
+    <br><br>
+    <dv-button success small short>> Run</dv-button>
+    <dv-button danger small short>|| Stop</dv-button>
+    <dv-button success small short pill>Go ahead</dv-button>
+    <br><br>
+    <dv-button success small short>> Run &nbsp;&nbsp;<small style="font-weight:400">Ctrl-R</small></dv-button>
+    <dv-button danger small short>|| Stop &nbsp;&nbsp;<small style="font-weight:400">Ctrl-S</small></dv-button>
+    <br><br>
+    <dv-button warning tall>A tall one</dv-button>
+    <br><br>
+    <dv-button warning circle>=</dv-button> 
+    <dv-button success circle no-focus>&</dv-button> 
+    <dv-button pill>What is this?</dv-button>
+    <dv-button circle no-border>$</dv-button>
+    <dv-button circle no-focus no-border>%</dv-button>
+    <dv-button circle no-focus no-border>&</dv-button>
+    <dv-button circle no-focus no-border>#</dv-button>
+    <dv-button circle no-focus no-border>§</dv-button>
+    <h4>Button group</h4>
+    <dv-btn-group>
+        <dv-button 
+          small primary 
+          v-for="i in [1,2,3,4,5,6,7,8,9]"
+          :class="clicked == i ? 'active' : ''"
+          @click="clickBtnGroup(i)">{{ i }}
+        </dv-button>
+    </dv-btn-group>    
+
+    <h3>Tags</h3>
+
+    <div>
+        <dv-tag 
+        	v-for="tag in tags.map(tag => ({text: tag, primary: tag == primaryTag}))" 
+        	:value="tag.text" 
+        	:primary="tag.primary ? 'primary': false"
+        	:warning="tag.text == warningTag"
+        	@click="clickTag(tag.text)"
+        	@close="closeTag(tag.text)"
+        ></dv-tag>
+    </div>  
+
+    <h3>Tabs</h3>
+
+    <dv-tabs :value="1">
+    	<dv-tab-item>Code</dv-tab-item>
+    	<dv-tab-item :active="1" class="active">Issues</dv-tab-item>
+    	<dv-tab-item>Pull requestes</dv-tab-item>
+    </dv-tabs>
+
+    Ainda temos muito que fazer nos tabs!
+
     <h3>Installed CLI Plugins</h3>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
@@ -31,11 +106,90 @@
 </template>
 
 <script>
+
+import dvButton from './dv-button.vue'
+import dvBtnGroup from './dv-btn-group.vue'
+import dvMenu from './dv-menu.vue'
+import dvTabs from './dv-tabs.vue'
+import dvTabItem from './dv-tab-item.vue'
+import dvTag from './dv-tag.vue'
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
+    name: 'HelloWorld',
+
+    components: {
+    	dvButton,
+    	dvBtnGroup,
+    	dvMenu,
+    	dvTabs,
+    	dvTabItem,
+    	dvTag
+    },
+
+    props: {
+      msg: String
+    }, 
+
+    data: function () {
+
+		return {
+			counter: 0,
+			clicked: null,
+			menuItems: [
+				{ text: 'File operations', category: true },
+				{ text: 'New...', icon: 'N', key: 'Ctrl-N' },
+				{ text: 'Save', icon: '$', key: 'Ctrl-S'  },
+				{ text: 'Save as...', icon: '%', key: 'Ctrl-A', },
+				{ divider: true },
+				{ text: 'Save and exit', disabled: true, index: 10 },
+				{ text: 'Exit', icon: 'º', key: 'Ctrl-X', callback: this.testCallback.bind(this) },
+				{ text: 'Text editing', category: true },
+				{ text: 'Copy', icon: 'C', key: 'Ctrl-C' },
+				{ text: 'Cut', icon: 'X', key: 'Ctrl-X' },
+				{ text: 'Paste', icon: 'V', key: 'Ctrl-V' }
+    		],
+    		tags: [
+      			'Lula', 'Bolsonaro', 'Ciro', 'Alckmin', 'Marina', 'Dias', 'Meirelles', 'Daciolo'
+    		],   
+    		primaryTag: '',
+    		warningTag: ''
+		} 
+
+    },
+
+    methods: {
+    	onMenuClick: function (e) {
+    		console.log(e)
+    		if (e.callback) {
+    			e.callback()
+    		}
+    	},
+
+    	clickBtnGroup: function (index) {
+	       if (index == this.clicked)
+	         this.clicked = null
+	       else 
+	         this.clicked = index;
+	    },
+
+    	testCallback: function () {
+    		console.log('Hello World')
+    	},
+
+	   	clickTag: function (tag) {
+	   		this.warningTag = this.primaryTag
+	   		this.primaryTag = tag
+	   		//this.$set(this, 'primaryTag', tag)
+	   		//console.log(this.primaryTag)
+    	},
+
+    	closeTag: function (tag) {
+    		let index = this.tags.indexOf(tag)
+    		this.tags.splice(index, 1)
+    	}
+
+    }
+
 }
 </script>
 
