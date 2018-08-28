@@ -32,7 +32,8 @@ export default {
 			if (this.width)
 				return `width:${this.width};`
 			return ''
-		}
+		},
+
 	},
 
 	data: function () {
@@ -45,36 +46,39 @@ export default {
 
 	methods: {
 
-		addTab: function (title, tabContent) {
-			let newTab = {
-				title, 
-				tabContent,
-				active: false
-			}
-			//this.tabs.splice(0, 0, newTab)
-			this.tabs.push(newTab)
+		addTab: function (newTab) {
+			newTab.active = false
+			// newTab has already been inserted as a child component
+			let index = this.$slots.default.indexOf(newTab.$vnode)
+			console.log('addTab()')
+			console.log('index = ' + index)
+			console.log('with children: ' + this.$children.indexOf(newTab))
+
+            this.tabs.splice(index, 0, newTab);
 			this.showTab(newTab)
 		},
 
-		removeTab: function (title, id) {
-			let tabToRemove = this.tabs.find(tab => tab.id == id || tab.title == title)
+		removeTab: function (tabToRemove) {
 			let index = this.tabs.indexOf(tabToRemove)
 			this.tabs.splice(index, 1)
+			if (index > 0) {
+				index -= 1
+			}
+			if (this.tabs.length) {
+				this.showTab(this.tabs[index])
+			}
 		},
 
 		showTab: function (tab) {
 			console.log('entrou em showTab')
 			if (this.currentActiveTab) {
 				this.currentActiveTab.active = false
-				this.currentActiveTab.tabContent.active = false
 			}	
 			tab.active = true
-			tab.tabContent.active = true
 			this.currentActiveTab = tab
 		},
 
 		onclick: function (tab) {
-			console.log(tab)
 			this.showTab(tab)
 			this.$emit('input', this.tabs.indexOf(tab))
 		},

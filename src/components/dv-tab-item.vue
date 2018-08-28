@@ -33,9 +33,13 @@ export default {
 	},
 
 	mounted: function () {
-		let parent = this.$parent
-		parent.addTab(this.title, this)
-	} 
+		this.$parent.addTab(this)
+	},
+
+	beforeDestroy: function () {
+		console.log('Vamos remover a tab ' + this.title)
+		this.$parent.removeTab(this)
+	}
 }
 
 </script>

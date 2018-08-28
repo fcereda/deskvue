@@ -92,14 +92,15 @@
 
     <dv-tabs :value="currentTab" width="600px" content-border @input="setTab" @add="addTab">
     	<dv-tab-item title="Code">Tab: code</dv-tab-item>
-    	<dv-tab-item title="Issues">These are the issues found with your code:</dv-tab-item>
-    	<dv-tab-item title="Pull requestes">Here you have your pull requests:</dv-tab-item>
-    	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>'"></dv-tab-item>
     	<dv-tab-item 
     		v-for="tab in additionalTabs" 
     		:title="tab.title"
-    		v-html="tab.html"
-    	></dv-tab-item>	
+    	>
+    		This is tab <b>{{ tab.title }}</b><br>Click the button below to remove this tab:<br><br><dv-button @click="removeTab(tab)">Remove</dv-button>
+    	</dv-tab-item>	
+    	<dv-tab-item title="Issues">These are the issues found with your code:</dv-tab-item>
+    	<dv-tab-item title="Pull requestes">Here you have your pull requests:</dv-tab-item>
+    	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>'"></dv-tab-item>
     </dv-tabs>
 
     Ainda temos muito que fazer nos tabs!
@@ -225,11 +226,19 @@ export default {
     	},
 
     	addTab: function () {
-    		this.additionalTabs.push({
-    			title: 'New Tab',
-    			html: '<h3>This is a new tab</h3>Random number: ' + Math.random()
-    		})
+    		this.counter += 1
+    		let newTab = {
+    			title: 'New Tab ' + this.counter,
+    			html: `<h3>This tab ${this.counter}</h3>Random number: ${Math.random()}`
+    		}
+    		//this.additionalTabs.push(newTab)
+    		this.additionalTabs.splice(this.additionalTabs.length, 0, newTab)
     		console.log(this.additionalTabs)
+    	},
+
+    	removeTab: function (tab) {
+    		let index = this.additionalTabs.indexOf(tab)
+    		this.additionalTabs.splice(index, 1)
     	}
 
     }
