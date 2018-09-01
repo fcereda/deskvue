@@ -39,6 +39,11 @@ export default {
 	beforeDestroy: function () {
 		console.log('Vamos remover a tab ' + this.title)
 		this.$parent.removeTab(this)
+		//this.$parent.willRemoveTab()
+	},
+
+	destroyed: function () {
+		//this.$parent.removedTab()
 	}
 }
 

@@ -90,7 +90,14 @@
 
     <h3>Tabs</h3>
 
-    <dv-tabs :value="currentTab" width="600px" content-border @input="setTab" @add="addTab">
+    <dv-tabs ref="tab1" :value="currentTab" width="600px" 
+    	background-color="#eee" 
+    	color="#aaa"
+    	content-background-color="#F8F8F8" 
+    	content-color="black"
+    	content-border 
+    	active-color="none"
+    	@input="setTab" @add="addTab">
     	<dv-tab-item title="Code">Tab: code</dv-tab-item>
     	<dv-tab-item 
     		v-for="tab in additionalTabs" 
@@ -100,7 +107,7 @@
     	</dv-tab-item>	
     	<dv-tab-item title="Issues">These are the issues found with your code:</dv-tab-item>
     	<dv-tab-item title="Pull requestes">Here you have your pull requests:</dv-tab-item>
-    	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>'"></dv-tab-item>
+    	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>Falta implementar controles de teclado dos tabs'"></dv-tab-item>
     </dv-tabs>
 
     Ainda temos muito que fazer nos tabs!
@@ -239,6 +246,7 @@ export default {
     	removeTab: function (tab) {
     		let index = this.additionalTabs.indexOf(tab)
     		this.additionalTabs.splice(index, 1)
+    		this.$nextTick(() => this.$refs.tab1.showTab(index+1))
     	}
 
     }

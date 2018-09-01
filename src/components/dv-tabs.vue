@@ -1,10 +1,11 @@
 <template>
 
-<div :style="tabStyle">
-	<ul class="dv-tab">
+<div :style="divStyle">
+	<ul class="dv-tab" :style="tabsStyle">
 		<li 
 			class="dv-tab-item" 
 			:class="tab.active ? 'active' : ''"
+			:style="tabStyle(tab)"
 			v-for="tab in tabs"
 			@click="onclick(tab)"
 		>{{ tab.title }}</li> 
@@ -12,6 +13,7 @@
 	</ul>
 	<div 
 		class="dv-tab-content" 
+		:style="contentStyle"
 		:class="{border: showContentBorder}"
 	><slot></slot>
 	</div>
@@ -25,14 +27,34 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['value', 'content-border', 'width'],
+	props: ['value', 'content-border', 'width', 'background-color', 'color', 'content-background-color', 'content-color', 'active-color'],
 
 	computed: {
-		tabStyle: function () {
+		divStyle: function () {
 			if (this.width)
 				return `width:${this.width};`
 			return ''
 		},
+
+		tabsStyle: function () {
+			let style = ''
+			if (this.backgroundColor)
+				style = `background-color:${this.backgroundColor};`
+			if (this.color)
+				style += `color:${this.color};`
+			return style
+		},
+
+		contentStyle: function () {
+			let style = ''
+			if (this.contentBackgroundColor) {
+				style = `background-color:${this.contentBackgroundColor};`
+			}
+			if (this.contentColor) {
+				style += `color:${this.contentColor};`
+			}
+			return style
+		}
 
 	},
 
@@ -40,20 +62,35 @@ export default {
 		return {
 			showContentBorder: utils.isPropOn(this.contentBorder),
 			tabs: [],
-			currentActiveTab: null
+			oldTabs: [],
+			currentActiveTab: null,
+			indexActiveTab: -1,
 		}
 	},
 
 	methods: {
 
+		tabStyle: function (tab) {
+			if (tab.active) {
+				let style = this.contentStyle + `border-bottom: 2px solid ${this.contentBackgroundColor};`
+				if (this.activeColor) {
+					if (this.activeColor == 'none') {
+						style += 'border-top:1px solid #aaa;'
+					}
+					else {
+						style += `border-top:2px solid ${this.activeColor};`
+					}
+				}
+				return style
+			}
+			return ''
+		},
+
 		addTab: function (newTab) {
 			newTab.active = false
 			// newTab has already been inserted as a child component
+			// Trying index = this.$children.indexOf(newTab) DOES NOT work
 			let index = this.$slots.default.indexOf(newTab.$vnode)
-			console.log('addTab()')
-			console.log('index = ' + index)
-			console.log('with children: ' + this.$children.indexOf(newTab))
-
             this.tabs.splice(index, 0, newTab);
 			this.showTab(newTab)
 		},
@@ -61,21 +98,27 @@ export default {
 		removeTab: function (tabToRemove) {
 			let index = this.tabs.indexOf(tabToRemove)
 			this.tabs.splice(index, 1)
-			if (index > 0) {
+			if (this.tabs.length == 0) 
+				return
+			if (index >= this.tabs.length)
 				index -= 1
-			}
-			if (this.tabs.length) {
+			if (!this.tabs.find(tab => tab.active)) {
+				if (this.indexActiveTab >= this.tabs.length) {
+					this.indexActiveTab = this.tabs.length - 1
+				}
 				this.showTab(this.tabs[index])
 			}
 		},
 
 		showTab: function (tab) {
-			console.log('entrou em showTab')
+			if (typeof tab == 'number')
+				tab = this.tabs[tab]
 			if (this.currentActiveTab) {
 				this.currentActiveTab.active = false
 			}	
 			tab.active = true
 			this.currentActiveTab = tab
+			this.indexActiveTab = this.tabs.indexOf(tab)
 		},
 
 		onclick: function (tab) {
