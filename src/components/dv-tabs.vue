@@ -31,7 +31,17 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['value', 'content-border', 'width', 'background-color', 'color', 'content-background-color', 'content-color', 'active-color'],
+	props: [
+		'value', 
+		'content-border', 
+		'width', 
+		'align', 
+		'background-color', 
+		'color', 
+		'content-background-color', 
+		'content-color', 
+		'active-color'
+	],
 
 	computed: {
 		divStyle: function () {
@@ -46,6 +56,8 @@ export default {
 				style = `background-color:${this.backgroundColor};`
 			if (this.color)
 				style += `color:${this.color};`
+			if (this.align)
+				style += `text-align:${this.align}`
 			return style
 		},
 
@@ -203,6 +215,10 @@ export default {
     font-size:4px;
     margin:0px;
 }  
+
+[role="tablist"] {
+  padding: 0;
+}
 
 li.dv-tab-item {
    display:inline-block;

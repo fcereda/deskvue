@@ -1,6 +1,7 @@
 <template>
 
 	<section 
+		role="tabpanel"
 		class="tab-content" 
 		:class="tabItemClass"
 	>

@@ -91,6 +91,7 @@
     <h3>Tabs</h3>
 
     <dv-tabs ref="tab1" :value="currentTab" width="600px" 
+    	align="left"
     	background-color="#eee" 
     	color="#aaa"
     	content-background-color="#F8F8F8" 
