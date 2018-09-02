@@ -23,6 +23,8 @@ kbd {
     font-size: 0.8em;
     padding: 0.0625rem 0.5rem;
     border-radius: 0.125rem;
-    border: 2px solid;
-    box-shadow: 1px 1px 0 currentColor, 2px 2px 0 currentColor;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+    top: -0.25em;
 }      

@@ -91,27 +91,59 @@
     <h3>Tabs</h3>
 
     <dv-tabs ref="tab1" :value="currentTab" width="600px" 
+    	add
+    	remove
     	align="left"
     	background-color="#eee" 
     	color="#aaa"
     	content-background-color="#F8F8F8" 
     	content-color="black"
     	content-border 
-    	active-color="none"
     	@input="setTab" @add="addTab">
     	<dv-tab-item title="Code">Tab: code</dv-tab-item>
     	<dv-tab-item 
     		v-for="tab in additionalTabs" 
-    		:title="tab.title"
+    		:title="tab.title" 
     	>
     		This is tab <b>{{ tab.title }}</b><br>Click the button below to remove this tab:<br><br><dv-button @click="removeTab(tab)">Remove</dv-button>
     	</dv-tab-item>	
-    	<dv-tab-item title="Issues">These are the issues found with your code:</dv-tab-item>
+    	<dv-tab-item title="Issues">To select the issues found in your code, press <kbd>Ctrl</kbd> + <kbd>I</kbd>.<br>
+    		To help fixing these issues, clone the repository and open Sublime Text.<br>
+    		To ignore the issues, just do nothing.</dv-tab-item>
     	<dv-tab-item title="Pull requestes">Here you have your pull requests:</dv-tab-item>
-    	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>Falta implementar controles de teclado dos tabs'"></dv-tab-item>
+    	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>Para remover um tab, foque nele e pressione <kbd>Del</kbd>'"></dv-tab-item>
+    	<dv-tab-item title="Nested tab">
+    		<dv-tabs ref="nested" 
+	   			width="100%"
+    	    	active-color="none"
+    			content-background-color="white"
+    			content-border
+    			tab-width="25%">
+    			<dv-tab-item title="Tab 1">This is tab 1</dv-tab-item>
+    			<dv-tab-item title="Fixed width tabs">This is the second tab</dv-tab-item>
+    		</dv-tabs>
+    	</dv-tab-item>		
     </dv-tabs>
 
-    Ainda temos muito que fazer nos tabs!
+
+	<h3>Simple inputs</h3><p>
+	<fieldset>
+		<legend>Log in</legend>
+		<div class="field">
+		    <label for="first-name" class="dv-input-label">What's the first name</label>
+		  <input type="text" name="first-name" class="dv-input-text" placeholder="Type here"></input>
+		</div>
+		<br>
+		<div class="field">
+		<label class="dv-input-label">Last name</label>
+		<input type="text" class="dv-input-text" placeholder="Type here"></input>
+		</div>
+		<select class="dv-select dv-input-text">
+		    <option v-for="item in [1,2,3,4,5,6,7,8,9,10]">Option {{ item }}</option> 
+		</select><br><br>   
+		<button class="dv-button wide primary">OK</button>
+	</fieldset>
+	
 
     <h3>Installed CLI Plugins</h3>
     <ul>
@@ -145,6 +177,7 @@ import dvMenu from './dv-menu.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
+import './form.scss'
 
 export default {
     name: 'HelloWorld',
@@ -240,7 +273,7 @@ export default {
     			html: `<h3>This tab ${this.counter}</h3>Random number: ${Math.random()}`
     		}
     		this.additionalTabs.splice(this.additionalTabs.length, 0, newTab)
-    		this.$refs.tab1.showTab(this.additionalTabs.length)
+    		this.$refs.tab1.switchTab(this.additionalTabs.length)
     	},
 
     	removeTab: function (tab) {

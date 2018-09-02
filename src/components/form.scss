@@ -1,0 +1,79 @@
+@import './base.scss';
+
+fieldset {
+    border: 1px solid #aaa;
+}  
+
+legend {
+    color: #666;
+    font-size:0.75em;
+    padding-left:0.5em;
+    padding-right:0.5em;
+    text-align: left;
+}  
+
+fieldset > div.field {
+    display: table-row;
+}  
+  
+div.field {
+    width: 200px;
+}  
+  
+div.field > * {
+    display: table-cell;
+}
+  
+label.dv-input-label {
+    //width: 40em;
+}  
+  
+input.dv-input-text {
+    padding-left: 0.4em;
+    padding-right: 0.5em;
+    background-color: #fff;
+    color: #222;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    //outline: 1px transparent;
+    min-width: 5em;
+    line-height: 150%;
+    cursor: pointer;
+    user-select: none;
+    font-family: inherit;
+    height: 2.25em;
+}  
+  
+input.dv-input-text:hover {
+    cursor:text;
+}  
+  
+input.dv-input-text:focus {
+    outline: 2px solid #1867c0;
+    //outline: 2px solid rgba(0, 0, 0, 0.30);
+    //box-shadow: inset 0px 2px 2px 2px rgba(0,0,0,0.15)
+}  
+  
+  
+ 
+.dv-select {
+    padding-left: 0.4em;
+    padding-right: 0.5em;
+    background-color: #fff;
+    color: #222;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    outline: 1px transparent;
+    min-width: 5em;
+    line-height: 150%;
+    cursor: default;
+    user-select: none;
+    font-family: inherit;
+    height: 2.25em;
+}  
+  
+.dv-select:hover {
+    cursor: pointer;
+}  
+  
+.dv-select:focus {
+    outline: 2px solid #1867c0;
+}    

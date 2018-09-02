@@ -5,15 +5,16 @@
 		<li 
 			role="presentation"
 			class="dv-tab-item" 
-			:class="tab.active ? 'active' : ''"
+			:class="(tab.active ? 'active' : '') + (removeable ? ' removeable' : '')"
 			:tabindex="tab.active ? 0 : -1"
 			:style="tabStyle(tab)"
 			v-for="(tab, index) in tabs"
 			:ref="tabRef(index)"
 			@click="onclick(tab)"
 			@keydown="onkeydown"
-		>{{ tab.title }}</li> 
-	    <li class="dv-tab-button"><button class="dv-button circle small short no-focus" @click="onAddBtnClick">+</button></li>
+		>{{ tab.title }}<span v-if="removeable" class="close-icon" @click.stop="removeTab(tab)">×</span>
+		</li> 
+	    <li v-if="addable" class="dv-tab-button"><button class="dv-button circle small short no-focus" @click="onAddBtnClick">+</button></li>
 	</ul>
 	<div 
 		class="dv-tab-content" 
@@ -33,9 +34,12 @@ export default {
 
 	props: [
 		'value', 
+		'add',
+		'remove',
 		'content-border', 
 		'width', 
 		'align', 
+		'tab-width',
 		'background-color', 
 		'color', 
 		'content-background-color', 
@@ -57,7 +61,7 @@ export default {
 			if (this.color)
 				style += `color:${this.color};`
 			if (this.align)
-				style += `text-align:${this.align}`
+				style += `text-align:${this.align};`
 			return style
 		},
 
@@ -70,13 +74,15 @@ export default {
 				style += `color:${this.contentColor};`
 			}
 			return style
-		}
+		},
 
 	},
 
 	data: function () {
 		return {
 			showContentBorder: utils.isPropOn(this.contentBorder),
+			addable: utils.isPropOn(this.add),
+			removeable: utils.isPropOn(this.remove),
 			tabs: [],
 			oldTabs: [],
 			currentActiveTab: null,
@@ -87,8 +93,11 @@ export default {
 	methods: {
 
 		tabStyle: function (tab) {
+			let style = ''
+			if (this.tabWidth)
+				style = `min-width:${this.tabWidth};`
 			if (tab.active) {
-				let style = this.contentStyle + `border-bottom: 2px solid ${this.contentBackgroundColor};`
+				style = style + this.contentStyle + `border-bottom: 2px solid ${this.contentBackgroundColor};`
 				if (this.activeColor) {
 					if (this.activeColor == 'none') {
 						style += 'border-top:1px solid #aaa;'
@@ -97,9 +106,8 @@ export default {
 						style += `border-top:2px solid ${this.activeColor};`
 					}
 				}
-				return style
 			}
-			return ''
+			return style
 		},
 
 		tabRef: function (index) {
@@ -121,7 +129,11 @@ export default {
 		},
 
 		removeTab: function (tabToRemove) {
-			let index = this.tabs.indexOf(tabToRemove)
+			let index = -1
+			if (typeof tabToRemove == 'number')
+				index = tabToRemove
+			else
+				index = this.tabs.indexOf(tabToRemove)
 			this.tabs.splice(index, 1)
 			if (this.tabs.length == 0) 
 				return
@@ -188,6 +200,12 @@ export default {
 				case 'End':
 					index = this.tabs.length - 1
 					break
+				case 'Delete':
+					if (this.removeable) {
+						this.removeTab(index)
+						e.preventDefault()
+						return 
+					}
 				default:
 					return
 			}
@@ -236,6 +254,10 @@ li.dv-tab-item {
    cursor:pointer;
 }  
 
+li.dv-tab-item.removeable {
+	padding-right:0.5em;
+}
+
 li.dv-tab-item:hover {
     color:#1867c0;
   }  
@@ -256,7 +278,21 @@ li.dv-tab-item:focus {
     text-decoration-color: #888;
     outline: none;
   }  
+
+.dv-tab-item > span.close-icon {
+	display:inline-block;
+	padding:0;
+	padding-left:0.25em;
+	padding-right:0.25em;
+	margin-left:0.5em;
+}
+
+.dv-tab-item > span.close-icon:hover {
+	box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
+}
   
+/*
+
 .dv-tab-item > button {
     border: 0.5px solid transparent;
     outline: none;
@@ -272,6 +308,7 @@ li.dv-tab-item:focus {
     border: 0.5px dotted #aaa;
 }    
   
+*/  
   
 .dv-tab-button {
   float:right;
