@@ -1,13 +1,17 @@
 <template>
 
 <div :style="divStyle">
-	<ul class="dv-tab" :style="tabsStyle">
+	<ul role="tablist" class="dv-tab" :style="tabsStyle">
 		<li 
+			role="presentation"
 			class="dv-tab-item" 
 			:class="tab.active ? 'active' : ''"
+			:tabindex="tab.active ? 0 : -1"
 			:style="tabStyle(tab)"
-			v-for="tab in tabs"
+			v-for="(tab, index) in tabs"
+			:ref="tabRef(index)"
 			@click="onclick(tab)"
+			@keydown="onkeydown"
 		>{{ tab.title }}</li> 
 	    <li class="dv-tab-button"><button class="dv-button circle small short no-focus" @click="onAddBtnClick">+</button></li>
 	</ul>
@@ -86,13 +90,22 @@ export default {
 			return ''
 		},
 
-		addTab: function (newTab) {
+		tabRef: function (index) {
+			return `tab${index}`
+		},
+
+		// addTab() and removeTab() are used only by the dv-tab-item component
+		// and are not supposed to be used by other components
+
+		addTab: function (newTab, showNewTab) {
 			newTab.active = false
 			// newTab has already been inserted as a child component
 			// Trying index = this.$children.indexOf(newTab) DOES NOT work
 			let index = this.$slots.default.indexOf(newTab.$vnode)
             this.tabs.splice(index, 0, newTab);
-			this.showTab(newTab)
+			if (showNewTab || this.tabs.length == 1) {
+				this.switchTab(newTab)
+			}
 		},
 
 		removeTab: function (tabToRemove) {
@@ -106,24 +119,68 @@ export default {
 				if (this.indexActiveTab >= this.tabs.length) {
 					this.indexActiveTab = this.tabs.length - 1
 				}
-				this.showTab(this.tabs[index])
+				this.switchTab(this.tabs[index])
 			}
 		},
 
-		showTab: function (tab) {
-			if (typeof tab == 'number')
-				tab = this.tabs[tab]
-			if (this.currentActiveTab) {
-				this.currentActiveTab.active = false
-			}	
-			tab.active = true
-			this.currentActiveTab = tab
-			this.indexActiveTab = this.tabs.indexOf(tab)
+		switchTab: function (tab, focus) {
+			// tab can be either a dv-tabs component or a number 
+			// indicating the position of the tab to be selected
+			// focus: if true, changes the keyboard focus to the
+			// newly selected tab
+
+			// By wrapping the logic inside a $nextTick block,
+			// we allow the developer to call switchTab() right 
+			// after inserting or removing a tab
+			this.$nextTick(() => {
+				if (typeof tab == 'number')
+					tab = this.tabs[tab]
+				if (this.currentActiveTab) {
+					this.currentActiveTab.active = false
+				}	
+				tab.active = true
+				this.currentActiveTab = tab
+				this.indexActiveTab = this.tabs.indexOf(tab)
+				if (focus) {
+					let elem = this.$refs[this.tabRef(this.indexActiveTab)][0]
+					elem.focus()
+				}
+			})
 		},
 
+		// event handlers
+
 		onclick: function (tab) {
-			this.showTab(tab)
+			this.switchTab(tab)
 			this.$emit('input', this.tabs.indexOf(tab))
+		},
+
+		onkeydown: function (e) {
+			let index = this.indexActiveTab
+			switch (e.key) {
+				case 'ArrowLeft': 
+					index -= 1
+					if (index < 0) {
+						index = this.tabs.length - 1
+					}
+					break
+				case 'ArrowRight':
+					index += 1	
+					if (index >= this.tabs.length) {
+						index = 0
+					}	
+					break
+				case 'Home':
+					index = 0
+					break
+				case 'End':
+					index = this.tabs.length - 1
+					break
+				default:
+					return
+			}
+			e.preventDefault()
+			this.switchTab(index, true)
 		},
 
 		onAddBtnClick: function () {

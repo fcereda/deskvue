@@ -238,9 +238,8 @@ export default {
     			title: 'New Tab ' + this.counter,
     			html: `<h3>This tab ${this.counter}</h3>Random number: ${Math.random()}`
     		}
-    		//this.additionalTabs.push(newTab)
     		this.additionalTabs.splice(this.additionalTabs.length, 0, newTab)
-    		console.log(this.additionalTabs)
+    		this.$refs.tab1.showTab(this.additionalTabs.length)
     	},
 
     	removeTab: function (tab) {

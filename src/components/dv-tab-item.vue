@@ -1,11 +1,11 @@
 <template>
 
-	<div 
+	<section 
 		class="tab-content" 
 		:class="tabItemClass"
 	>
     	<slot><div v-html="vHtml"></div></slot>
-	</div>
+	</section>
 
 </template>
 
