@@ -148,10 +148,28 @@
 		<dv-checkbox disabled>Allows indeterminate</dv-checkbox>
 		</div>
 
-		<fieldset style="float:right;width:10em;">
+		<fieldset style="float:right;width:10em;text-align:left;">
 		<legend>More options</legend>
-		<dv-checkbox>l really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
+		<dv-checkbox v-model="checkbox1">l really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
+		<input type="checkbox">A multiple line regular checkbox</input>
 		</fieldset>
+
+		<p>Radios</p>
+
+		<input type="radio" name="myoption">Option One</option>
+		<input type="radio" name="myoption">Option Two</option>
+
+		<p>dv-radios</p>
+
+		<fieldset style="width:15em;text-align:left;">
+		<legend>dv-radios</legend>
+			<dv-checkbox type="radio" name="myradio" v-model="radio1">First radio</dv-checkbox><br>
+			<dv-checkbox type="radio" name="myradio" v-model="radio2">Second radio</dv-checkbox>
+		</fieldset>	
+
+		<br><br>Toggle<br><br>
+		<dv-checkbox type="toggle" color="warning" v-model="toggle1">Toggle this!</dv-checkbox><br>
+		<dv-checkbox type="toggle" v-model="toggle1">And this too!</dv-checkbox><br>
 
 
 		<br><br>
@@ -237,8 +255,11 @@ export default {
     		currentTab: 1,
 	   		btnGroupRadioValue: -1,
 	   		additionalTabs: [],
-	   		checkbox1: false,
+	   		checkbox1: true,
 	   		checkbox2: 0,
+	   		radio1: false,
+	   		radio2: true,
+	   		toggle1: false
 		} 
 
     },
