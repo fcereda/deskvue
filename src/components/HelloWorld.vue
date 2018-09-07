@@ -150,7 +150,7 @@
 
 		<fieldset style="float:right;width:10em;">
 		<legend>More options</legend>
-		<dv-checkbox>A really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
+		<dv-checkbox>l really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
 		</fieldset>
 
 

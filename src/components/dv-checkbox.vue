@@ -1,10 +1,10 @@
 <template>
-<span tabindex="0" class="dv-checkbox" @click="onClick">
-	<label :class="labelClass" style="display:inline-block;text-align:left;height:auto;margin:0;padding:0;">
+<div tabindex="0" class="dv-checkbox" @click="onClick" @keydown="onKeydown">
+	<label :class="labelClass" style="margin-top:-0.25em">
 		<i class="material-icons" :class="iconClass">{{ icon }}</i>
 		<slot></slot>
 	</label>
-</span>
+</div>
 </template>
 
 <script>
@@ -54,6 +54,12 @@ export default {
 			else
 				newValue = !newValue
 			this.$emit('input', newValue)
+		},
+
+		onKeydown: function (e) {
+			console.log(e.key)
+			if (e.key == ' ' || e.key == 'Enter') 
+				return this.onClick()
 		}
 
 	}
@@ -67,9 +73,11 @@ export default {
 @import './base.scss';
 
 .dv-checkbox {
-	//display: inline-block;
+	display: inline-block;
 	text-align: left;
-	background-color: yellow;
+	text-indent: -0.9375em;
+	margin-left: 1.5em;
+	transform: translateY(-0.325em);
 }
 
 .dv-checkbox > label:hover {
@@ -85,6 +93,7 @@ export default {
 
 .dv-checkbox > label > i.material-icons {
 	transform: scale(0.85, 0.85) translateY(0.325em);
+	position: relative;
 	padding-right:0.25em;
 }
 
