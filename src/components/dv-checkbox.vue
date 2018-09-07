@@ -1,10 +1,10 @@
 <template>
 <span tabindex="0" class="dv-checkbox" @click="onClick" @keydown="onKeydown">
-	<label :class="labelClass" style="margin-top:-0.25em;display:flex;flex-direction:row;">
+	<label :class="labelClass">
 		<span class="icon-container" :class="iconContainerClass">
-		<input class="input-control" :type="type == 'radio' ? 'radio': 'checkbox'" :name="name" :value="id" @change="onChange" @input="onChange" @click="newOnClick" :checked="value" ref="inputControl"></input>
+		<input class="input-control" type="checkbox" :value="id" @change="onChange" @input="onChange" :checked="value" ref="inputControl"></input>
 		<i class="material-icons" :class="iconClass">{{ icon }}</i></span>
-		<span><slot></slot></span>
+		<span class="checkbox-label"><slot></slot></span>
 	</label>
 </span>
 </template>
@@ -33,7 +33,7 @@ let id = 1
 
 export default {
 
-	props: ['type', 'name', 'value', 'disabled', 'color', 'allow-indeterminate'],
+	props: ['type', 'align', 'value', 'disabled', 'color'],
 
 	data: function () {
 		id += 1
@@ -51,8 +51,12 @@ export default {
 		},
 
 		labelClass: function () {
+			let classes = []				
 			if (utils.isPropOn(this.disabled))
-				return 'color-disabled'
+				classes.push('color-disabled')
+			if (this.align == 'right')
+				classes.push('right')
+			return classes.join(' ')
 		},
 
 		iconClass: function () {
@@ -67,9 +71,14 @@ export default {
 		},
 
 		iconContainerClass: function () {
+			let classes = []
 			if (this.type == 'toggle') {
-				return 'toggle'
+				classes.push('toggle')
 			}
+			if (this.align == 'right') {
+				classes.push('right')
+			}
+			return classes.join(' ')
 		}	
 
 	},
@@ -97,19 +106,9 @@ export default {
 		},
 
 		onChange: function (e) {
-			console.log('entrou em onChange, id = ' + e.target.value)
 			let newValue = e.target.checked
-			if (this.type == 'radio') {
-				let selectedId = e.target.value
-				newValue = this.id == selectedId
-			}
-			console.log('newValue = ' + newValue)
 			this.$emit('input', newValue)
 		},
-
-		newOnClick: function (e) {
-			console.log('newOnClick fired for id = ' + e.target.value)
-		}
 
 	}
 
@@ -117,26 +116,37 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
 
 @import './base.scss';
+
+$icon-scale: 0.85;
+$border-color: #aaa;
 
 .dv-checkbox {
 	display: inline-block;
 	box-sizing: border-box;
 	text-align: left;
-	//transform: translateY(-0.325em);
+}
+
+.dv-checkbox > label {
+	display:flex;
+	flex-direction:row;
+}
+
+.dv-checkbox > label.right {
+	flex-direction: row-reverse;
 }
 
 .dv-checkbox > label:hover {
-	text-decoration: underline;
+	//text-decoration: underline;
 	cursor: pointer;
 	user-select: none;
 }
 
 .dv-checkbox:focus {
 	outline: none;
-	text-decoration: underline;
+	//text-decoration: underline;
 }
 
 .input-control {
@@ -145,10 +155,8 @@ export default {
 
 .dv-checkbox > label > .icon-container {
 	display:inline-block;
-	transform: scale(0.85, 0.85);
+	transform: scale($icon-scale, $icon-scale);
 	position: relative;
-	//top: 0.325em;
-	top:-0.25em;
 	margin-right:0.25em;
 }
 
@@ -158,21 +166,35 @@ export default {
 }
 
 .dv-checkbox:focus > label > .icon-container > i {
-	border: 2px solid #aaa;
+	border-color: $border-color;
 }
 
+$toggle-scale: 1.5;
+$toggle-border-width: 1.333px;
+
+.dv-checkbox > label > .icon-container.toggle > i {
+	border-width: $toggle-border-width;
+}
 
 .dv-checkbox > label > i.material-icons {
 }
 
 .dv-checkbox > label > .icon-container.toggle {
-	transform: scale(1.5, 1.5) !important;
-	margin-right:0.75em;
-	//top: 0.5em;
-	top:-0.25em;
+	transform: scale($toggle-scale, $toggle-scale) !important;
+	margin-right:0.5em;
+	top:-0.0625em;
 	color: #555555;
 }
 
-	/* translateY(0.325em); */
+.dv-checkbox > label > .icon-container.toggle.right {
+	margin-right:0;
+	margin-left:0.75em;
+}
+
+.dv-checkbox > label > span.checkbox-label {
+	margin-bottom:0.25em;
+	position: relative;
+	top:0.25em;
+}
 
 </style>

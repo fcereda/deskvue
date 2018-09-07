@@ -144,14 +144,14 @@
 
 		<div style="text-align:left">
 		<dv-checkbox v-model="checkbox1">Billing address is the same as shipping address</dv-checkbox><br>
-		<dv-checkbox v-model="checkbox2" color="success" allow-indeterminate>Allows indeterminate</dv-checkbox><br>
+		<dv-checkbox v-model="checkbox2" color="success">Indeterminate value</dv-checkbox><br>
 		<dv-checkbox disabled>Allows indeterminate</dv-checkbox>
 		</div>
 
 		<fieldset style="float:right;width:10em;text-align:left;">
 		<legend>More options</legend>
-		<dv-checkbox v-model="checkbox1">l really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
-		<input type="checkbox">A multiple line regular checkbox</input>
+		<dv-checkbox v-model="checkbox1">I added a really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
+		<dv-checkbox v-model="checkbox2">Another multiple line checkbox</dv-checkbox>
 		</fieldset>
 
 		<p>Radios</p>
@@ -161,15 +161,36 @@
 
 		<p>dv-radios</p>
 
-		<fieldset style="width:15em;text-align:left;">
-		<legend>dv-radios</legend>
+		<fieldset style="width:10em;text-align:left;float:left;">
+			<legend>Left toggles</legend>
+			<dv-checkbox type="toggle" color="warning" v-model="toggle1">Toggle this!</dv-checkbox><br>
+			<dv-checkbox type="toggle" v-model="toggle2">And this too!</dv-checkbox><br>
+		</fieldset>
+
+		<fieldset style="width:10em;text-align:left;float:left">
+			<legend>dv-radios</legend>
 			<dv-checkbox type="radio" name="myradio" v-model="radio1">First radio</dv-checkbox><br>
 			<dv-checkbox type="radio" name="myradio" v-model="radio2">Second radio</dv-checkbox>
 		</fieldset>	
 
-		<br><br>Toggle<br><br>
-		<dv-checkbox type="toggle" color="warning" v-model="toggle1">Toggle this!</dv-checkbox><br>
-		<dv-checkbox type="toggle" v-model="toggle1">And this too!</dv-checkbox><br>
+		<fieldset style="width:10em;text-align:right;float:left;">
+			<legend>Right toggles</legend>
+			<dv-checkbox type="toggle" align="right" color="success" v-model="toggle3">Toggle this!</dv-checkbox><br>
+			<dv-checkbox type="toggle" align="right" color="danger" v-model="toggle4">And this too!</dv-checkbox><br>
+		</fieldset>
+
+		<fieldset style="width:15em;text-align:left">
+			<legend>Radio group</legend>
+			<dv-radiogroup v-model="radioGroup">
+				<dv-radio id="1">Option One</dv-radio>&nbsp;
+				<dv-radio id="2">Option Two</dv-radio>
+			</dv-radiogroup>
+		</fieldset>	
+
+		
+
+	</fieldset>	
+
 
 
 		<br><br>
@@ -207,6 +228,8 @@ import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
 import dvMenu from './dv-menu.vue'
+import dvRadio from './dv-radio.vue'
+import dvRadiogroup from './dv-radiogroup.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
@@ -220,6 +243,8 @@ export default {
     	dvBtnGroup,
     	dvCheckbox,
     	dvMenu,
+    	dvRadio,
+    	dvRadiogroup,
     	dvTabs,
     	dvTabItem,
     	dvTag
@@ -256,10 +281,14 @@ export default {
 	   		btnGroupRadioValue: -1,
 	   		additionalTabs: [],
 	   		checkbox1: true,
-	   		checkbox2: 0,
+	   		checkbox2: -1,
 	   		radio1: false,
 	   		radio2: true,
-	   		toggle1: false
+	   		toggle1: false,
+	   		toggle2: false,
+	   		toggle3: true,
+	   		toggle4: true,
+	   		radioGroup: 0
 		} 
 
     },
