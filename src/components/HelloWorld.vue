@@ -139,8 +139,22 @@
 		<input type="text" class="dv-input-text" placeholder="Type here"></input>
 		</div>
 		<select class="dv-select dv-input-text">
-		    <option v-for="item in [1,2,3,4,5,6,7,8,9,10]">Option {{ item }}</option> 
-		</select><br><br>   
+		    <option v-for="item in 100">Option {{ item }}</option> 
+		</select><br><br>
+
+		<div style="text-align:left">
+		<dv-checkbox v-model="checkbox1">Billing address is the same as shipping address</dv-checkbox><br>
+		<dv-checkbox v-model="checkbox2" color="success" allow-indeterminate>Allows indeterminate</dv-checkbox><br>
+		<dv-checkbox disabled>Allows indeterminate</dv-checkbox>
+		</div>
+
+		<fieldset style="float:right;width:10em;">
+		<legend>More options</legend>
+		<dv-checkbox>A really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
+		</fieldset>
+
+
+		<br><br>
 		<button class="dv-button wide primary">OK</button>
 	</fieldset>
 	
@@ -173,6 +187,7 @@
 
 import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
+import dvCheckbox from './dv-checkbox.vue'
 import dvMenu from './dv-menu.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
@@ -185,6 +200,7 @@ export default {
     components: {
     	dvButton,
     	dvBtnGroup,
+    	dvCheckbox,
     	dvMenu,
     	dvTabs,
     	dvTabItem,
@@ -221,6 +237,8 @@ export default {
     		currentTab: 1,
 	   		btnGroupRadioValue: -1,
 	   		additionalTabs: [],
+	   		checkbox1: false,
+	   		checkbox2: 0,
 		} 
 
     },

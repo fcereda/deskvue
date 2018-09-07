@@ -4,6 +4,15 @@ $font-family: 'Roboto', 'Segoe UI', sans-serif;
 
 // Colors
 
+$color-primary: #007bff;
+$color-secondary: #6c757d;
+$color-warning: #FF9800;
+$color-danger: #cb2431;
+$color-success: #28a745; 
+$color-info: #4FC3F7; 
+$color-dark: #607D8B;
+$color-disabled: #888;
+
 $bg-color-primary: #007bff;
 $bg-color-secondary: #6c757d;
 $bg-color-warning: #FF9800;
@@ -28,3 +37,35 @@ kbd {
     position: relative;
     top: -0.25em;
 }      
+
+.color-primary {
+	color: $color-primary;
+}
+
+.color-secondary {
+	color: $color-secondary;
+}
+
+.color-warning {
+	color: $color-warning;
+}
+
+.color-danger {
+	color: $color-danger;
+}
+
+.color-success {
+	color: $color-success;
+}
+
+.color-info {
+	color: $color-info;
+}
+
+.color-dark {
+	color: $color-dark;
+}
+
+.color-disabled {
+	color: $color-disabled;  
+}
