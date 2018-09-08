@@ -15,40 +15,49 @@ export default {
 	data: function () {
 		return {
 			radios: [],
+			maxId: 0,
 			selectedRadio: null
 		}
 	},
 
 	watch: {
-
 		value: function () {
-			console.log('New value: ' + this.value)
-
+			this.selectedRadio = this.radios.find(radio => radio.thisId == this.value)
+			this.updateRadioValues()
 		}
-
 	},
 
 	methods: {
 
 		addRadio: function(radio) {
-			console.log('vai adicionar um radio')
-			console.log(radio)
-			radio.$on('input', (e) => {
-				console.log('radio onInput')
-				console.log(e)
-				if (e) {
-					this.selectedRadio = radio
-				}
-				this.updateRadioValues()
-				this.$emit('input', radio.id)
+			if (radio.id === undefined) {
+				this.maxId += 1
+				radio.setId(this.maxId)
+			}
+			else {
+				this.maxId = Math.max(radio.id, this.maxId)
+			}
+			radio.$on('input', (e) => {		
+				this.$emit('input', radio.thisId)
 			})
+
 			this.radios.push(radio)
-			console.log(this.radios)
+			if (radio.id == this.value) {
+				this.selectedRadio = radio
+				this.updateRadioValues()
+			}
+		},
+
+		removeRadio: function (radio) {
+			console.log('removing radio')
+			radio.$on('input', null)
+			let index = this.radios.indexOf(radio)
+			this.radios.splice(index, 1)
 		},
 
 		updateRadioValues: function () {
 			this.radios.forEach(radio => {
-				radio.value = radio == this.selectedRadio
+				radio.setValue(radio == this.selectedRadio)
 				//this.$set(radio.$props, 'value', radio == this.selectedRadio)
 			})
 		},

@@ -148,18 +148,13 @@
 		<dv-checkbox disabled>Allows indeterminate</dv-checkbox>
 		</div>
 
+		<br>
+
 		<fieldset style="float:right;width:10em;text-align:left;">
 		<legend>More options</legend>
 		<dv-checkbox v-model="checkbox1">I added a really big checkbox label, to cause wrapping that we will have to deal with</dv-checkbox>
 		<dv-checkbox v-model="checkbox2">Another multiple line checkbox</dv-checkbox>
 		</fieldset>
-
-		<p>Radios</p>
-
-		<input type="radio" name="myoption">Option One</option>
-		<input type="radio" name="myoption">Option Two</option>
-
-		<p>dv-radios</p>
 
 		<fieldset style="width:10em;text-align:left;float:left;">
 			<legend>Left toggles</legend>
@@ -167,10 +162,10 @@
 			<dv-checkbox type="toggle" v-model="toggle2">And this too!</dv-checkbox><br>
 		</fieldset>
 
-		<fieldset style="width:10em;text-align:left;float:left">
-			<legend>dv-radios</legend>
-			<dv-checkbox type="radio" name="myradio" v-model="radio1">First radio</dv-checkbox><br>
-			<dv-checkbox type="radio" name="myradio" v-model="radio2">Second radio</dv-checkbox>
+		<fieldset style="width:10em;text-align:right;float:left">
+			<legend>dv-checkbox type="radio"</legend>
+			<dv-checkbox type="radio" align="right" v-model="radio1">First radio</dv-checkbox><br>
+			<dv-checkbox type="radio" align="right" v-model="radio2">Second radio</dv-checkbox>
 		</fieldset>	
 
 		<fieldset style="width:10em;text-align:right;float:left;">
@@ -185,7 +180,44 @@
 				<dv-radio id="1">Option One</dv-radio>&nbsp;
 				<dv-radio id="2">Option Two</dv-radio>
 			</dv-radiogroup>
+			<br>Value: {{ radioGroup }}
 		</fieldset>	
+
+		<fieldset style="width:10em;text-align:center;float:left">
+			<legend>Centered group</legend>
+			<dv-radiogroup v-model="radioGroup2">
+				<dv-radio id="3" align="center">Three</dv-radio>
+				<dv-radio id="4" align="center">Four</dv-radio>
+			</dv-radiogroup>
+			Value: {{radioGroup2}}
+		</fieldset>		
+
+		<fieldset style="width:10em;text-align:center;float:left">
+			<legend>No IDs</legend>
+			<dv-radiogroup v-model="radioGroup3">
+				<dv-radio align="center">Five</dv-radio>
+				<dv-radio align="center">Six</dv-radio>
+			</dv-radiogroup>
+			Value: {{radioGroup3}}
+		</fieldset>	
+
+		<fieldset style="width:10em;text-align:center;float:left">
+			<legend>Centered toggles</legend>
+			<dv-checkbox type="toggle" align="center" v-model="toggle3">Five</dv-checkbox>
+			<dv-checkbox type="toggle" align="center" v-model="toggle4">Six</dv-checkbox>
+		</fieldset>		
+
+		<fieldset style="width:10em; text-align:left; float:left;">
+			<legend>Candidatos</legend>
+			<dv-radiogroup v-model="radioGroup4">
+				<dv-radio 
+					align="left"
+					display="block"
+					v-for="candidato in tags"
+					:id="candidato"
+				>{{ candidato }}</dv-radio>
+			</dv-radiogroup>
+		</fieldset>		
 
 		
 
@@ -288,7 +320,10 @@ export default {
 	   		toggle2: false,
 	   		toggle3: true,
 	   		toggle4: true,
-	   		radioGroup: 0
+	   		radioGroup: 2,
+	   		radioGroup2: 3,
+	   		radioGroup3: 0,
+	   		radioGroup4: 0,
 		} 
 
     },

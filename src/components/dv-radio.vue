@@ -3,9 +3,10 @@
 <dv-checkbox 
 	type="radio"
 	:align="align"
+	:display="display"
 	:color="color"
 	:disabled="disabled"
-	:value="value"
+	:value="thisValue"
 	@input="onInput">
 	<slot></slot>
 </dv-checkbox>	
@@ -22,16 +23,32 @@ export default {
 		dvCheckbox
 	},
 
-	props: [ 'id', 'align', 'color', 'disabled', 'value' ],
+	props: [ 'id', 'align', 'display', 'color', 'disabled', 'value' ],
 
 	data: function () {
-		return {}
+		return {
+			thisValue: this.value || false,
+			thisId: this.id,
+			parent: null,
+		}
+	},
+
+	watch: {
+		value: function () {
+			this.thisValue = this.value
+		}
 	},
 
 	mounted: function () {
-		const parent = this.$parent
-		if (parent.addRadio) {
-			parent.addRadio(this)
+		if (this.$parent.addRadio) {
+			this.parent = this.$parent
+			this.parent.addRadio(this)
+		}
+	},
+
+	beforeDestroy: function () {
+		if (this.parent) {
+			this.parent.removeRadio(this)
 		}
 	},
 
@@ -39,6 +56,14 @@ export default {
 		onInput: function (e) {
 			this.$emit('input', e)
 		},
+
+		setValue: function (newValue) {
+			this.thisValue = newValue
+		},
+
+		setId: function (id) {
+			this.thisId = id
+		}
 	}
 
 }

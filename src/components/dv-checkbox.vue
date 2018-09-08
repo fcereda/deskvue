@@ -1,8 +1,10 @@
 <template>
-<span tabindex="0" class="dv-checkbox" @click="onClick" @keydown="onKeydown">
+<span tabindex="0" class="dv-checkbox" :class="displayClass" @click="onClick" @keydown="onKeydown">
 	<label :class="labelClass">
 		<span class="icon-container" :class="iconContainerClass">
+<!--
 		<input class="input-control" type="checkbox" :value="id" @change="onChange" @input="onChange" :checked="value" ref="inputControl"></input>
+-->		
 		<i class="material-icons" :class="iconClass">{{ icon }}</i></span>
 		<span class="checkbox-label"><slot></slot></span>
 	</label>
@@ -33,7 +35,7 @@ let id = 1
 
 export default {
 
-	props: ['type', 'align', 'value', 'disabled', 'color'],
+	props: ['type', 'align', 'display', 'value', 'disabled', 'color'],
 
 	data: function () {
 		id += 1
@@ -50,12 +52,17 @@ export default {
 			return icons[type][value]
 		},
 
+		displayClass: function () {
+			if (this.display == 'block')
+				return 'block'
+		},
+
 		labelClass: function () {
 			let classes = []				
 			if (utils.isPropOn(this.disabled))
 				classes.push('color-disabled')
-			if (this.align == 'right')
-				classes.push('right')
+			if (this.align)
+				classes.push(this.align)
 			return classes.join(' ')
 		},
 
@@ -86,6 +93,8 @@ export default {
 	methods: {
 
 		onClick: function () {
+			let newValue = !this.value
+			this.$emit('input', newValue)
 /*
 			let newValue = this.value
 			if (utils.isPropOn(this.allowIndeterminate))
@@ -99,6 +108,8 @@ export default {
 		onKeydown: function (e) {
 			if (e.key == ' ' || e.key == 'Enter') {
 				e.preventDefault()
+				this.onClick();
+				return
 				let inputControl = this.$refs.inputControl
 				inputControl.checked = !inputControl.checked
 				this.$emit('input', inputControl.checked)
@@ -129,6 +140,10 @@ $border-color: #aaa;
 	text-align: left;
 }
 
+.dv-checkbox.block {
+	display: block;
+}
+
 .dv-checkbox > label {
 	display:flex;
 	flex-direction:row;
@@ -136,6 +151,10 @@ $border-color: #aaa;
 
 .dv-checkbox > label.right {
 	flex-direction: row-reverse;
+}
+
+.dv-checkbox > label.center {
+	flex-direction: column;
 }
 
 .dv-checkbox > label:hover {
@@ -158,6 +177,7 @@ $border-color: #aaa;
 	transform: scale($icon-scale, $icon-scale);
 	position: relative;
 	margin-right:0.25em;
+	text-align:center;
 }
 
 .dv-checkbox > label > .icon-container > i {
@@ -183,7 +203,7 @@ $toggle-border-width: 1.333px;
 	transform: scale($toggle-scale, $toggle-scale) !important;
 	margin-right:0.5em;
 	top:-0.0625em;
-	color: #555555;
+	color: #777;
 }
 
 .dv-checkbox > label > .icon-container.toggle.right {
@@ -191,10 +211,15 @@ $toggle-border-width: 1.333px;
 	margin-left:0.75em;
 }
 
-.dv-checkbox > label > span.checkbox-label {
+.dv-checkbox > label:not(.center) > span.checkbox-label {
 	margin-bottom:0.25em;
 	position: relative;
 	top:0.25em;
+}
+
+.dv-checkbox > label.center > span.checkbox-label {
+	margin-left: 0.25em;
+	margin-right: 0.75em;
 }
 
 </style>
