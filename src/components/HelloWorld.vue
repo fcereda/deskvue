@@ -134,6 +134,15 @@
 		  <input type="text" name="first-name" class="dv-input-text" placeholder="Type here"></input>
 		</div>
 		<br>
+		<div style="width:20em;text-align:left;">
+			<dv-textbox label="First name" placeholder="Type your first name here" v-model="text1"></dv-textbox>
+			<dv-textbox label="Last name"  placeholder="Type your last name" v-model="text2"></dv-textbox>
+			<dv-textbox label="Email" placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>
+		</div>	
+
+		<br><br>
+
+
 		<div class="field">
 		<label class="dv-input-label">Last name</label>
 		<input type="text" class="dv-input-text" placeholder="Type here"></input>
@@ -265,6 +274,7 @@ import dvRadiogroup from './dv-radiogroup.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
+import dvTextbox from './dv-textbox.vue'
 import './form.scss'
 
 export default {
@@ -279,7 +289,8 @@ export default {
     	dvRadiogroup,
     	dvTabs,
     	dvTabItem,
-    	dvTag
+    	dvTag,
+    	dvTextbox
     },
 
     props: {
@@ -312,6 +323,10 @@ export default {
     		currentTab: 1,
 	   		btnGroupRadioValue: -1,
 	   		additionalTabs: [],
+
+	   		text1: '',
+	   		text2: '',
+	   		text3: '',
 	   		checkbox1: true,
 	   		checkbox2: -1,
 	   		radio1: false,
