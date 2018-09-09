@@ -2,6 +2,7 @@
 
 	<dv-form-field
 		:display="display"
+		:width="width"
 		:label="label"
 		:floating="floating"
 		:rounded="rounded"
@@ -36,7 +37,7 @@ export default {
 		dvFormField
 	},
 
-	props: ['display', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value'],
+	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value'],
 
 	computed: {
 
@@ -95,18 +96,21 @@ export default {
 $focus-color: #1867c0;
 
 input.dv-input-text {
+	box-sizing:border-box;
     padding-left: 0.4em;
     padding-right: 0.5em;
     background-color: #fff;
     color: #222;
     border: 1px solid rgba(0, 0, 0, 0.15);
     min-width: 5em;
+    width: calc(100% - 0.1em);
     line-height: 150%;
     cursor: pointer;
     user-select: none;
     font-family: inherit;
     font-size:14px;
     height: 2.25em;
+
 }  
   
 input.dv-input-text:hover {

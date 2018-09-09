@@ -136,12 +136,12 @@
 		</div>
 		<br>
 		<div style="text-align:left;">
-			<dv-textbox label="First name" rounded placeholder="Type your first name here" v-model="text1"></dv-textbox>&nbsp;
-			<dv-textbox label="Last name"  rounded placeholder="Type your last name" v-model="text2"></dv-textbox>&nbsp;
+			<dv-textbox style="width:300px" label="First name" rounded placeholder="Type your first name here" v-model="text1"></dv-textbox>&nbsp;
+			<dv-textbox label="Last name" width="8em" rounded placeholder="Type your last name" v-model="text2"></dv-textbox>&nbsp;
 			<dv-textbox label="Email" rounded placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>&nbsp;
-			<dv-textbox label="First name" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
-			<dv-textbox label="Last name" floating rounded placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
-			<dv-textbox label="Email" floating rounded placeholder="Please, no bogus addresses" v-model="text6"></dv-textbox>
+			<dv-textbox label="Lotus ppp" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
+			<dv-textbox label="Ferrari qp" floating rounded placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
+			<dv-textbox style="width:300px" label="Brabham Gordon Murray" floating rounded placeholder="Please, no bogus addresses" v-model="text6"></dv-textbox>
 		</div>	
 		Textos digitados: {{ [text1, text2, text3, text4, text5, text6].join(', ')}}
 

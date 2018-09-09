@@ -25,15 +25,20 @@
 import utils from './utils.js'
 
 export default {
-	props: ['display', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value', 'is-empty'],
+	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value', 'is-empty'],
 
 	computed: {
 
 		containerStyle: function () {
+			let style		
 			let thisDisplay = 'inline-block'
 			if (this.display == 'block')
 				thisDisplay = 'block'
-			return `display:${thisDisplay};`
+			style = `display:${thisDisplay};`
+			if (this.width) {
+				style = style + `width:${this.width};`
+			}
+			return style
 		},
 
 		divClass: function () {
@@ -129,6 +134,7 @@ $focus-color: #1867c0;
 	flex-direction: column-reverse;
 	margin-bottom:1em;
 	font-size:14px;
+	width:100%;
 }
 
 .textbox > .dv-input-label {
@@ -165,6 +171,7 @@ $focus-color: #1867c0;
 .textbox.floating {
 	display: inline-block;
 	position: relative;
+	box-sizing: border-box;
 	border: 1px solid #aaa;
 }
 
@@ -203,7 +210,8 @@ $focus-color: #1867c0;
 	top: 0;
 	left: 0;
 	padding-top: 1.125em;
-	width: calc(100% - 0.9em);
+	/*width: calc(100% - 0.9em); */
+	width:100%;
 	border: none;
 	background-color: transparent;
 	line-height: 125%;
@@ -215,6 +223,7 @@ $focus-color: #1867c0;
 .textbox.floating.empty > .slot {
 	opacity:0.0;
 	transition: 0.25s all;
+	box-sizing: border-box;	
 }
 
 .textbox.floating.empty > .dv-input-label {
