@@ -121,6 +121,7 @@
     			tab-width="25%">
     			<dv-tab-item title="Tab 1">This is tab 1</dv-tab-item>
     			<dv-tab-item title="Fixed width tabs">This is the second tab</dv-tab-item>
+    			<dv-tab-item disabled title="Disabled">This should be a hidden tab</dv-tab-item>
     		</dv-tabs>
     	</dv-tab-item>		
     </dv-tabs>
