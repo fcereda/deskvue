@@ -1,9 +1,9 @@
 <template>
 
-<div style="display:inline-block;">
+<div :style="containerStyle">
 	<div 
-		class="textbox floating"
-		:class="containerClass"
+		class="textbox"
+		:class="divClass"
 	>
 		<input 
 			type="text" 
@@ -15,7 +15,10 @@
 			@blur="hasFocus=false"
 			@input="onInput"
 		></input>
-		<label class="dv-input-label" :class="labelClass" @click="setFocus">{{ label }}</label>
+		<label class="dv-input-label" :class="labelClass" @click="setFocus">
+			{{ label }}
+			<span v-if="showLabelIcons" class="icons"><i v-for="icon in icons" class="material-icons icon">{{ icon }}</i></span>
+		</label>
 	</div>
 </div>
 
@@ -23,28 +26,53 @@
 
 <script>
 
+import utils from './utils.js'
+
 export default {
-	props: ['label', 'color', 'placeholder', 'mask', 'info', 'error', 'value'],
+	props: ['display', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value'],
 
 	computed: {
 
-		containerClass: function () {
-			if (this.hasFocus)
-				return 'focus'
-			if (this.currentValue.length)
-				return ''
-			return 'empty'
+		containerStyle: function () {
+			let thisDisplay = 'inline-block'
+			if (this.display == 'block')
+				thisDisplay = 'block'
+			return `display:${thisDisplay};`
+		},
+
+		divClass: function () {
+			let classes = []
+			if (this.isFloating) classes.push('floating')				
+			if (this.isRounded)  classes.push('rounded')
+			if (this.hasFocus) {
+				classes.push('focus') 
+			}
+			else if (!this.value || !this.value.length) {
+				classes.push('empty')
+			}	
+			return classes.join(' ')
 		},
 
 		labelClass: function () {
 			return this.hasFocus ? 'focus' : ''
+		},
+
+		isFloating: function () {
+			return utils.isPropOn(this.floating)
+		},
+
+		isRounded: function () {
+			return utils.isPropOn(this.rounded)
 		}
+
 	},
 
 	data: function () {
 		return {
 			currentValue: this.value,
-			hasFocus: false
+			hasFocus: false,
+			showLabelIcons: false,
+			icons: ['help_outline']
 		}
 	},
 
@@ -82,7 +110,7 @@ $focus-color: #1867c0;
 .textbox > .dv-input-label {
 	font-size: 0.9em;
 	font-weight: 600;
-	padding-left:0.125em;
+	padding-left:0.5em;
 	padding-bottom:0.125em;
 }
 
@@ -108,6 +136,10 @@ input.dv-input-text {
 input.dv-input-text:hover {
     cursor:text;
 }  
+
+.textbox:not(.floating).rounded > input.dv-input-text {
+	border-radius: 8px;
+}
   
 .textbox:not(.floating) > input.dv-input-text:focus {
     outline: 2px solid $focus-color; 
@@ -141,24 +173,35 @@ input.dv-input-text:hover {
 */
 
 .textbox.floating {
-	//display: inline-block;
+	display: block;
 	position: relative;
+	//width:10em;
+	//height:10em;
 	border: 1px solid #aaa;
 }
 
+.textbox.floating.rounded {
+	border-radius:8px;
+}
+
 .textbox.floating > .dv-input-label {
-	position: relative;	
+		box-sizing:border-box;
+	position: absolute;	
 	top: 0em;
 	left: 0em;
+	width:100%;
 	padding-left: 0.5em;
 	padding-top: 0.75em;
 	font-size:0.8em;
 	line-height:80%;
+	transition: 0.2s all;
 }
 
 
 .textbox.floating.focus {
-	outline:2px solid $focus-color;
+	//outline:2px solid $focus-color;
+	border:1px solid $focus-color;
+	box-shadow: inset 0px 0px 2px 0px $focus-color;
 }
 
 
@@ -166,7 +209,7 @@ input.dv-input-text:hover {
     outline: 2px solid transparent; 
 }  
 
-
+/*
 .textbox.floating.empty > .dv-input-label {
 	top: 0.25em;
 	left: 0em;
@@ -180,22 +223,76 @@ input.dv-input-text:hover {
 	cursor: text;	
 	transition: 0.25s all;
 }
+*/
 
 .textbox.floating > input {
 	position: relative;
 	top: 0;
 	left: 0;
+	padding-top: 1.125em;
 	width: calc(100% - 0.9em);
 	border: none;
 	background-color: transparent;
 	line-height: 125%;
+	transition-delay: 0.2s;
+	transition-duration: -0.2;
+	transition-property: opacity;
 }
 
 .textbox.floating.empty > input {
-	height:0em;
+	//height:0em;
 	opacity:0.0;
 	transition: 0.25s all;
 
+}
+
+.textbox.floating.empty > .dv-input-label {
+	font-size:1em;
+
+	position: absolute;
+	padding-top: calc(1.125em + (2.25em - 1em) / 2 + 0.125em);
+	left: 0;
+	right:0;	
+	bottom: 0;
+	top:0;
+
+	//display:table-cell;
+	//vertical-align:middle;
+
+	cursor: text;	
+	transition: 0.25s all;
+}
+
+.icons {
+	float:right;
+	transform:translateY(-0.375em);
+	padding-right:0.125em;
+}
+
+.textbox.floating:not(.empty) > label > span.icons {
+	transform:translateY(-0.5em);
+}
+
+.icon {
+	font-size:1.5em;
+	padding-left:0;
+}
+
+.textbox.floating:not(.empty) > label > span.icons > .icon {
+	padding-left:0;
+}
+
+.textbox > .iconbar {
+	position: absolute;
+	right:0;
+	top:0;
+	padding:0.25em;
+	color:#656565;
+}
+
+.small-text {
+	//font-size:16px;
+	font-size:100%;
 }
 
 </style>

@@ -134,11 +134,15 @@
 		  <input type="text" name="first-name" class="dv-input-text" placeholder="Type here"></input>
 		</div>
 		<br>
-		<div style="width:20em;text-align:left;">
-			<dv-textbox label="First name" placeholder="Type your first name here" v-model="text1"></dv-textbox>
-			<dv-textbox label="Last name"  placeholder="Type your last name" v-model="text2"></dv-textbox>
-			<dv-textbox label="Email" placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>
+		<div style="text-align:left;">
+			<dv-textbox label="First name" rounded placeholder="Type your first name here" v-model="text1"></dv-textbox>&nbsp;
+			<dv-textbox label="Last name"  rounded placeholder="Type your last name" v-model="text2"></dv-textbox>&nbsp;
+			<dv-textbox label="Email" rounded placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>&nbsp;
+			<dv-textbox label="First name" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
+			<dv-textbox label="Last name" floating rounded placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
+			<dv-textbox label="Email" floating rounded placeholder="Please, no bogus addresses" v-model="text6"></dv-textbox>
 		</div>	
+		Textos digitados: {{ [text1, text2, text3, text4, text5, text6].join(', ')}}
 
 		<br><br>
 
@@ -325,8 +329,11 @@ export default {
 	   		additionalTabs: [],
 
 	   		text1: '',
-	   		text2: '',
+	   		text2: 'John Stewart',
 	   		text3: '',
+	   		text4: 'Emerson Fittipaldi',
+	   		text5: 'Niki Lauda',
+	   		text6: 'Nelson Piquet',
 	   		checkbox1: true,
 	   		checkbox2: -1,
 	   		radio1: false,
