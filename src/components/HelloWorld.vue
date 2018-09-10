@@ -130,10 +130,25 @@
 	<h3>Simple inputs</h3><p>
 	<fieldset>
 		<legend>Log in</legend>
-		<div class="field">
-		    <label for="first-name" class="dv-input-label">What's the first name</label>
-		  <input type="text" name="first-name" class="dv-input-text" placeholder="Type here"></input>
+
+		<br>
+		<div style="text-align:left">
+			Who are you going to vote for? <br>
+			<dv-input-select search placeholder="Selecione seu candidato">
+			<option placeholder>Please click here...</option>
+				<option v-for="tag in tags">{{ tag }}</option>
+			</dv-input-select>
+		
+			<br><br>
+			Who are you not voting for in any circumstance?<br>
+			<dv-input-select multiple search>
+				<option v-for="tag in tags">{{ tag }}</option>
+			</dv-input-select>
+
 		</div>
+
+
+
 		<br>
 		<div style="text-align:left;">
 			<dv-textbox style="width:300px" label="First name" rounded placeholder="Type your first name here" v-model="text1"></dv-textbox>&nbsp;
@@ -280,6 +295,9 @@ import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
 import dvTextbox from './dv-textbox.vue'
+
+import dvInputSelect from './dv-input-select.vue'
+
 import './form.scss'
 
 export default {
@@ -295,7 +313,9 @@ export default {
     	dvTabs,
     	dvTabItem,
     	dvTag,
-    	dvTextbox
+    	dvTextbox,
+
+    	dvInputSelect
     },
 
     props: {

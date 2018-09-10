@@ -93,8 +93,6 @@ export default {
 
 @import './base.scss';
 
-$focus-color: #1867c0;
-
 input.dv-input-text {
 	box-sizing:border-box;
     padding-left: 0.4em;
