@@ -46,6 +46,14 @@ export default {
       			}	
 
 			}, 'value', 'label', false)
+			this.$nextTick(() => {
+				if (!utils.isPropOn(this.multiple)) 
+					return
+				let choicesInner = this.$el.querySelector('.choices__inner')
+				let choicesInput = this.$el.querySelector('input.choices__input')
+				choicesInner.classList = choicesInner.classList + ' choices__inner-multiple'
+				choicesInput.classList = choicesInput.classList + ' choices__input-multiple'
+			})
 		}
 
 	}
@@ -79,6 +87,9 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	background-color: inherit;
 	box-sizing: border-box;
 	border-radius: 8px;
+
+	display: block;
+	padding: 7.5px 7.5px 3.75px;
 }
 
 /* border-color: transparent should me added to .choices__inner for the floating control */
@@ -113,14 +124,41 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 }
 
 
+.choices__inner-multiple {
+	padding-top:4px;
+	padding-bottom:1px; 
+}
+
+.choices__input-multiple {
+	background-color: #f0f0f0;
+	padding-top: 4px;
+	padding-bottom:2px; 
+}
+
 .choices__list--multiple.choices__item {
 	margin-bottom: 0;
+}
+
+.choices__list--multiple .choices__item {
+	background-color: #999;
+	border-width: 0;
+	vertical-align: top;
+}
+
+
+.choices[data-type*="select-multiple"] .choices__button {
+	border-left: 1px solid transparent;
 }
 
 /*
 .choices__item.choices__item--selectable {
 	margin-bottom:0;
-	padding:0;
+	padding:0;.choices__list--multiple.choices__item {
+	background-color: firebrick;
+	margin-bottom: 0;
+	border-width: 0;
+	vertical-align: top;
+}
 }
 */
 .dv-select {
