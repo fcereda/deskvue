@@ -34,6 +34,7 @@ export default {
 	methods: {
 
 		initializeChoices: function () {
+			let thisElement = this.$el
 			let elem = this.$refs.select
 			this.choice = new Choice(elem, {
 				choices: [],
@@ -41,19 +42,59 @@ export default {
 		        searchEnabled: utils.isPropOn(this.search),	
         		placeholder: true,
         		placeholderValue: this.placeholder,		        
+        		position: 'auto',
 		        classNames: {
       				//containerOuter: 'dv-select',
-      			}	
-
+      			},
 			}, 'value', 'label', false)
 			this.$nextTick(() => {
 				if (!utils.isPropOn(this.multiple)) 
 					return
-				let choicesInner = this.$el.querySelector('.choices__inner')
-				let choicesInput = this.$el.querySelector('input.choices__input')
+				//let choicesInner = thisElement.querySelector('.choices__inner')
+				let choicesInner = this.choice.containerInner
+				let choicesInput = thisElement.querySelector('input.choices__input')
 				choicesInner.classList = choicesInner.classList + ' choices__inner-multiple'
 				choicesInput.classList = choicesInput.classList + ' choices__input-multiple'
 			})
+
+			elem.addEventListener('showDropdown', e => {
+  				const choicesInput = thisElement.querySelector('input.choices__input')
+  				const dropdown = thisElement.querySelector('.choices__list--dropdown')
+
+  				const dropdownHeight = dropdown.offsetHeight
+  				const inputClientRect = choicesInput.getBoundingClientRect()
+  				const inputTop = inputClientRect.top
+  				const inputBottom = inputClientRect.bottom
+ 				const windowHeight = window.outerHeight
+
+ 				const positionAtTheTop = () => {
+					let containerOuter = this.choice.containerOuter
+  					containerOuter.classList += ' is-flipped'
+ 				}
+
+  				// Don't do anything if there's room for positioning the dropdown 
+  				// below the input
+  				if (inputBottom + dropdownHeight <= windowHeight) {
+  					console.log(this.choice.containerOuter.classList)
+ 					return
+  				}
+
+  				if (inputTop - dropdownHeight >= 0) {
+  					positionAtTheTop()
+  				}
+
+  				// If we get here, we don't have enough room in either the top or the
+  				// bottom; in this case, we position the dropdown where we have the most room
+ 				const spaceTop = inputTop
+ 				const spaceBottom = windowHeight - inputBottom
+ 				if (spaceBottom > spaceTop) {
+ 					positionAtTheTop()
+ 				}
+
+   			})
+
+
+
 		}
 
 	}
@@ -75,7 +116,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 }
 
 .choices {
-	height: 2.25em;
+	height: 2.4em;
 	margin-right:0;	
 }
 
@@ -89,7 +130,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	border-radius: 8px;
 
 	display: block;
-	padding: 7.5px 7.5px 3.75px;
+	padding: 7.5px 5.5px 3.75px;
 }
 
 /* border-color: transparent should me added to .choices__inner for the floating control */
@@ -121,16 +162,18 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	padding-top: 0px;
 	padding-bottom:4px;
 	background-color: transparent;
+	max-width: unset;
 }
 
 
 .choices__inner-multiple {
 	padding-top:4px;
-	padding-bottom:1px; 
+	padding-bottom:0px; 
+	min-height: 32px;
 }
 
 .choices__input-multiple {
-	background-color: #f0f0f0;
+	background-color: transparent;
 	padding-top: 4px;
 	padding-bottom:2px; 
 }
@@ -142,12 +185,69 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 .choices__list--multiple .choices__item {
 	background-color: #999;
 	border-width: 0;
+	border-radius: 6px;
 	vertical-align: top;
+	font-size: 1em;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
 }
 
 
+.choices[data-type*="select-one"] .choices__button {
+	height: unset;
+	top: calc(50% - 1px);
+	opacity: 0.75;
+}
+
 .choices[data-type*="select-multiple"] .choices__button {
-	border-left: 1px solid transparent;
+    position: relative;
+    display: inline-block;
+    margin-top: 0;
+    margin-right: 0px;
+    margin-bottom: 0;
+    margin-left: 8px;
+    padding-left: 0px;
+    padding-right:0px;
+    border-left: 1px solid transparent;
+    background-image: url(/img/cross.26f0a45f.svg);
+    background-size: 8px;
+    width: 16px;
+    line-height: 1;
+    opacity: .75;
+}
+
+.choices[data-type*="select-multiple"] .choices__button:focus {
+	background-color: $focus-color;
+	color: white;
+	border-radius: 16px;
+}
+
+.choices__list--dropdown {
+	top: inherit;
+}
+
+.choices[data-type*="select-one"]:after {
+    content: "";
+    height: 0;
+    width: 0;
+    border-style: solid;
+    border-color: #333333 transparent transparent transparent;
+    border-width: 5px;
+    position: absolute;
+    right: 11.5px;
+    top: calc(50% - 2px);
+    margin-top: -2.5px;
+    pointer-events: none;
+
+    opacity: 0.75;
+}
+
+.choices[data-type*="select-one"].is-open:after {
+	opacity: 1.0;
+}
+
+.choices[data-type*="select-one"]:hover:after {
+	opacity: 1.0;
 }
 
 /*

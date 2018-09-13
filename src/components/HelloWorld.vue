@@ -132,6 +132,14 @@
 		<legend>Log in</legend>
 
 		<br>
+
+		<div style="text-align:left; width:25em;">	
+			What is your favorite language?<br>
+			<dv-multiselect></dv-multiselect>
+		</div>	
+
+
+		<br>
 		<div style="text-align:left">
 			Who are you going to vote for? <br>
 			<dv-input-select search placeholder="Selecione seu candidato">
@@ -144,8 +152,9 @@
 			<dv-input-select multiple search>
 				<option v-for="tag in tags">{{ tag }}</option>
 			</dv-input-select>
-
 		</div>
+
+
 
 
 
@@ -297,6 +306,7 @@ import dvTag from './dv-tag.vue'
 import dvTextbox from './dv-textbox.vue'
 
 import dvInputSelect from './dv-input-select.vue'
+import dvMultiselect from './dv-multiselect.vue'
 
 import './form.scss'
 
@@ -315,7 +325,8 @@ export default {
     	dvTag,
     	dvTextbox,
 
-    	dvInputSelect
+    	dvInputSelect,
+    	dvMultiselect,
     },
 
     props: {
@@ -348,6 +359,8 @@ export default {
     		currentTab: 1,
 	   		btnGroupRadioValue: -1,
 	   		additionalTabs: [],
+
+	   		multiselect1: null,
 
 	   		text1: '',
 	   		text2: 'John Stewart',
@@ -435,6 +448,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 h3 {
   margin: 40px 0 0;
 }
