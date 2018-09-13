@@ -31,6 +31,11 @@ export default {
 		this.$nextTick(() => this.initializeChoices())
 	},
 
+	beforeDestroy: function () {
+		console.log('will destroy this.choice')
+   		this.choice.destroy()
+	},
+
 	methods: {
 
 		initializeChoices: function () {
@@ -50,14 +55,31 @@ export default {
 			this.$nextTick(() => {
 				if (!utils.isPropOn(this.multiple)) 
 					return
-				//let choicesInner = thisElement.querySelector('.choices__inner')
+				// Customizes the input element for multiple select
 				let choicesInner = this.choice.containerInner
 				let choicesInput = thisElement.querySelector('input.choices__input')
 				choicesInner.classList = choicesInner.classList + ' choices__inner-multiple'
 				choicesInput.classList = choicesInput.classList + ' choices__input-multiple'
+
+				// Hack for keep the minimize the width of the input element:
+				const resizeInput = () => {
+  					choicesInput.style.width = (choicesInput.value.length || 1) + "ch";
+				}
+				// bind the "resizeInput" callback on "input" event, so the input
+				// will be resized every time it
+				choicesInput.addEventListener('input', resizeInput); 
+				// Also calls resizeInput every time the user selects an item, so
+				// as to shrink the input to the minimum size
+				elem.addEventListener('choice', (e) => {
+					this.$nextTick(resizeInput)
+				})		
+				// Initializes the input with the minimum size
+				resizeInput()  
 			})
 
 			elem.addEventListener('showDropdown', e => {
+				// Listen to the showDropdown event just to position the
+				// dropdown correctly; choice.position: 'auto' is not working
   				const choicesInput = thisElement.querySelector('input.choices__input')
   				const dropdown = thisElement.querySelector('.choices__list--dropdown')
 
@@ -75,7 +97,6 @@ export default {
   				// Don't do anything if there's room for positioning the dropdown 
   				// below the input
   				if (inputBottom + dropdownHeight <= windowHeight) {
-  					console.log(this.choice.containerOuter.classList)
  					return
   				}
 
@@ -113,6 +134,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 .dv-select-container {
 	display:inline-block;
 	width: 25em;
+	text-align:left;
 }
 
 .choices {
@@ -125,7 +147,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	padding-left: 0.4em;
 	padding-right: 0;
 	
-	background-color: inherit;
+	background-color: white;
 	box-sizing: border-box;
 	border-radius: 8px;
 
@@ -161,7 +183,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	margin-bottom: 0;
 	padding-top: 0px;
 	padding-bottom:4px;
-	background-color: transparent;
+	background-color: yellow;
 	max-width: unset;
 }
 

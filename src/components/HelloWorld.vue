@@ -110,7 +110,15 @@
     	<dv-tab-item title="Issues">To select the issues found in your code, press <kbd>Ctrl</kbd> + <kbd>I</kbd>.<br>
     		To help fixing these issues, clone the repository and open Sublime Text.<br>
     		To ignore the issues, just do nothing.</dv-tab-item>
-    	<dv-tab-item title="Pull requestes">Here you have your pull requests:</dv-tab-item>
+    	<dv-tab-item title="Pull requestes">Here you have your pull requests:
+
+			Who are you going to vote for? <br>
+			<dv-input-select search placeholder="Selecione seu candidato">
+			<option placeholder>Please click here...</option>
+				<option v-for="tag in tags">{{ tag }}</option>
+			</dv-input-select>
+
+    	</dv-tab-item>
     	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>Para remover um tab, foque nele e pressione <kbd>Del</kbd>'"></dv-tab-item>
     	<dv-tab-item title="Nested tab">
     		<dv-tabs ref="nested" 
