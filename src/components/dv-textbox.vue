@@ -99,7 +99,7 @@ input.dv-input-text {
     padding-right: 0.5em;
     background-color: #fff;
     color: #222;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+	border: 1px solid $border-color;    
     min-width: 5em;
     width: calc(100% - 0.1em);
     line-height: 150%;

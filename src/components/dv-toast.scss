@@ -1,0 +1,62 @@
+$toasted-container-margin: 20px;
+
+.dv-toast.dv-toast.toasted-container.top-right {
+    top: $toasted-container-margin;
+    right: $toasted-container-margin;
+}
+
+.dv-toast.toasted-container.top-center {
+	top: $toasted-container-margin;
+}
+
+.dv-toast.toasted-container.top-left {
+    top: $toasted-container-margin;
+    left: $toasted-container-margin;
+}
+
+.dv-toast.toasted-container.bottom-right {
+    bottom: $toasted-container-margin;
+    right: $toasted-container-margin;
+}
+
+.dv-toast.toasted-container.bottom-center {
+	bottom: $toasted-container-margin;
+}
+
+.dv-toast.toasted-container.bottom-left {
+    bottom: $toasted-container-margin;
+    left: $toasted-container-margin;
+}
+
+.dv-toast > .toasted:first-of-type {
+	margin-top:0;
+}
+
+
+.toasted.error .action,
+.toasted.primary.error .action {
+	color: #FFCDD2;
+}
+
+.toasted.warning,
+.toasted.primary.warning {
+    background-color: #FF8F00;
+}
+
+.toasted.warning .action,
+.toasted.primary.warning .action {
+    color: #FFECB3;
+}
+
+.toasted.success .action,
+.toasted.primary.success .action {
+    color: #F0F4C3;
+}
+
+.toasted {
+	cursor: default;
+}
+
+.toasted i {
+	opacity: 0.80;
+}

@@ -273,7 +273,38 @@
 
 		<br><br>
 		<button class="dv-button wide primary">OK</button>
-	</fieldset>
+
+
+	<fieldset>
+		<legend>Notifications</legend>
+
+		<fieldset style="width:15em;float:left;">
+			<legend>Message to show</legend>
+			<dv-textbox rounded width="100%" placeholder="Type the message here" v-model="toastText"></dv-textbox>
+		</fieldset>			
+		<fieldset style="width:20em;float:left;">
+			<legend>Type of toast</legend>
+			<dv-radiogroup v-model="toastType">
+				<dv-radio 
+					v-for="type in ['Regular', 'Info', 'Success', 'Warning', 'Error']"
+					:id="type.toLowerCase()" 
+					align="center"
+				>{{ type }}</dv-radio>
+			</dv-radiogroup>
+		</fieldset>			
+		<fieldset style="width:10em;float:left;">  
+			<legend>Icon</legend>
+			<dv-radiogroup v-model="toastIcon">
+				<dv-radio id="info" align="center"> &nbsp;<i class="material-icons">info</i></dv-radio>
+				<dv-radio id="error" align="center"> &nbsp;<i class="material-icons">error</i></dv-radio>
+				<dv-radio id="check_circle" align="center"> &nbsp;<i class="material-icons">check_circle</i></dv-radio>
+			</dv-radiogroup>
+		</fieldset>			 
+		<br><br>
+
+
+		<dv-button @click="showToast">Show toaster</dv-button>
+	</fieldset>		
 	
 
     <h3>Installed CLI Plugins</h3>
@@ -388,6 +419,11 @@ export default {
 	   		radioGroup2: 3,
 	   		radioGroup3: 0,
 	   		radioGroup4: 0,
+
+	   		toastText: 'Hello World!',
+	   		toastPosition: 'top-right',
+	   		toastType: null,
+	   		toastIcon: 'error'
 		} 
 
     },
@@ -447,12 +483,35 @@ export default {
     		let index = this.additionalTabs.indexOf(tab)
     		this.additionalTabs.splice(index, 1)
     		this.$nextTick(() => this.$refs.tab1.showTab(index+1))
+    	},
+
+    	showToast: function () {
+    		console.log(this.toastType)
+    		this.$toasted.show(this.toastText, {
+    			containerClass: 'dv-toast',
+    			type: this.toastType,
+    			position: 'top-right',
+    			icon: this.toastIcon, 
+    			duration: 5000,
+    		    action : {
+        			text : 'OK',
+        			onClick : (e, toastObject) => {
+            			toastObject.goAway(0);
+        			}
+    			},
+    		})
     	}
 
     }
 
 }
 </script>
+
+<style lang="scss">
+
+@import './dv-toast.scss';
+
+</style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

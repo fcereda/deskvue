@@ -150,6 +150,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	background-color: white;
 	box-sizing: border-box;
 	border-radius: 8px;
+	border-color: $border-color;
 
 	display: block;
 	padding: 7.5px 5.5px 3.75px;
@@ -159,7 +160,6 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 
 .choices.is-open > .choices__inner {
 	border-radius: 8px;
-
 }
 
 .choices.is-focused > .choices__inner {

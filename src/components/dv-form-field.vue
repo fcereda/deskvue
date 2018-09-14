@@ -45,6 +45,7 @@ export default {
 			let classes = []
 			if (this.isFloating) classes.push('floating')				
 			if (this.isRounded)  classes.push('rounded')
+			if (!this.label) classes.push('no-label')	
 			if (this.hasFocus) {
 				classes.push('focus') 
 			}
@@ -137,6 +138,10 @@ $focus-color: #1867c0;
 	width:100%;
 }
 
+.textbox.no-label {
+	margin-bottom: 0;
+}
+
 .textbox > .dv-input-label {
 	font-size: 0.9em;
 	font-weight: 600;
@@ -172,7 +177,7 @@ $focus-color: #1867c0;
 	display: inline-block;
 	position: relative;
 	box-sizing: border-box;
-	border: 1px solid #aaa;
+	border: 1px solid $border-color;
 }
 
 .textbox.floating.rounded {
