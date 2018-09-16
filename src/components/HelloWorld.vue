@@ -15,8 +15,9 @@
     	@click="onMenuClick"
     ></dv-menu>	
 
-    <h3>Buttons</h3>
 
+
+    <h3>Buttons</h3>
     <dv-button primary wide>Hello</dv-button>
     <dv-button warning class="warning">Warning</dv-button>
     <dv-button danger>Error</dv-button>
@@ -27,7 +28,8 @@
     <br><br>
     <dv-button class="ml-2" @click="counter += 1">OK {{ counter }} </dv-button>
     <dv-button wide @click="clicked = (clicked+1) % 9">Cancel {{ clicked }}</dv-button>
-    <dv-button wide no-focus>No focus</dv-button>    
+    <dv-button wide no-focus>No focus</dv-button>
+
     <br><br>
     RunKit:
     <br><br>
@@ -51,7 +53,7 @@
     <h4>Button group</h4>
     <dv-btn-group>
         <dv-button 
-          small primary 
+          small  
           v-for="i in [1,2,3,4,5,6,7,8,9]"
           :class="clicked == i ? 'active' : ''"
           @click="clickBtnGroup(i)">{{ i }}
@@ -282,6 +284,11 @@
 			<legend>Message to show</legend>
 			<dv-textbox rounded width="100%" placeholder="Type the message here" v-model="toastText"></dv-textbox>
 		</fieldset>			
+		<fieldset style="width:25em;float:left;">
+			<legend>Type of toast</legend>
+			<dv-options :options="options1" equal-width v-model="option1"></dv-options>
+		</fieldset>	
+
 		<fieldset style="width:20em;float:left;">
 			<legend>Type of toast</legend>
 			<dv-radiogroup v-model="toastType">
@@ -292,18 +299,29 @@
 				>{{ type }}</dv-radio>
 			</dv-radiogroup>
 		</fieldset>			
-		<fieldset style="width:10em;float:left;">  
+		<fieldset style="width:15em;float:left;">  
 			<legend>Icon</legend>
 			<dv-radiogroup v-model="toastIcon">
 				<dv-radio id="info" align="center"> &nbsp;<i class="material-icons">info</i></dv-radio>
-				<dv-radio id="error" align="center"> &nbsp;<i class="material-icons">error</i></dv-radio>
+				<dv-radio id="report" align="center"> &nbsp;<i class="material-icons">report</i></dv-radio>
 				<dv-radio id="check_circle" align="center"> &nbsp;<i class="material-icons">check_circle</i></dv-radio>
+				<dv-radio id="warning" align="center"> &nbsp;<i class="material-icons">warning</i></dv-radio>				
+				<dv-radio id="notification_important" align="center"> &nbsp;<i class="material-icons">notification_important</i></dv-radio>				
 			</dv-radiogroup>
 		</fieldset>			 
+
+		<br><br>
+		<dv-options :options="options2" type="radio" v-model="option2"></dv-options>
+
+
 		<br><br>
 
 
 		<dv-button @click="showToast">Show toaster</dv-button>
+		<br><br>
+		{{ option1 }}
+		<br>
+		{{ option2 }}
 	</fieldset>		
 	
 
@@ -316,7 +334,7 @@
     <ul>
       <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
+      <li><a warning="https://chat.vuejs.org" target="_blank" rel="noopener">Community warningat</a></li>
       <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
       <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
     </ul>
@@ -337,6 +355,7 @@ import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
 import dvMenu from './dv-menu.vue'
+import dvOptions from './dv-options.vue'
 import dvRadio from './dv-radio.vue'
 import dvRadiogroup from './dv-radiogroup.vue'
 import dvTabs from './dv-tabs.vue'
@@ -357,6 +376,7 @@ export default {
     	dvBtnGroup,
     	dvCheckbox,
     	dvMenu,
+    	dvOptions,
     	dvRadio,
     	dvRadiogroup,
     	dvTabs,
@@ -423,7 +443,12 @@ export default {
 	   		toastText: 'Hello World!',
 	   		toastPosition: 'top-right',
 	   		toastType: null,
-	   		toastIcon: 'error'
+	   		toastIcon: 'error',
+
+	   		options1: ['Regular', 'Info', 'Success', 'Warning', 'Error'],
+	   		options2: ['info', 'report', 'check_circle', 'warning', 'notification_important'].map(icon => `<i class="material-icons" style="transform:translateY(0.125em)">${icon}</i>`),
+	   		option1: [2],
+	   		option2: null
 		} 
 
     },
@@ -492,7 +517,7 @@ export default {
     			type: this.toastType,
     			position: 'top-right',
     			icon: this.toastIcon, 
-    			duration: 5000,
+    			//duration: 5000,
     		    action : {
         			text : 'OK',
         			onClick : (e, toastObject) => {

@@ -1,6 +1,9 @@
+/** Variables **/
+
 // Fonts
 
 $font-family: 'Roboto', 'Segoe UI', sans-serif;
+$font-size: 14px;
 
 // Colors
 
@@ -23,6 +26,15 @@ $bg-color-dark: #607D8B;
     
 $focus-color: #1867c0;
 $border-color: #aaa;
+
+
+// Forms
+
+$form-control-height: 2.25em;
+
+
+
+/** Styles **/
 
 body {
 	font-family: 'San Francisco', 'Roboto', 'Segoe UI', sans-serif;

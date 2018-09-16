@@ -11,7 +11,7 @@
 		<slot></slot>
 		</div>
 
-		<label class="dv-input-label" :class="labelClass" @click="setFocus">
+		<label v-if="label" class="dv-input-label" :class="labelClass" @click="setFocus">
 			{{ label }}
 			<span v-if="showLabelIcons" class="icons"><i v-for="icon in icons" class="material-icons icon">{{ icon }}</i></span>
 		</label>

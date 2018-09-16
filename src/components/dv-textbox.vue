@@ -106,8 +106,8 @@ input.dv-input-text {
     cursor: pointer;
     user-select: none;
     font-family: inherit;
-    font-size:14px;
-    height: 2.25em;
+    font-size: $font-size;
+    height: $form-control-height;
 
 }  
   
