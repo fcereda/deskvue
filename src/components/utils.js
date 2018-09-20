@@ -1,14 +1,23 @@
-export default {
-	
-	isPropOn(prop) {
-		return prop || (prop === '')
-	},
+function toClassName (str) {
+	return str.split(/(?=[A-Z])/).join('-').toLowerCase()
+}
 
-	getComponentClasses(props, possibleClasses) {
+function isPropOn(prop) {
+	return prop || (prop === '')
+}
+
+
+export default {
+
+	isPropOn,	
+
+	getComponentClasses(component, props) {
 		let classes = []
-		possibleClasses.forEach(thisClass => {
-			if (props[thisClass] || props[thisClass] === '') {
-				classes.push(thisClass)	
+		props.forEach(propName => {
+			if (this.isPropOn(component[propName])) {
+				const className = toClassName(propName)
+				console.log(className)
+				classes.push(className)	
 			}
 		})			
 		return classes

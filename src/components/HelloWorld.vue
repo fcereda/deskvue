@@ -286,7 +286,7 @@
 		</fieldset>			
 		<fieldset style="width:25em;float:left;">
 			<legend>Type of toast</legend>
-			<dv-options :options="options1" equal-width v-model="option1"></dv-options>
+			<dv-options :options="options1" full-width equal-width v-model="option1"></dv-options>
 		</fieldset>	
 
 		<fieldset style="width:20em;float:left;">
@@ -311,10 +311,28 @@
 		</fieldset>			 
 
 		<br><br>
-		<dv-options :options="options2" type="radio" v-model="option2"></dv-options>
+		<fieldset style="width:30em;float:left;">
+			<legend>Ícones e texto</legend>
+			<dv-options :options="options2" type="radio" stacked v-model="option2"></dv-options>
+		</fieldset>	
+		
+		<fieldset style="width:15em;float:left">
+			<legend>Pilotos</legend>
+			<dv-options 
+				:options="{ 
+					senna: 'Ayrton',
+					piquet: 'Nelson',
+					emerson: 'Fittipaldi'
+				}" 
+				type="radio" 
+				equal-width
+				full-width
+				v-model="option3"
+			></dv-options>
+		</fieldset>	
 
 
-		<br><br>
+		<p style="clear:both;"></p><p>&nbsp;</p>
 
 
 		<dv-button @click="showToast">Show toaster</dv-button>
@@ -322,6 +340,8 @@
 		{{ option1 }}
 		<br>
 		{{ option2 }}
+		<br>
+		{{ option3 }}
 	</fieldset>		
 	
 
@@ -446,9 +466,15 @@ export default {
 	   		toastIcon: 'error',
 
 	   		options1: ['Regular', 'Info', 'Success', 'Warning', 'Error'],
-	   		options2: ['info', 'report', 'check_circle', 'warning', 'notification_important'].map(icon => `<i class="material-icons" style="transform:translateY(0.125em)">${icon}</i>`),
+	   		options2: ['info', 'report', 'check_circle', 'warning', 'notification_important'].map(icon => {
+	   			return {
+	   				icon,
+	   				text: 'Icon'
+	   			}
+	   		}),
 	   		option1: [2],
-	   		option2: null
+	   		option2: null,
+	   		option3: null
 		} 
 
     },
@@ -481,8 +507,6 @@ export default {
 	   	clickTag: function (tag) {
 	   		this.warningTag = this.primaryTag
 	   		this.primaryTag = tag
-	   		//this.$set(this, 'primaryTag', tag)
-	   		//console.log(this.primaryTag)
     	},
 
     	closeTag: function (tag) {

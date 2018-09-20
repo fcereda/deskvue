@@ -20,12 +20,12 @@
 import utils from './utils.js'
 
 export default {
-	props: ['options', 'type', 'option-width', 'equal-width', 'value'],
+	props: ['options', 'type', 'full-width', 'option-width', 'equal-width', 'stacked', 'value'],
 
 	computed: {
 
 		divClass: function () {
-			return ''
+			return utils.getComponentClasses(this, ['fullWidth', 'stacked'])
 		}
 
 	},
@@ -43,8 +43,39 @@ export default {
 			indexActive = this.value
 		}
 
+		let options = []
+		if (typeof(this.options) == 'object') {
+			// this.options is either an array or an object
+			if (!Array.isArray(this.options)) {
+				// this.options is an object
+				options = Object.keys(this.options).map(key => {
+					let option = this.options[key]
+					if (typeof(option) == 'object') {
+						// this.options[key] is an object 
+						option.id = key
+						return option
+					}
+					else {
+						// this.options[key] is a string or number
+						return {
+							id: key,
+							text: option
+						}
+					}	
+				})
+			}
+			else {
+				// this.options is an array
+				options = this.options
+			}
+		}
+		else {
+			console.error('dv-options warning: options prop must be an array or object, converting to single button')
+			options = [this.options]
+		}
+
 		return {
-			thisOptions: this.options.map((option, index) => {
+			thisOptions: options.map((option, index) => {
 				if (typeof(option) == 'string') {
 					return {
 						html: option,
@@ -52,20 +83,26 @@ export default {
 					}
 				}
 				let html = []
+				let separator = ' '
+				let id = index				
+
 				if (option.icon)
-					html.push(`<i class="material-icons>${option.icon}</i>`)
+					html.push(`<i class="material-icons">${option.icon}</i>`)
 				if (option.text)
-					html.push(option.text)
-				let id = index
+					html.push(`<span>${option.text}</span>`)
+				if (utils.isPropOn(this.stacked))
+					separator = '<br>'
 				if (option.id) 
 					id = option.id
 				return {
-					html: html.join(' &nbsp;'),
+					html: html.join(separator),
 					color: option.color,
 					id: id
 				}	
 			}),
+			numOptions: options.length,
 			optionsAreSelected,
+			hasFocus: false,
 			indexActive,
 			lastIndexActive: -1,
 		}
@@ -84,7 +121,7 @@ export default {
 
 		optionStyle: function (index) {
 			if (utils.isPropOn(this.equalWidth)) {
-				const numOptions = this.options.length || 1
+				const numOptions = this.numOptions || 1
 				const width = 100 / numOptions
 				return `width:${width}%;`
 			}
@@ -100,13 +137,13 @@ export default {
 				case 'ArrowLeft':
 					this.indexActive -= 1
 					if (this.indexActive < 0) {
-						this.indexActive = this.options.length - 1
+						this.indexActive = this.numOptions - 1
 					}
 					break
 				case 'ArrowDown':
 				case 'ArrowRight':
 					this.indexActive += 1
-					this.indexActive = this.indexActive % this.options.length
+					this.indexActive = this.indexActive % this.numOptions
 					break
 				case ' ':
 				case 'Enter':
@@ -119,6 +156,7 @@ export default {
 		},
 
 		onFocus: function (e) {
+			this.hasFocus = true
 			if (this.indexActive < 0)
 				this.indexActive = this.lastIndexActive
 			if (this.indexActive < 0)
@@ -126,6 +164,7 @@ export default {
 		},
 
 		onBlur: function () {
+			this.hasFocus = false
 			this.lastIndexActive = this.indexActive
 			this.indexActive = -1
 		},
@@ -135,7 +174,9 @@ export default {
 		},
 
 		onMouseOut: function (index) {
-			this.indexActive = -1
+			if (!this.hasFocus) {
+				this.indexActive = -1
+			}
 		},
 
 		onClick: function (index) {
@@ -189,12 +230,14 @@ export default {
 	border: 1px solid $border-color;
 	border-radius: 8px;
 
-	height: $form-control-height;
+	min-height: $form-control-height;
 	background-color: transparent;
 	user-select: none;
 	cursor: pointer;
+}
 
-	width:100%;
+.dv-options.full-width {
+	width:100%; 
 }
 
 .dv-options:focus {
@@ -234,6 +277,21 @@ export default {
 .dv-option.selected {
 	background-color: $color-primary;
 	color: white;
+}
+
+.dv-option > i.material-icons {
+	transform: translateY(0.125em); 
+	/* font-size: 24px; */
+	vertical-align: text-bottom;	
+	opacity: 0.9;
+}
+
+.dv-options.stacked > .dv-option > i.material-icons {	
+	transform: translateY(0.25em);
+}
+
+.dv-option.selected > i.material-icons {
+	opacity: 1.0;
 }
 
 </style>
