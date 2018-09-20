@@ -313,7 +313,7 @@
 		<br><br>
 		<fieldset style="width:30em;float:left;">
 			<legend>Ícones e texto</legend>
-			<dv-options :options="options2" type="radio" stacked v-model="option2"></dv-options>
+			<dv-options :options="options2" type="radio" vertical stacked v-model="option2"></dv-options>
 		</fieldset>	
 		
 		<fieldset style="width:15em;float:left">
@@ -468,8 +468,9 @@ export default {
 	   		options1: ['Regular', 'Info', 'Success', 'Warning', 'Error'],
 	   		options2: ['info', 'report', 'check_circle', 'warning', 'notification_important'].map(icon => {
 	   			return {
+	   				id: icon,
 	   				icon,
-	   				text: 'Icon'
+	   				text: 'Hello<br>Ayrton'
 	   			}
 	   		}),
 	   		option1: [2],

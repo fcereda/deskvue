@@ -20,12 +20,12 @@
 import utils from './utils.js'
 
 export default {
-	props: ['options', 'type', 'full-width', 'option-width', 'equal-width', 'stacked', 'value'],
+	props: ['options', 'type', 'vertical', 'full-width', 'option-width', 'equal-width', 'stacked', 'value'],
 
 	computed: {
 
 		divClass: function () {
-			return utils.getComponentClasses(this, ['fullWidth', 'stacked'])
+			return utils.getComponentClasses(this, ['fullWidth', 'stacked', 'vertical'])
 		}
 
 	},
@@ -89,7 +89,7 @@ export default {
 				if (option.icon)
 					html.push(`<i class="material-icons">${option.icon}</i>`)
 				if (option.text)
-					html.push(`<span>${option.text}</span>`)
+					html.push(`<span class="dv-option-text">${option.text}</span>`)
 				if (utils.isPropOn(this.stacked))
 					separator = '<br>'
 				if (option.id) 
@@ -120,7 +120,7 @@ export default {
 		},
 
 		optionStyle: function (index) {
-			if (utils.isPropOn(this.equalWidth)) {
+			if (utils.isPropOn(this.equalWidth) && !utils.isPropOn(this.vertical)) {
 				const numOptions = this.numOptions || 1
 				const width = 100 / numOptions
 				return `width:${width}%;`
@@ -226,7 +226,8 @@ export default {
 .dv-options {
 	box-sizing: border-box;
 	font-size: $font-size;
-	display: inline-block;
+	display: inline-flex;
+	flex-direction: row;
 	border: 1px solid $border-color;
 	border-radius: 8px;
 
@@ -234,6 +235,10 @@ export default {
 	background-color: transparent;
 	user-select: none;
 	cursor: pointer;
+}
+
+.dv-options.vertical {
+	flex-direction: column;
 }
 
 .dv-options.full-width {
@@ -255,17 +260,35 @@ export default {
 	line-height: $form-control-height;
 }
 
-.dv-option:nth-child(1n+2) {
+.dv-options:not(.vertical) > .dv-option:nth-child(1n+2) {
 	border-left: 1px solid $border-color;
 }
 
-.dv-option:nth-child(1) {
+.dv-options.vertical > .dv-option:nth-child(1n+2) {
+	border-top: 1px solid $border-color;
+}
+
+.dv-options:not(.vertical) > .dv-option:nth-child(1) {
 	border-top-left-radius: 8px;
 	border-bottom-left-radius: 8px;
 }
 
-.dv-option:last-child {
+.dv-options:not(.vertical) > .dv-option:last-child {
 	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.dv-options.vertical > .dv-option {
+/*	line-height: inherit; */
+}
+
+.dv-options.vertical > .dv-option:nth-child(1) {
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.dv-options.vertical > .dv-option:last-child {
+	border-bottom-left-radius: 8px;
 	border-bottom-right-radius: 8px;
 }
 
@@ -281,13 +304,16 @@ export default {
 
 .dv-option > i.material-icons {
 	transform: translateY(0.125em); 
-	/* font-size: 24px; */
 	vertical-align: text-bottom;	
 	opacity: 0.9;
 }
 
 .dv-options.stacked > .dv-option > i.material-icons {	
-	transform: translateY(0.25em);
+	transform: translateY(0.325em);
+}
+
+.dv-options.stacked > .dv-option > .dv-option-text {
+	line-height: 125%;
 }
 
 .dv-option.selected > i.material-icons {
