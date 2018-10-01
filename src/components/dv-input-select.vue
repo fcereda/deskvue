@@ -1,6 +1,6 @@
 <template>
 
-<div class="dv-select-container">
+<div class="dv-select-container" :class="divClass">
 	<select ref="select" :multiple="multiple">
 
 		<slot></slot>
@@ -17,12 +17,23 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['value', 'search', 'multiple', 'placeholder'],
+	props: ['value', 'search', 'multiple', 'placeholder', 'rounded', 'no-border'],
 
 	data: function () {
 
 		return {
 			choice: null
+		}
+
+	},
+
+	computed: {
+
+		divClass: function () {
+			if (utils.isPropOn(this.noBorder))
+				return 'rounded no-border'
+			if (utils.isPropOn(this.rounded))
+				return 'rounded'
 		}
 
 	},
@@ -41,7 +52,7 @@ export default {
 		initializeChoices: function () {
 			let thisElement = this.$el
 			let elem = this.$refs.select
-			this.choice = new Choice(elem, {
+			let choice = new Choice(elem, {
 				choices: [],
 				removeItemButton: true,
 		        searchEnabled: utils.isPropOn(this.search),	
@@ -52,6 +63,7 @@ export default {
       				//containerOuter: 'dv-select',
       			},
 			}, 'value', 'label', false)
+			this.choice = choice
 			this.$nextTick(() => {
 				if (!utils.isPropOn(this.multiple)) 
 					return
@@ -90,7 +102,7 @@ export default {
  				const windowHeight = window.outerHeight
 
  				const positionAtTheTop = () => {
-					let containerOuter = this.choice.containerOuter
+					let containerOuter = choice.containerOuter
   					containerOuter.classList += ' is-flipped'
  				}
 
@@ -132,14 +144,22 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 @import './base.scss';
 
 .dv-select-container {
+/*
 	display:inline-block;
+*/	
 	width: 25em;
 	text-align:left;
 }
 
 .choices {
-	height: 2.4em;
+/*
+	height: $form-control-height;
+*/	
 	margin-right:0;	
+}
+
+.dv-select-container.no-border > .choices {
+	height: 1.8em;
 }
 
 .choices__inner {
@@ -147,22 +167,42 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	padding-left: 0.4em;
 	padding-right: 0;
 	
-	background-color: white;
+	background-color: transparent;
 	box-sizing: border-box;
-	border-radius: 8px;
 	border-color: $border-color;
 
 	display: block;
+/*
 	padding: 7.5px 5.5px 3.75px;
+*/	
+	padding: 7.5px 5.5px 3.75px;
+	padding-bottom: 5.0px !important;
+}
+
+.choices__inner:not(.choices__inner-multiple) {
+	height: $form-control-height;
+}
+
+.choices__inner.choices__inner-multiple {
+	min-height: $form-control-height;
+	padding-bottom: 0px !important;
+}
+
+.dv-select-container.no-border > .choices > .choices__inner {
+	border: none;
+}
+
+.dv-select-container.rounded > .choices > .choices__inner {
+	border-radius: 8px;	
 }
 
 /* border-color: transparent should me added to .choices__inner for the floating control */
 
-.choices.is-open > .choices__inner {
+.dv-select-container.rounded > .choices.is-open > .choices__inner {
 	border-radius: 8px;
 }
 
-.choices.is-focused > .choices__inner {
+.dv-select-container:not(.no-border) > .choices.is-focused > .choices__inner {
 	border-color: $focus-color;
 	box-shadow: 0px 0px 2px 0px $focus-color;	
 }
@@ -217,7 +257,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 
 .choices[data-type*="select-one"] .choices__button {
 	height: unset;
-	top: calc(50% - 1px);
+	top: calc(50% + 1px);
 	opacity: 0.75;
 }
 
@@ -257,7 +297,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
     border-width: 5px;
     position: absolute;
     right: 11.5px;
-    top: calc(50% - 2px);
+    top: calc(50% - 1px);
     margin-top: -2.5px;
     pointer-events: none;
 

@@ -136,6 +136,8 @@
     	</dv-tab-item>		
     </dv-tabs>
 
+    <form-controls></form-controls>
+
 
 	<h3>Simple inputs</h3><p>
 	<fieldset>
@@ -156,12 +158,38 @@
 			<option placeholder>Please click here...</option>
 				<option v-for="tag in tags">{{ tag }}</option>
 			</dv-input-select>
+
+			<br><br>
+			Who do you you think will win?<br>
+			<dv-input-select multiple search rounded no-border>
+				<option v-for="tag in tags">{{ tag }}</option>
+			</dv-input-select>
 		
 			<br><br>
 			Who are you not voting for in any circumstance?<br>
-			<dv-input-select multiple search>
+			<dv-input-select multiple search rounded>
 				<option v-for="tag in tags">{{ tag }}</option>
 			</dv-input-select>
+
+			<br><br>
+			<dv-selectbox
+				label="Who was the best Brazilian driver of the 70s?"
+				search
+				floating
+				rounded
+				:value="myPilots"
+				style="float:left">
+				<option v-for="pilot in pilots">{{ pilot }}</option>				
+			</dv-selectbox>
+			<dv-textbox 
+				label="Lotus ppp" 
+				floating 
+				rounded 
+				placeholder="Type your first name here" 
+				v-model="text4"
+				style="float:left"
+			></dv-textbox>
+
 		</div>
 
 
@@ -174,7 +202,7 @@
 			<dv-textbox label="Last name" width="8em" rounded placeholder="Type your last name" v-model="text2"></dv-textbox>&nbsp;
 			<dv-textbox label="Email" rounded placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>&nbsp;
 			<dv-textbox label="Lotus ppp" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
-			<dv-textbox label="Ferrari qp" floating rounded placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
+			<dv-textbox label="Ferrari qp" floating rounded inset placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
 			<dv-textbox style="width:300px" label="Brabham Gordon Murray" floating rounded placeholder="Please, no bogus addresses" v-model="text6"></dv-textbox>
 		</div>	
 		Textos digitados: {{ [text1, text2, text3, text4, text5, text6].join(', ')}}
@@ -382,9 +410,12 @@ import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
 import dvTextbox from './dv-textbox.vue'
+import dvSelectbox from './dv-selectbox.vue'
 
 import dvInputSelect from './dv-input-select.vue'
 import dvMultiselect from './dv-multiselect.vue'
+
+import formControls from './form-controls.vue'
 
 import './form.scss'
 
@@ -399,6 +430,7 @@ export default {
     	dvOptions,
     	dvRadio,
     	dvRadiogroup,
+    	dvSelectbox,
     	dvTabs,
     	dvTabItem,
     	dvTag,
@@ -406,6 +438,8 @@ export default {
 
     	dvInputSelect,
     	dvMultiselect,
+
+    	formControls,
     },
 
     props: {
@@ -441,6 +475,8 @@ export default {
 
 	   		multiselect1: null,
 
+	   		pilots: ['Wilson Fittipaldi', 'Emerson Fittipaldi', 'José Carlos Pace', 'Ingo Hoffman', 'Alex Dias Ribeiro', 'Nelson Piquet'],
+	   		myPilots: null,
 	   		text1: '',
 	   		text2: 'John Stewart',
 	   		text3: '',

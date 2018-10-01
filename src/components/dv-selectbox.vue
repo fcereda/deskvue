@@ -13,15 +13,18 @@
 		@set-focus="setFocus"
 	>
 
-		<input 
-			type="text" 
-			class="dv-input-text" 
-			:class="inputClass"
+		<dv-input-select 
+			:multiple="multiple" 
+			:search="search"
+			:rounded="rounded"
+			:no-border="isFloating"
+			class="dv-input-select" 
 			:placeholder="placeholder" 
 			:value="value"
 			ref="input"
 			@input="onInput"
-		></input>
+		><slot></slot>
+		</dv-input-select>
 
 	</dv-form-field>
 
@@ -30,14 +33,16 @@
 <script>
 
 import dvFormField from './dv-form-field.vue'
+import dvInputSelect from './dv-input-select.vue'
 import utils from './utils.js'
 
 export default {
 	components: {
-		dvFormField
+		dvFormField,
+		dvInputSelect
 	},
 
-	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value'],
+	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'color', 'info', 'error', 'multiple', 'search', 'value'],
 
 	computed: {
 
@@ -50,9 +55,14 @@ export default {
 		},
 
 		isEmpty: function () {
-			return !this.value || !this.value.length
+			if (!this.value)
+				return false
+			if (typeof this.value == 'object' && !this.value.length)
+				return false
+			return true
 		},
 
+/*
 		inputClass: function () {
 			let classes = []
 			if (this.isFloating)
@@ -61,6 +71,7 @@ export default {
 				classes.push('rounded')
 			return classes.join(' ')
 		}
+*/
 
 	},
 
@@ -93,6 +104,20 @@ export default {
 
 @import './base.scss';
 
+
+$input-select-height: $form-control-height - 0.075em;
+
+
+.dv-input-select {
+	font-size: $font-size;
+	min-height: $input-select-height;	
+}
+
+.dv-input-select {
+	background-color: transparent;
+}
+
+/*
 input.dv-input-text {
 	box-sizing:border-box;
     padding-left: 0.4em;
@@ -125,11 +150,12 @@ input.dv-input-text:not(.floating):focus {
   
 input.dv-input-text.floating {
 	border: 1px solid transparent;
-	/* outline: none; */
 	background-color: transparent;
 }
 
-input.dv-input-text.floating:focus {
+*/
+
+input.dv-input-select.floating:focus {
     outline: 2px solid transparent; 
 }  
 
@@ -137,21 +163,6 @@ input.dv-input-text.rounded {
 	border-radius:8px;
 }
 
-/* I'm not sure the following style belongs here! */
-/*
-input.dv-input-text.floating {
-	position: relative;
-	top: 0;
-	left: 0;
-	padding-top: 1.125em;
-	width: calc(100% - 0.9em);
-	border: none;
-	background-color: transparent;
-	line-height: 125%;
-	transition-delay: 0.2s;
-	transition-duration: -0.2;
-	transition-property: opacity;
-}
-*/
+
 
 </style>

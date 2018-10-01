@@ -180,6 +180,16 @@ $focus-color: #1867c0;
 	border: 1px solid $border-color;
 }
 
+/*
+.textbox.floating.inset {
+	box-shadow: inset 0px 1px 6px 1px $border-color;
+}
+
+.textbox.floating.inset > input{
+	background-color: transparent;
+}
+*/
+
 .textbox.floating.rounded {
 	border-radius:8px;
 }
@@ -188,7 +198,7 @@ $focus-color: #1867c0;
 	box-sizing:border-box;
 	position: absolute;	
 	top: 0em;
-	left: 0em;
+	left: 0.125em;
 	width:100%;
 	padding-left: 0.5em;
 	padding-top: 0.75em;
@@ -236,7 +246,7 @@ $focus-color: #1867c0;
 
 	position: absolute;
 	padding-top: calc(1.125em + (2.25em - 1em) / 2 + 0.125em);
-	left: 0;
+	left: 0px;
 	right:0;	
 	bottom: 0;
 	top:0;
