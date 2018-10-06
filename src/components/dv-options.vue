@@ -1,6 +1,14 @@
 <template>
 
-<div class="dv-options" tabindex="0" :class="divClass" @keydown="onKeydown" @focus="onFocus" @blur="onBlur">
+<div 
+	class="dv-options" 
+	:class="divClass" 
+	:style="divStyle"
+	tabindex="0" 
+	@keydown="onKeydown" 
+	@focus="onFocus" 
+	@blur="onBlur"
+>
 	<div 
 		class="dv-option" 
 		:class="optionClass(index)"
@@ -20,13 +28,19 @@
 import utils from './utils.js'
 
 export default {
-	props: ['options', 'type', 'vertical', 'full-width', 'option-width', 'equal-width', 'stacked', 'value'],
+	props: ['options', 'type', 'vertical', 'width', 'full-width', 'option-width', 'equal-width', 'stacked', 'value'],
 
 	computed: {
 
 		divClass: function () {
 			return utils.getComponentClasses(this, ['fullWidth', 'stacked', 'vertical'])
-		}
+		},
+
+		divStyle: function () {
+			if (this.width)
+				return `width:${this.width};`
+			return ''
+		},
 
 	},
 
@@ -83,7 +97,7 @@ export default {
 					}
 				}
 				let html = []
-				let separator = ' '
+				let separator = '&nbsp;'
 				let id = index				
 
 				if (option.icon)
@@ -92,6 +106,8 @@ export default {
 					html.push(`<span class="dv-option-text">${option.text}</span>`)
 				if (utils.isPropOn(this.stacked))
 					separator = '<br>'
+				else
+					console.log('separator = ' + separator)
 				if (option.id) 
 					id = option.id
 				return {
@@ -123,7 +139,7 @@ export default {
 			if (utils.isPropOn(this.equalWidth) && !utils.isPropOn(this.vertical)) {
 				const numOptions = this.numOptions || 1
 				const width = 100 / numOptions
-				return `width:${width}%;`
+				return `min-width:${width}%;`
 			}
 			if (this.optionWidth) {
 				return `width:${this.optionWidth};`
@@ -258,6 +274,7 @@ export default {
 	padding-right: 1em;
 	height: 100%; 
 	line-height: $form-control-height;
+	overflow-x: hidden;
 }
 
 .dv-options:not(.vertical) > .dv-option:nth-child(1n+2) {
@@ -313,6 +330,7 @@ export default {
 }
 
 .dv-options.stacked > .dv-option > .dv-option-text {
+	display:inline-block;
 	line-height: 125%;
 }
 
