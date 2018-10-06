@@ -105,7 +105,7 @@ export default {
 @import './base.scss';
 
 
-$input-select-height: $form-control-height - 0.075em;
+$input-select-height: $form-control-height - 0.075em - 0.032em;
 
 
 .dv-input-select {

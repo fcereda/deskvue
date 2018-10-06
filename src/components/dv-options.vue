@@ -124,10 +124,29 @@ export default {
 		}
 	},
 
+	watch: {
+
+		value: function () {
+			let selectedIds = []
+			if (this.type == 'radio') 
+				// type == 'radio'
+				selectedIds = [this.value]
+			else
+				// type == 'checkbutton'
+				selectedIds = this.value
+			this.thisOptions.forEach((option, index) => {
+				this.$set(this.optionsAreSelected, index, selectedIds.indexOf(option.id) >= 0)
+			})
+		}
+
+	},
+
 	methods: {
 
 		optionClass: function (index) {
 			let classes = []
+			if (this.optionWidth)
+				classes.push('no-padding')
 			if (index == this.indexActive)
 				classes.push('hover')
 			if (this.optionsAreSelected[index])
@@ -203,7 +222,6 @@ export default {
 		toggleOption: function (index) {
 			console.log('onClick')
 			let newValue = !this.optionsAreSelected[index]
-			this.$set(this.optionsAreSelected, index, newValue)
 			if (newValue && this.type == 'radio') {
 				for (let i=0; i<this.optionsAreSelected.length; i++) {
 					if (i == index)
@@ -222,6 +240,7 @@ export default {
 			}
 			else {
 				// If we get here, option.type == 'checkbutton'
+				this.$set(this.optionsAreSelected, index, newValue)
 				this.$emit('input', this.optionsAreSelected.reduce((selectedIds, optionIsSelected, index) => {
 					if (optionIsSelected)
 						selectedIds.push(this.thisOptions[index].id)
@@ -275,6 +294,12 @@ export default {
 	height: 100%; 
 	line-height: $form-control-height;
 	overflow-x: hidden;
+	flex-grow:1;
+}
+
+.dv-option.no-padding {
+	padding-left: 0;
+	padding-right: 0;
 }
 
 .dv-options:not(.vertical) > .dv-option:nth-child(1n+2) {

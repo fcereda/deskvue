@@ -31,7 +31,7 @@
 			label="Who was the best Brazilian driver of the 70s?"
 			search
 			floating
-			rounded
+			
 			:value="myPilots"
 			style="float:left">
 			<option v-for="pilot in pilots">{{ pilot }}</option>				
@@ -39,7 +39,7 @@
 		<dv-textbox 
 			label="Lotus ppp" 
 			floating 
-			rounded 
+			:rounded="false" 
 			placeholder="Type your first name here" 
 			v-model="text4"
 			style="float:left"

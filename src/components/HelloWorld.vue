@@ -339,10 +339,22 @@
 		</fieldset>			 
 
 		<br><br>
-		<fieldset style="width:30em;float:left;">
+		<fieldset style="width:32em;float:left;">
 			<legend>Ícones e texto</legend>
-			<dv-options :options="options2" type="radio" vertical stacked v-model="option2"></dv-options>
+			<dv-options :options="options2" type="radio" width="25em" option-width="20%" stacked v-model="option2"></dv-options>
+			<dv-options :options="options3" type="radio" full-width v-model="option2"></dv-options>
+			<dv-options :options="options3" type="radio" v-model="option2"></dv-options>
 		</fieldset>	
+
+		<fieldset style="width:32em;float:left;">
+			<legend>Ícones e texto</legend>
+			<dv-options :options="options2" type="checkbox" width="25em" option-width="20%" stacked v-model="option4"></dv-options>
+			<br><br>
+			<dv-options :options="options3" type="checkbox" v-model="option4"></dv-options>
+			<br>
+			{{ option4 }}
+		</fieldset>	
+
 		
 		<fieldset style="width:15em;float:left">
 			<legend>Pilotos</legend>
@@ -447,7 +459,7 @@ export default {
     }, 
 
     data: function () {
-
+	   	const firstNames = ['Wilson', 'Emerson', 'Moco', 'Ingo', 'Alex', 'Nelson', 'Raul', 'Ayrton']
 		return {
 			counter: 0,
 			clicked: null,
@@ -502,16 +514,24 @@ export default {
 	   		toastIcon: 'error',
 
 	   		options1: ['Regular', 'Info', 'Success', 'Warning', 'Error'],
-	   		options2: ['info', 'report', 'check_circle', 'warning', 'notification_important'].map(icon => {
+	   		options2: ['info', 'report', 'check_circle', 'warning', 'notification_important'].map((icon, index) => {
 	   			return {
 	   				id: icon,
 	   				icon,
-	   				text: 'Hello<br>Ayrton'
+	   				text: `Hello<br>${firstNames[index]}`
+	   			}
+	   		}),
+	   		options3: ['info', 'report', 'check_circle', 'warning', 'notification_important'].map((icon, index) => {
+	   			return {
+	   				id: icon,
+	   				icon,
+	   				text: `${firstNames[index]}`
 	   			}
 	   		}),
 	   		option1: [2],
 	   		option2: null,
-	   		option3: null
+	   		option3: null,
+	   		option4: [],
 		} 
 
     },
