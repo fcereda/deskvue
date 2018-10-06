@@ -100,6 +100,7 @@ input.dv-input-text {
     background-color: #fff;
     color: #222;
 	border: 1px solid $border-color;    
+	border-radius: $border-radius;
     min-width: 5em;
     width: calc(100% - 0.1em);
     line-height: 150%;
@@ -116,7 +117,7 @@ input.dv-input-text:hover {
 }  
 
 input.dv-input-text:not(.floating).rounded {
-	border-radius: 8px;
+	border-radius: $border-radius-rounded;
 }
   
 input.dv-input-text:not(.floating):focus {

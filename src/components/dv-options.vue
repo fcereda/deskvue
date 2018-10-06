@@ -28,12 +28,12 @@
 import utils from './utils.js'
 
 export default {
-	props: ['options', 'type', 'vertical', 'width', 'full-width', 'option-width', 'equal-width', 'stacked', 'value'],
+	props: ['options', 'type', 'rounded', 'vertical', 'width', 'full-width', 'option-width', 'equal-width', 'stacked', 'slim', 'no-border', 'value'],
 
 	computed: {
 
 		divClass: function () {
-			return utils.getComponentClasses(this, ['fullWidth', 'stacked', 'vertical'])
+			return utils.getComponentClasses(this, ['rounded', 'fullWidth', 'stacked', 'vertical', 'slim', 'noBorder'])
 		},
 
 		divStyle: function () {
@@ -264,12 +264,28 @@ export default {
 	display: inline-flex;
 	flex-direction: row;
 	border: 1px solid $border-color;
-	border-radius: 8px;
+	border-radius: 2px;
 
 	min-height: $form-control-height;
 	background-color: transparent;
 	user-select: none;
 	cursor: pointer;
+}
+
+.dv-options:not(.stacked):not(.vertical) {
+	height: $form-control-height;	
+}
+
+.dv-options.slim {
+	height: calc($form-control-height - 0.5em);
+}
+
+.dv-options.no-border {
+	border-color: transparent;
+}
+
+.dv-options.rounded {
+	border-radius: 8px;
 }
 
 .dv-options.vertical {
@@ -297,6 +313,10 @@ export default {
 	flex-grow:1;
 }
 
+.dv-options:not(.stacked):not(.vertical) > .dv-option {
+	overflow-y: hidden;
+}
+
 .dv-option.no-padding {
 	padding-left: 0;
 	padding-right: 0;
@@ -310,33 +330,64 @@ export default {
 	border-top: 1px solid $border-color;
 }
 
+.dv-options.no-border > .dv-option {
+	border-color: transparent !important;
+}
+
 .dv-options:not(.vertical) > .dv-option:nth-child(1) {
-	border-top-left-radius: 8px;
-	border-bottom-left-radius: 8px;
+	border-top-left-radius: $border-radius-rounded;
+	border-bottom-left-radius: $border-radius-rounded;
 }
 
 .dv-options:not(.vertical) > .dv-option:last-child {
-	border-top-right-radius: 8px;
-	border-bottom-right-radius: 8px;
-}
-
-.dv-options.vertical > .dv-option {
-/*	line-height: inherit; */
+	border-top-right-radius: $border-radius-rounded;
+	border-bottom-right-radius: $border-radius-rounded;
 }
 
 .dv-options.vertical > .dv-option:nth-child(1) {
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
+	border-top-left-radius: $border-radius-rounded;
+	border-top-right-radius: $border-radius-rounded;
 }
 
 .dv-options.vertical > .dv-option:last-child {
-	border-bottom-left-radius: 8px;
-	border-bottom-right-radius: 8px;
+	border-bottom-left-radius: $border-radius-rounded;
+	border-bottom-right-radius: $border-radius-rounded;
 }
+
+.dv-options:not(.vertical):not(.rounded) > .dv-option:nth-child(1) {
+	border-top-left-radius: $border-radius;
+	border-bottom-left-radius: $border-radius;
+}
+
+.dv-options:not(.vertical):not(.rounded) > .dv-option:last-child {
+	border-top-right-radius: $border-radius;
+	border-bottom-right-radius: $border-radius;
+}
+
+.dv-options.vertical:not(.rounded) > .dv-option:nth-child(1) {
+	border-top-left-radius: $border-radius;
+	border-top-right-radius: $border-radius;
+}
+
+.dv-options.vertical:not(.rounded) > .dv-option:last-child {
+	border-bottom-left-radius: $border-radius;
+	border-bottom-right-radius: $border-radius;
+}
+
 
 .dv-option.hover {
 	z-index:2;
 	box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.25); 
+}
+
+$slim-margin: 0.25em;
+$slim-height: calc(100% - 0.25em - 0.25em);
+
+.dv-options.slim > .dv-option.selected {
+	height: $slim-height;
+	margin-top: $slim-margin;
+	margin-bottom: $slim-margin;
+	line-height: 160%; 
 }
 
 .dv-option.selected {

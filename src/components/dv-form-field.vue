@@ -147,6 +147,7 @@ $focus-color: #1867c0;
 	font-weight: 600;
 	padding-left:0.5em;
 	padding-bottom:0.125em;
+	text-align:left;
 }
 
 .textbox > .dv-input-label.focus {

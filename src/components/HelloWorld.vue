@@ -355,6 +355,22 @@
 			{{ option4 }}
 		</fieldset>	
 
+		<fieldset>
+			<legend>Option box</legend>
+			<dv-optionbox 
+				label="Pick your Brazilian pilot"
+				floating
+				rounded
+				:options="options1"
+				type="checkbox"
+				width="25em"
+				option-width="20%"
+				v-model="option1"
+				style="float:left;"
+			></dv-optionbox>
+			<dv-textbox label="Lotus ppp" floating placeholder="Type your first name here" v-model="text4" style="float:left;"></dv-textbox>
+		</fieldset>
+
 		
 		<fieldset style="width:15em;float:left">
 			<legend>Pilotos</legend>
@@ -415,6 +431,7 @@ import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
 import dvMenu from './dv-menu.vue'
+import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
 import dvRadio from './dv-radio.vue'
 import dvRadiogroup from './dv-radiogroup.vue'
@@ -439,6 +456,7 @@ export default {
     	dvBtnGroup,
     	dvCheckbox,
     	dvMenu,
+    	dvOptionbox,
     	dvOptions,
     	dvRadio,
     	dvRadiogroup,
