@@ -202,7 +202,7 @@ $focus-color: #1867c0;
 	left: 0.125em;
 	width:100%;
 	padding-left: 0.5em;
-	padding-top: 0.75em;
+	padding-top: 0.625em;
 	font-size:0.8em;
 	line-height:80%;
 	transition: 0.2s all;

@@ -12,15 +12,13 @@
 		:is-empty="false"
 		@set-focus="setFocus"
 	>
-
 		<dv-options
 			:options="options"
 			:type="type"
 			:stacked="stacked"
 			:option-width="optionWidth"
-			full-width
-			slim
 			:rounded="isRounded"
+			:slim="isFloating"
 			:no-border="isFloating"
 			class="dv-optionbox-dv-options" 
 			ref="input"
@@ -28,6 +26,7 @@
 			@input="onInput"
 		><slot></slot>
 		</dv-options>
+
 
 	</dv-form-field>
 
@@ -91,10 +90,9 @@ export default {
 $margin: 0.25em;
 
 .dv-optionbox-dv-options {
-	box-sizing: border-box;
-	padding-left: $margin;
-	padding-right: $margin;
-	min-height: $form-control-height - 0.5em;
+  margin-top: $margin;
+  margin: $margin $margin $margin $margin;
+  width: calc(100% - 0.25em - 0.25em);
 }
 
 </style>

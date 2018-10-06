@@ -369,6 +369,18 @@
 				style="float:left;"
 			></dv-optionbox>
 			<dv-textbox label="Lotus ppp" floating placeholder="Type your first name here" v-model="text4" style="float:left;"></dv-textbox>
+			<br><br>
+			<dv-optionbox 
+				label="Using icons"
+				floating
+				:options="options3" 
+				type="checkbox" 
+				v-model="option4"
+				style="float:left;"
+			></dv-optionbox>
+			<br>
+
+
 		</fieldset>
 
 		

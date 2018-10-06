@@ -258,6 +258,9 @@ export default {
 
 @import './base.scss';
 
+$slim-margin: 0.25em;
+$slim-height: $form-control-height - ($slim-margin * 2);
+
 .dv-options {
 	box-sizing: border-box;
 	font-size: $font-size;
@@ -276,8 +279,9 @@ export default {
 	height: $form-control-height;	
 }
 
-.dv-options.slim {
-	height: calc($form-control-height - 0.5em);
+.dv-options:not(.stacked):not(.vertical).slim {
+	min-height: $slim-height;
+	height: $slim-height;
 }
 
 .dv-options.no-border {
@@ -313,6 +317,10 @@ export default {
 	flex-grow:1;
 }
 
+.dv-options.slim > .dv-option {
+	line-height: $slim-height;
+}
+
 .dv-options:not(.stacked):not(.vertical) > .dv-option {
 	overflow-y: hidden;
 }
@@ -330,9 +338,11 @@ export default {
 	border-top: 1px solid $border-color;
 }
 
+/*
 .dv-options.no-border > .dv-option {
 	border-color: transparent !important;
 }
+*/
 
 .dv-options:not(.vertical) > .dv-option:nth-child(1) {
 	border-top-left-radius: $border-radius-rounded;
@@ -380,15 +390,6 @@ export default {
 	box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.25); 
 }
 
-$slim-margin: 0.25em;
-$slim-height: calc(100% - 0.25em - 0.25em);
-
-.dv-options.slim > .dv-option.selected {
-	height: $slim-height;
-	margin-top: $slim-margin;
-	margin-bottom: $slim-margin;
-	line-height: 160%; 
-}
 
 .dv-option.selected {
 	background-color: $color-primary;
@@ -396,9 +397,12 @@ $slim-height: calc(100% - 0.25em - 0.25em);
 }
 
 .dv-option > i.material-icons {
-	transform: translateY(0.125em); 
 	vertical-align: text-bottom;	
 	opacity: 0.9;
+}
+
+.dv-options:not(.slim) > .dv-option > i.material-icons {
+	transform: translateY(0.125em); 
 }
 
 .dv-options.stacked > .dv-option > i.material-icons {	
@@ -408,6 +412,11 @@ $slim-height: calc(100% - 0.25em - 0.25em);
 .dv-options.stacked > .dv-option > .dv-option-text {
 	display:inline-block;
 	line-height: 125%;
+}
+
+.dv-options.slim > .dv-option > .dv-option-text {
+	transform: translateY(-0.125em);
+	vertical-align:text-bottom;
 }
 
 .dv-option.selected > i.material-icons {
