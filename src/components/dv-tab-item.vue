@@ -12,8 +12,10 @@
 
 <script>
 
+import utils from './utils.js'
+
 export default {
-	props: ['title', 'id', 'v-html'],
+	props: ['title', 'id', 'v-html', 'disabled'],
 
 	computed: {
 		tabItemClass: function () {
@@ -24,6 +26,10 @@ export default {
 
 		hasHtml: function () {
 			return !this.html || this.html == ''
+		},
+
+		isDisabled: function () {
+			return utils.isPropOn(this.disabled)
 		}
 	},
 

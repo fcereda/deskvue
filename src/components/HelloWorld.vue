@@ -101,7 +101,9 @@
     	content-background-color="#F8F8F8" 
     	content-color="black"
     	content-border 
-    	@input="setTab" @add="addTab">
+    	@input="setTab" @add="addTab"
+    >
+    	<dv-tab-item title=" " disabled></dv-tab-item>
     	<dv-tab-item title="Code">Tab: code</dv-tab-item>
     	<dv-tab-item 
     		v-for="tab in additionalTabs" 
@@ -112,7 +114,7 @@
     	<dv-tab-item title="Issues">To select the issues found in your code, press <kbd>Ctrl</kbd> + <kbd>I</kbd>.<br>
     		To help fixing these issues, clone the repository and open Sublime Text.<br>
     		To ignore the issues, just do nothing.</dv-tab-item>
-    	<dv-tab-item title="Pull requestes">Here you have your pull requests:
+    	<dv-tab-item disabled title="Pull requestes">Here you have your pull requests:
 
 			Who are you going to vote for? <br>
 			<dv-input-select search placeholder="Selecione seu candidato">
@@ -204,6 +206,8 @@
 			<dv-textbox label="Lotus ppp" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
 			<dv-textbox label="Ferrari qp" floating rounded inset placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
 			<dv-textbox style="width:300px;background-color:#e4e4e4;" no-border label="Brabham Gordon Murray" floating rounded placeholder="Please, no bogus addresses" v-model="text6"></dv-textbox>
+			<dv-textbox style="width:500px;background-color:#e4e4e4;" no-border label="More Brabham, more Gordon" floating rounded placeholder="Please, no bogus addresses" v-model="text6"></dv-textbox>
+
 		</div>	
 		Textos digitados: {{ [text1, text2, text3, text4, text5, text6].join(', ')}}
 

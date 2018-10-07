@@ -5,14 +5,14 @@
 		<li 
 			role="presentation"
 			class="dv-tab-item" 
-			:class="(tab.active ? 'active' : '') + (removeable ? ' removeable' : '')"
-			:tabindex="tab.active ? 0 : -1"
+			:class="tabClass(tab)"
+			:tabindex="tab.isDisabled ? '' : tab.active ? 0 : -1"
 			:style="tabStyle(tab)"
 			v-for="(tab, index) in tabs"
 			:ref="tabRef(index)"
-			@click="onclick(tab)"
+			@click="onclick(tab, $event)"
 			@keydown="onkeydown"
-		>{{ tab.title }}<span v-if="removeable" class="close-icon" @click.stop="removeTab(tab)">×</span>
+		>{{ tab.title }}<span v-if="removeable && !tab.isDisabled" class="close-icon" @click.stop="removeTab(tab)">×</span>
 		</li> 
 	    <li v-if="addable" class="dv-tab-button"><button class="dv-button circle small short no-focus" @click="onAddBtnClick">+</button></li>
 	</ul>
@@ -92,6 +92,17 @@ export default {
 
 	methods: {
 
+		tabClass: function (tab) {
+			let classes = []
+			if (tab.active) 
+				classes.push('active')
+			if (this.removeable)				
+				classes.push('removeable')
+			if (tab.isDisabled)
+				classes.push('disabled')
+			return classes.join(' ')
+		},
+
 		tabStyle: function (tab) {
 			let style = ''
 			if (this.tabWidth)
@@ -123,10 +134,20 @@ export default {
 			// Trying index = this.$children.indexOf(newTab) DOES NOT work
 			let index = this.$slots.default.indexOf(newTab.$vnode)
             this.tabs.splice(index, 0, newTab);
-			if (showNewTab || this.tabs.length == 1) {
+
+            // Tab added to this.tabs. Let's check if we must switch to it
+            if (newTab.isDisabled)
+            	return	// Never ever switch to a disabled tab
+            let numEnabledTabs = this.tabs.filter(tab => !tab.isDisabled).length
+            let isThisTheFirstEnabledTab = (numEnabledTabs == 1)
+            // If showNewTab == true or this tab is the first enabled one, switch to it
+			if (showNewTab || isThisTheFirstEnabledTab) {
 				this.switchTab(newTab)
 			}
-		},
+			// We can't simply check whether this.currentActiveTab is non-null, because
+			// the tab will only be actually switched after all tabs are added (all logic
+			// inside this.switchTab happens inside a $nextTick block)
+		}, 
 
 		removeTab: function (tabToRemove) {
 			let index = -1
@@ -174,31 +195,63 @@ export default {
 
 		// event handlers
 
-		onclick: function (tab) {
+		onclick: function (tab, e) {
+			if (tab.isDisabled) {
+				e.preventDefault()
+				return
+			}
 			this.switchTab(tab)
 			this.$emit('input', this.tabs.indexOf(tab))
 		},
 
 		onkeydown: function (e) {
 			let index = this.indexActiveTab
+			let tabs = this.tabs
+
+			function allTabsAreDisabled () {
+				for (let i=0; i<tabs.length; i++) {
+					if (!tabs[i].isDisabled)
+						return false
+				}
+				return true
+			}
+
+			function getNextIndex (currentIndex) {
+				if (allTabsAreDisabled())
+					return -1
+				for (let i=currentIndex; i<tabs.length; i++) {
+					if (!tabs[i].isDisabled)
+						return i
+				}
+				if (currentIndex > 0)
+					return getNextIndex (0)
+				return -1	
+			} 
+
+			function getPrevIndex (currentIndex) {
+				if (allTabsAreDisabled())
+					return -1
+				for (let i=currentIndex; i>=0; i--) {
+					if (!tabs[i].isDisabled)
+						return i
+				}
+				if (currentIndex < tabs.length - 1)
+					return getPrevIndex (tabs.length-1)
+				return -1
+			}
+
 			switch (e.key) {
 				case 'ArrowLeft': 
-					index -= 1
-					if (index < 0) {
-						index = this.tabs.length - 1
-					}
+					index = getPrevIndex(index-1)
 					break
 				case 'ArrowRight':
-					index += 1	
-					if (index >= this.tabs.length) {
-						index = 0
-					}	
+					index = getNextIndex(index+1)
 					break
 				case 'Home':
-					index = 0
+					index = getNextIndex(0)
 					break
 				case 'End':
-					index = this.tabs.length - 1
+					index = getPrevIndex(this.tabs.length-1)
 					break
 				case 'Delete':
 					if (this.removeable) {
@@ -224,6 +277,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+@import './base.scss';
 
 .dv-tab {
     list-style-type: none;
@@ -254,11 +309,16 @@ li.dv-tab-item {
    cursor:pointer;
 }  
 
+li.dv-tab-item.disabled {
+	color: $color-disabled; 
+	cursor: default;
+}
+
 li.dv-tab-item.removeable {
 	padding-right:0.5em;
 }
 
-li.dv-tab-item:hover {
+li.dv-tab-item:not(.disabled):hover {
     color:#1867c0;
   }  
   
@@ -273,11 +333,13 @@ li.dv-tab-item.active {
 }  
   
 li.dv-tab-item:focus {
-    //color:#1867c0;
+	outline: none;
+}
+
+li.dv-tab-item:not(.disabled):focus {
     text-decoration:underline;
     text-decoration-color: #888;
-    outline: none;
-  }  
+}  
 
 .dv-tab-item > span.close-icon {
 	display:inline-block;
