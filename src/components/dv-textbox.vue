@@ -6,6 +6,7 @@
 		:label="label"
 		:floating="floating"
 		:rounded="rounded"
+		:no-border="noBorder"
 		:color="color"
 		:info="info"
 		:error="error"
@@ -37,7 +38,7 @@ export default {
 		dvFormField
 	},
 
-	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value'],
+	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value'],
 
 	computed: {
 

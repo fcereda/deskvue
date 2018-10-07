@@ -172,11 +172,10 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	border-color: $border-color;
 
 	display: block;
-/*
-	padding: 7.5px 5.5px 3.75px;
-*/	
+
 	padding: 7.5px 5.5px 3.75px;
 	padding-bottom: 5.0px !important;
+	overflow: inherit;
 }
 
 .choices__inner:not(.choices__inner-multiple) {

@@ -1,12 +1,16 @@
 <template>
 
-<div :style="containerStyle">
+
+<div 
+	class="dv-form-field"
+	:class="containerClass"
+	:style="containerStyle"
+>
 	<div 
 		class="textbox"
 		:class="divClass"
 		ref="div"
 	>
-
 		<div class="slot" :class="slotClass" ref="slot">
 		<slot></slot>
 		</div>
@@ -25,27 +29,33 @@
 import utils from './utils.js'
 
 export default {
-	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'color', 'mask', 'info', 'error', 'value', 'is-empty'],
+	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value', 'is-empty'],
 
 	computed: {
 
 		containerStyle: function () {
-			let style		
-			let thisDisplay = 'inline-block'
-			if (this.display == 'block')
-				thisDisplay = 'block'
-			style = `display:${thisDisplay};`
+			let style = ''
 			if (this.width) {
 				style = style + `width:${this.width};`
 			}
 			return style
 		},
 
+		containerClass: function () {
+			let classes = []
+			if (this.display == 'block')
+				classes.push(this.display)
+			if (utils.isPropOn(this.rounded))
+				classes.push('rounded')
+			return classes.join(' ')
+		},
+
 		divClass: function () {
 			let classes = []
-			if (this.isFloating) classes.push('floating')				
-			if (this.isRounded)  classes.push('rounded')
-			if (!this.label) classes.push('no-label')	
+			if (this.isFloating)  classes.push('floating')				
+			if (this.isRounded)   classes.push('rounded')
+			if (this.hasNoBorder) classes.push('no-border')	
+			if (!this.label)      classes.push('no-label')	
 			if (this.hasFocus) {
 				classes.push('focus') 
 			}
@@ -70,6 +80,10 @@ export default {
 
 		isRounded: function () {
 			return utils.isPropOn(this.rounded)
+		},
+
+		hasNoBorder: function () {
+			return utils.isPropOn(this.noBorder)
 		}
 
 	},
@@ -130,10 +144,25 @@ export default {
 
 $focus-color: #1867c0;
 
+.dv-form-field {
+	display: inline-block;
+
+	&.block {
+		display: block;
+	}
+
+	&.rounded {
+		border-radius: $border-radius-rounded;
+	}
+
+}
+
 .textbox {
 	display: flex;
 	flex-direction: column-reverse;
+/*
 	margin-bottom:1em;
+*/
 	font-size:14px;
 	width:100%;
 }
@@ -172,13 +201,19 @@ $focus-color: #1867c0;
     outline: 2px solid $focus-color; 
 } 
 
-
+.textbox.rounded {
+	border-radius: 8px;
+}
 
 .textbox.floating {
 	display: inline-block;
 	position: relative;
 	box-sizing: border-box;
 	border: 1px solid $border-color;
+}
+
+.textbox.no-border {
+	border-color: transparent;
 }
 
 /*
@@ -210,7 +245,6 @@ $focus-color: #1867c0;
 
 
 .textbox.floating.focus {
-	//outline:2px solid $focus-color;
 	border:1px solid $focus-color;
 	box-shadow: 0px 0px 2px 0px $focus-color;
 }
@@ -226,7 +260,6 @@ $focus-color: #1867c0;
 	top: 0;
 	left: 0;
 	padding-top: 1.125em;
-	/*width: calc(100% - 0.9em); */
 	width:100%;
 	border: none;
 	background-color: transparent;
