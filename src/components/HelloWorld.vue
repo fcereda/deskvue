@@ -341,7 +341,7 @@
 		<br><br>
 		<fieldset style="width:32em;float:left;">
 			<legend>Ícones e texto</legend>
-			<dv-options :options="options2" type="radio" width="25em" option-width="20%" stacked v-model="option2"></dv-options>
+			<dv-options :options="options2" type="radio" option-width="20%" stacked vertical v-model="option2"></dv-options>
 			<dv-options :options="options3" type="radio" full-width v-model="option2"></dv-options>
 			<dv-options :options="options3" type="radio" v-model="option2"></dv-options>
 		</fieldset>	
@@ -361,6 +361,7 @@
 				label="Pick your Brazilian pilot"
 				floating
 				rounded
+				color="danger"
 				:options="options1"
 				type="checkbox"
 				width="25em"
@@ -548,6 +549,7 @@ export default {
 	   			return {
 	   				id: icon,
 	   				icon,
+	   				color: index == 2 ? 'warning' : null,	   				
 	   				text: `Hello<br>${firstNames[index]}`
 	   			}
 	   		}),
@@ -555,6 +557,7 @@ export default {
 	   			return {
 	   				id: icon,
 	   				icon,
+	   				color: index == 2 ? 'success' : null,
 	   				text: `${firstNames[index]}`
 	   			}
 	   		}),

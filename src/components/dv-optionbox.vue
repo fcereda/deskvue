@@ -15,6 +15,7 @@
 		<dv-options
 			:options="options"
 			:type="type"
+			:color="color"
 			:stacked="stacked"
 			:option-width="optionWidth"
 			:rounded="isRounded"

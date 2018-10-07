@@ -28,7 +28,7 @@
 import utils from './utils.js'
 
 export default {
-	props: ['options', 'type', 'rounded', 'vertical', 'width', 'full-width', 'option-width', 'equal-width', 'stacked', 'slim', 'no-border', 'value'],
+	props: ['options', 'type', 'rounded', 'vertical', 'width', 'full-width', 'option-width', 'equal-width', 'stacked', 'slim', 'no-border', 'color', 'value'],
 
 	computed: {
 
@@ -41,6 +41,10 @@ export default {
 				return `width:${this.width};`
 			return ''
 		},
+
+		isVertical: function () {
+			return utils.isPropOn(this.vertical)
+		}
 
 	},
 
@@ -89,6 +93,7 @@ export default {
 		}
 
 		return {
+			globalColor: utils.correctColor(this.color),
 			thisOptions: options.map((option, index) => {
 				if (typeof(option) == 'string') {
 					return {
@@ -145,17 +150,22 @@ export default {
 
 		optionClass: function (index) {
 			let classes = []
-			if (this.optionWidth)
+			if (this.optionWidth && !this.isVertical)
 				classes.push('no-padding')
 			if (index == this.indexActive)
 				classes.push('hover')
 			if (this.optionsAreSelected[index])
 				classes.push('selected')
+			const color = this.thisOptions[index].color || this.globalColor
+			if (color)
+				classes.push(color)
 			return classes.join(' ')
 		},
 
 		optionStyle: function (index) {
-			if (utils.isPropOn(this.equalWidth) && !utils.isPropOn(this.vertical)) {
+			if (this.isVertical)
+				return	// No classes are applied when orientation is vertical
+			if (utils.isPropOn(this.equalWidth)) {
 				const numOptions = this.numOptions || 1
 				const width = 100 / numOptions
 				return `min-width:${width}%;`
@@ -273,36 +283,123 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 	background-color: transparent;
 	user-select: none;
 	cursor: pointer;
+
+	&:not(.stacked):not(.vertical) {
+		height: $form-control-height;	
+
+		&.slim {
+			min-height: $slim-height;
+			height: $slim-height;
+			line-height: $slim-height;
+
+			.dv-option {
+				line-height: $slim-height;
+			}
+		}
+
+		.dv-option {
+			overflow-y: hidden;
+		}		
+	}
+
+	&.no-border {
+		border-color: transparent;
+	}
+
+	&.rounded {
+		border-radius: 8px;
+	}
+
+	&.vertical {
+		flex-direction: column;
+	}
+
+	&.full-width {
+		width:100%; 
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+
+	&.vertical { 
+	
+		.dv-option:nth-child(1n+2) {
+			border-top: 1px solid $border-color;
+		}
+
+
+		&:not(.rounded) {
+
+			& > .dv-option:nth-child(1) {
+				border-top-left-radius: $border-radius;
+				border-top-right-radius: $border-radius;
+			}
+
+			& > .dv-option:last-child {
+				border-bottom-left-radius: $border-radius;
+				border-bottom-right-radius: $border-radius;
+			}
+
+		}	
+
+
+		&.rounded {
+
+			& > .dv-option:nth-child(1) {
+				border-top-left-radius: $border-radius-rounded;
+				border-top-right-radius: $border-radius-rounded;
+			}
+
+			& > .dv-option:last-child {
+				border-bottom-left-radius: $border-radius-rounded;
+				border-bottom-right-radius: $border-radius-rounded;
+			}
+
+		}
+
+	}	
+
+	&:not(.vertical) {
+
+		& > .dv-option:nth-child(1n+2) {
+			border-left: 1px solid $border-color;
+		}
+
+		&.rounded {
+
+			& > .dv-option:nth-child(1) {
+				border-top-left-radius: $border-radius-rounded;
+				border-bottom-left-radius: $border-radius-rounded;
+			}
+
+			& > .dv-option:last-child {
+				border-top-right-radius: $border-radius-rounded;
+				border-bottom-right-radius: $border-radius-rounded;
+			}
+
+		}	
+
+		&:not(.rounded) {
+
+			& > .dv-option:nth-child(1) {
+				border-top-left-radius: $border-radius;
+				border-bottom-left-radius: $border-radius;
+			}
+
+			& > .dv-option:last-child {
+				border-top-right-radius: $border-radius;
+				border-bottom-right-radius: $border-radius;
+			}
+
+		}	
+
+	}
+
+
 }
 
-.dv-options:not(.stacked):not(.vertical) {
-	height: $form-control-height;	
-}
-
-.dv-options:not(.stacked):not(.vertical).slim {
-	min-height: $slim-height;
-	height: $slim-height;
-}
-
-.dv-options.no-border {
-	border-color: transparent;
-}
-
-.dv-options.rounded {
-	border-radius: 8px;
-}
-
-.dv-options.vertical {
-	flex-direction: column;
-}
-
-.dv-options.full-width {
-	width:100%; 
-}
-
-.dv-options:focus {
-	outline: none;
-}
 
 .dv-option {
 	position: relative;		
@@ -315,103 +412,56 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 	line-height: $form-control-height;
 	overflow-x: hidden;
 	flex-grow:1;
-}
 
-.dv-options.slim > .dv-option {
-	line-height: $slim-height;
-}
+	&.no-padding {
+		padding-left: 0;
+		padding-right: 0;
+	}
 
-.dv-options:not(.stacked):not(.vertical) > .dv-option {
-	overflow-y: hidden;
-}
+	&.hover {
+		z-index:2;
+		box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.25); 
+	}
 
-.dv-option.no-padding {
-	padding-left: 0;
-	padding-right: 0;
-}
+	&.selected {
+		background-color: $color-primary;
+		color: white;
 
-.dv-options:not(.vertical) > .dv-option:nth-child(1n+2) {
-	border-left: 1px solid $border-color;
-}
+		&.danger {
+			background-color: $color-danger;
+		}
 
-.dv-options.vertical > .dv-option:nth-child(1n+2) {
-	border-top: 1px solid $border-color;
-}
+		&.warning {
+			background-color: $color-warning;
+		}
 
-/*
-.dv-options.no-border > .dv-option {
-	border-color: transparent !important;
-}
-*/
+		&.success {
+			background-color: $color-success;
+		}
 
-.dv-options:not(.vertical) > .dv-option:nth-child(1) {
-	border-top-left-radius: $border-radius-rounded;
-	border-bottom-left-radius: $border-radius-rounded;
-}
+		&.info {
+			background-color: $color-info;
+			color: #333;
+		}
 
-.dv-options:not(.vertical) > .dv-option:last-child {
-	border-top-right-radius: $border-radius-rounded;
-	border-bottom-right-radius: $border-radius-rounded;
-}
+		&.secondary {
+			background-color: $color-secondary;
+		}
 
-.dv-options.vertical > .dv-option:nth-child(1) {
-	border-top-left-radius: $border-radius-rounded;
-	border-top-right-radius: $border-radius-rounded;
-}
+		&.dark {
+			background-color: $color-dark;
+		}
+	}
 
-.dv-options.vertical > .dv-option:last-child {
-	border-bottom-left-radius: $border-radius-rounded;
-	border-bottom-right-radius: $border-radius-rounded;
-}
+	& > i.material-icons {
+		vertical-align: text-bottom;	
+		opacity: 0.9;
+	}
 
-.dv-options:not(.vertical):not(.rounded) > .dv-option:nth-child(1) {
-	border-top-left-radius: $border-radius;
-	border-bottom-left-radius: $border-radius;
-}
+	&.selected > i.material-icons {
+		opacity: 1.0;
+	}
 
-.dv-options:not(.vertical):not(.rounded) > .dv-option:last-child {
-	border-top-right-radius: $border-radius;
-	border-bottom-right-radius: $border-radius;
-}
-
-.dv-options.vertical:not(.rounded) > .dv-option:nth-child(1) {
-	border-top-left-radius: $border-radius;
-	border-top-right-radius: $border-radius;
-}
-
-.dv-options.vertical:not(.rounded) > .dv-option:last-child {
-	border-bottom-left-radius: $border-radius;
-	border-bottom-right-radius: $border-radius;
-}
-
-
-.dv-option.hover {
-	z-index:2;
-	box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.25); 
-}
-
-
-.dv-option.selected {
-	background-color: $color-primary;
-	color: white;
-}
-
-.dv-option > i.material-icons {
-	vertical-align: text-bottom;	
-	opacity: 0.9;
-}
-
-.dv-options:not(.slim) > .dv-option > i.material-icons {
-	transform: translateY(0.125em); 
-}
-
-.dv-options.stacked > .dv-option > i.material-icons {	
-	transform: translateY(0.325em);
-}
-
-.dv-options.stacked > .dv-option > .dv-option-text {
-	display:inline-block;
-	line-height: 125%;
 }
 
 .dv-options.slim > .dv-option > .dv-option-text {
@@ -419,8 +469,22 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 	vertical-align:text-bottom;
 }
 
-.dv-option.selected > i.material-icons {
-	opacity: 1.0;
+.dv-options:not(.slim) > .dv-option > i.material-icons {
+	transform: translateY(0.125em); 
 }
+
+.dv-options.stacked {
+
+	& > .dv-option > i.material-icons {	
+		transform: translateY(0.325em);
+	}
+
+	& > .dv-option > .dv-option-text {
+		display:inline-block;
+		line-height: 125%;
+	}
+
+}	
+
 
 </style>

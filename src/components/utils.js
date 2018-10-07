@@ -11,7 +11,7 @@ export default {
 
 	isPropOn,	
 
-	getComponentClasses(component, props) {
+	getComponentClasses (component, props) {
 		let classes = []
 		props.forEach(propName => {
 			if (this.isPropOn(component[propName])) {
@@ -21,6 +21,15 @@ export default {
 			}
 		})			
 		return classes
+	},
+
+	correctColor (color) {
+		const colors = ['primary', 'secondary', 'danger', 'warning', 'secondary', 'info', 'dark']
+		if (!color) return null
+		color = color.toLowerCase()
+		if (colors.indexOf(color) < 0)
+			return ''
+		return color
 	}
 
 
