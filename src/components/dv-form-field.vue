@@ -29,7 +29,7 @@
 import utils from './utils.js'
 
 export default {
-	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value', 'is-empty'],
+	props: ['display', 'width', 'label', 'placeholder', 'disabled', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value', 'is-empty'],
 
 	computed: {
 
@@ -66,6 +66,8 @@ export default {
 		},
 
 		labelClass: function () {
+			if (utils.isPropOn(this.disabled))
+				return 'disabled'
 			return this.hasFocus ? 'focus' : ''
 		},
 
@@ -104,7 +106,6 @@ export default {
 		// It allows us to capture a focus element in a parent of the 
 		// <input> element where the focus actually takes place
 		divElem.addEventListener('blur', this.onFocusEvent, true)  // <- Same as above
-		console.log(this)
 	},
 
 	beforeDestroy: function () {
@@ -122,8 +123,6 @@ export default {
 		setFocus: function () {
 			this.hasFocus = true
 			this.$nextTick(() => this.$emit('set-focus'))
-			console.log('slots:')
-			console.log(this.$slots)
 		},
 
 		onInput: function (e) {
@@ -177,11 +176,16 @@ $focus-color: #1867c0;
 	padding-left:0.5em;
 	padding-bottom:0.125em;
 	text-align:left;
+
+	&.focus {
+		color: $focus-color;
+	}
+
+	&.disabled {
+		color: $color-disabled;
+	}
 }
 
-.textbox > .dv-input-label.focus {
-	color: $focus-color;
-}
 
 /*
 .textbox:not(.floating).rounded > input.dv-input-text {

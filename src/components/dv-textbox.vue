@@ -7,6 +7,7 @@
 		:floating="floating"
 		:rounded="rounded"
 		:no-border="noBorder"
+		:disabled="disabled"
 		:color="color"
 		:info="info"
 		:error="error"
@@ -19,6 +20,7 @@
 			class="dv-input-text" 
 			:class="inputClass"
 			:placeholder="placeholder" 
+			:disabled="disabled"
 			:value="value"
 			ref="input"
 			@input="onInput"
@@ -38,7 +40,7 @@ export default {
 		dvFormField
 	},
 
-	props: ['display', 'width', 'label', 'placeholder', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value'],
+	props: ['display', 'width', 'label', 'placeholder', 'disabled', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value'],
 
 	computed: {
 
@@ -53,6 +55,10 @@ export default {
 		isEmpty: function () {
 			return !this.value || !this.value.length
 		},
+
+		isDisabled: function () {
+			return !!utils.isPropOn(this.disabled)
+		},			
 
 		inputClass: function () {
 			let classes = []
@@ -111,11 +117,22 @@ input.dv-input-text {
     font-size: $font-size;
     height: $form-control-height;
 
+    &:disabled {
+    	opacity: 0.75;
+    	color: #606060;
+    }
+
+    &:hover:not(:disabled) {
+    	cursor:text;
+	}  
+
+	&:hover:disabled {
+		cursor: no-drop;
+	}		
+
 }  
+
   
-input.dv-input-text:hover {
-    cursor:text;
-}  
 
 input.dv-input-text:not(.floating).rounded {
 	border-radius: $border-radius-rounded;
