@@ -37,7 +37,17 @@
 			<dv-button class="border" wide>Cancelar</dv-button>			
 		</dv-combo>
 
-
+<div style="position:absolute;
+	background-color:transparent;
+	top:100px;
+	left:100px;
+	width:100px;
+	height:200px;
+	border:4px solid rgba(128,128,128,0.75);
+	border-radius:0px;
+	border-bottom-left-radius:16px;
+	border-top:none;
+	border-right:none;"></div>
 
 		<br><br>
 

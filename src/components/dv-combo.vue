@@ -2,6 +2,9 @@
 
 	<div
 		class="dv-combo" 
+		:class="divClass"
+		@focusin="onFocusin"
+		@focusout="onFocusout"
 	>
 	<slot></slot>
 	</div>
@@ -13,7 +16,31 @@
 export default {
 
 	data: function () {
-		return {}
+		return {
+			hasFocus: false
+		}
+	},
+
+	computed: {
+
+		divClass: function () {
+			if (this.hasFocus)
+				return 'focus'
+			return ''
+		}
+
+	},
+
+	methods: {
+		onFocusin: function (e) {
+			if (e.srcElement.nodeName == 'INPUT') {
+				this.hasFocus = true
+			}	
+		},
+
+		onFocusout: function () {
+			this.hasFocus = false
+		}
 	}
 
 }
@@ -32,7 +59,11 @@ export default {
 	border-radius: 8px;
 
 	&:focus-within {
-		border: 1px solid $color-primary;
+		border: 3px solid $focus-color;
+	}
+
+	&.focus {
+		box-shadow: 0px 0px 1px 1px $focus-color;
 	}
 
 	& > * {
@@ -71,9 +102,7 @@ export default {
 	}
 
 	& > input:focus {
-		border-color: $color-primary;
 		outline: none !important;
-		box-shadow: 0px 0px 1px 1px $color-primary;
 		z-index:10;
 	}
 
