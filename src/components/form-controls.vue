@@ -5,9 +5,43 @@
 	<h3>Form controls</h3><p>
 
 	<br>
-
-	<br>
 	<div style="text-align:left">
+
+		Search Google:<br>
+		<dv-combo>
+			<input class="dv-input-text" v-model="text2">
+			<i class="material-icons" style="cursor:pointer">search</i>
+		</dv-combo>
+
+
+		<br>This is a combo component<br>
+		<dv-combo>
+			<i class="material-icons">save</i>
+			<input class="dv-input-text" v-model="text2">
+			<dv-button class="border">OK</dv-button>
+			<i class="material-icons" style="cursor:pointer">keyboard_arrow_down</i>
+		</dv-combo>
+
+		<br>This is a combo component<br>
+		<dv-combo>
+			<i class="material-icons">drag_indicator</i>
+			<i class="material-icons">save</i>
+			<input class="dv-input-text" v-model="text2">
+			<dv-button class="border">OK</dv-button>
+			<dv-button class="border" wide>Cancelar</dv-button>			
+			<i class="material-icons" style="cursor:pointer">keyboard_arrow_down</i>
+		</dv-combo>
+<br><br>
+		<dv-combo>
+			<dv-button class="border">OK</dv-button>
+			<dv-button class="border" wide>Cancelar</dv-button>			
+		</dv-combo>
+
+
+
+		<br><br>
+
+
 		Who are you going to vote for? <br>
 		<dv-input-select search placeholder="Selecione seu candidato">
 		<option placeholder>Please click here...</option>
@@ -100,6 +134,8 @@
 
 <script>
 
+import dvButton from './dv-button.vue'
+import dvCombo from './dv-combo.vue'
 import dvTextbox from './dv-textbox.vue'
 import dvSelectbox from './dv-selectbox.vue'
 import dvInputSelect from './dv-input-select.vue'
@@ -107,6 +143,8 @@ import dvInputSelect from './dv-input-select.vue'
 export default {
 
 	components: {
+		dvButton,
+		dvCombo,
 		dvTextbox,
 		dvSelectbox,
 		dvInputSelect

@@ -448,6 +448,7 @@
 import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
+import dvCombo from './dv-combo.vue'
 import dvMenu from './dv-menu.vue'
 import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
@@ -473,6 +474,7 @@ export default {
     	dvButton,
     	dvBtnGroup,
     	dvCheckbox,
+    	dvCombo,
     	dvMenu,
     	dvOptionbox,
     	dvOptions,
