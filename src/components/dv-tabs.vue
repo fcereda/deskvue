@@ -294,19 +294,20 @@ export default {
 }
 
 li.dv-tab-item {
-   display:inline-block;
+   display: inline-block;
    border-top: 2px solid transparent;
    border-bottom: 2px solid transparent;
-   padding-left:1em;
-   padding-right:1em;
-   padding-top:0.5em;
-   padding-bottom:0.35em;
+   padding-left: 1em;
+   padding-right: 1em;
+   padding-top: 0.5em;
+   padding-bottom: 0.35em;
    transform: translateY(1.5px);
-   margin-right:0px;
-   margin-left:0px;
-   font-size:14px;
-   user-select:none;
-   cursor:pointer;
+   margin-right: 0px;
+   margin-left: 0px;
+   font-size: 14px;
+   text-align: center;
+   user-select: none;
+   cursor: pointer;
 
 	&.disabled {
 		color: $color-disabled; 
