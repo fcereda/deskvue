@@ -159,7 +159,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 }
 
 .dv-select-container.no-border > .choices {
-	height: 1.8em;
+	min-height: 1.8em;
 }
 
 .choices__inner {

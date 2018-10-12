@@ -65,15 +65,16 @@ export default {
 
 .dv-combo {
 	display: inline-flex;
-	align-items: center;
+	align-items: stretch;
 	border: 1px solid $border-color;
 	background-color: #fff;
 	border-radius: 8px;
 	vertical-align: text-top;
+	position: relative;
 
 	&.focus {
+		z-index: 1100 !important;
 		box-shadow: 0px 0px 1px 1px $focus-color;
-		z-index: 100;
 	}
 
 	& > * {
@@ -87,8 +88,12 @@ export default {
 	}
 
 	&:not(.slim) > .dv-button:not(:active) {
-		height: 31px;
+		min-height: 31px;
 	}
+
+	& > .dv-button {
+		height: auto;
+	}		
 
 	& > *.border {
 		border-left-color: $border-color !important;
@@ -130,6 +135,7 @@ export default {
 
 	& > .dv-icon,
 	& > .material-icons {
+		align-self: center;
 		padding-left: 0.125em;
 		padding-right: 0.125em;
 		font-size: 20px;

@@ -72,6 +72,30 @@
 			<dv-button class="border" wide>Cancelar</dv-button>			
 			<i class="material-icons" style="cursor:pointer">keyboard_arrow_down</i>
 		</dv-combo>
+
+
+		<dv-combo>
+
+			<dv-icon>search</dv-icon>
+	
+			<dv-input-select multiple search rounded no-border>
+				<option v-for="pilot in currentPilots">{{ pilot }}</option>
+			</dv-input-select>
+			<dv-button primary>OK</dv-button>
+		</dv-combo>
+
+		<br>
+
+		<dv-combo>
+
+			<dv-icon>search</dv-icon>
+	
+			<dv-input-select search rounded no-border>
+				<option v-for="pilot in currentPilots">{{ pilot }}</option>
+			</dv-input-select>
+			<dv-button warning>OK</dv-button>
+		</dv-combo>		<br>	
+
 <br><br>
 		<dv-combo>
 			<dv-button class="border"><dv-icon>check_circle_outline</dv-icon>  OK</dv-button>
