@@ -22,22 +22,37 @@
 		<dv-combo>
 			<i class="material-icons" style="cursor:pointer">search</i>
 			<input class="dv-input-text" v-model="text2">
+			<dv-iconbutton link>keyboard_arrow_up</dv-iconbutton>			
 			<dv-iconbutton flat>keyboard_arrow_down</dv-iconbutton>
 			<dv-button class="border">OK</dv-button>			
 		</dv-combo>
 
-		<br>
+		<br><br>    
+		    <dv-button success small short>> Run</dv-button><dv-button success small short><dv-icon>keyboard_arrow_right</dv-icon> Run &nbsp; <small>Ctrl-R</small></dv-button>
 
-		Search Google:<br>
-		<dv-combo>
-			<input class="dv-input-text" v-model="text2">
-			<i class="material-icons" style="cursor:pointer">search</i>
-		</dv-combo>
+		<br><br>    	
+		Search Google and any other sites you'd like:<br>
+		<div style="background-color:yellow;">
+			<dv-combo width="10em">
+				<input class="dv-input-text" v-model="text2">
+				<dv-icon rotate="90deg">search</dv-icon>
+			</dv-combo>
 
-		<dv-combo>
-			<input class="dv-input-text" v-model="text2">
-			<dv-iconbutton>search</dv-iconbutton>
-		</dv-combo>
+			<dv-combo width="10em">
+				<dv-icon>save</dv-icon>
+				<input class="dv-input-text" v-model="text2">
+
+				<i class="material-icons">save</i>
+				<i class="material-icons" style="cursor:pointer">search</i>
+			</dv-combo> 
+
+			<dv-combo width="15em">
+				<dv-button>save</dv-button>
+				<input class="dv-input-text" v-model="text2">
+				<dv-iconbutton>search</dv-iconbutton>			
+			</dv-combo>
+		</div>	
+
 
 
 		<br>This is a combo component<br>
@@ -59,8 +74,8 @@
 		</dv-combo>
 <br><br>
 		<dv-combo>
-			<dv-button class="border">OK</dv-button>
-			<dv-button class="border" wide>Cancelar</dv-button>			
+			<dv-button class="border"> OK <dv-icon>keyboard_arrow_right</dv-icon></dv-button>
+			<dv-button class="border" wide>Cancelar <dv-icon style="background-color:yellow;">keyboard_arrow_right</dv-icon></dv-button>			
 		</dv-combo>
 
 <div style="position:absolute;
@@ -81,7 +96,7 @@
 		Who are you going to vote for? <br>
 		<dv-input-select search placeholder="Selecione seu candidato">
 		<option placeholder>Please click here...</option>
-			<option v-for="tag in tags">{{ tag }}</option>
+			<option v-for="tag in pilots">{{ tag }}</option>
 		</dv-input-select>
 
 		<br><br>
@@ -93,7 +108,7 @@
 		<br><br>
 		Who are you not voting for in any circumstance?<br>
 		<dv-input-select multiple search rounded>
-			<option v-for="tag in tags">{{ tag }}</option>
+			<option v-for="tag in pilots">{{ tag }}</option>
 		</dv-input-select>
 
 		<br><br>
@@ -172,6 +187,7 @@
 
 import dvButton from './dv-button.vue'
 import dvCombo from './dv-combo.vue'
+import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
 import dvTextbox from './dv-textbox.vue'
 import dvSelectbox from './dv-selectbox.vue'
@@ -182,6 +198,7 @@ export default {
 	components: {
 		dvButton,
 		dvCombo,
+		dvIcon,
 		dvIconbutton,
 		dvTextbox,
 		dvSelectbox,
@@ -190,6 +207,7 @@ export default {
 
 	data: function () {
 		return {
+			rotation: 45,
 	   		pilots: ['Wilson Fittipaldi', 'Emerson Fittipaldi', 'José Carlos Pace', 'Ingo Hoffman', 'Alex Dias Ribeiro', 'Nelson Piquet'],
 	   		currentPilots: ['Hamilton', 'Bottas', 'Vettel', 'Raikkonen', 'Max', 'Riccardo', 'Alonso', 'Leclerc', 'Grosjean'],
 	   		myPilots: null,
@@ -200,6 +218,14 @@ export default {
 	   		text5: 'Niki Lauda',
 	   		text6: 'Nelson Piquet',
 		}
+	},
+
+	mounted: function () {
+		setInterval(() => {
+			this.rotation += 15
+			if (this.rotation >= 360)
+				this.rotation -= 360
+		}, 200)
 	}
 
 }

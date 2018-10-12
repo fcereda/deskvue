@@ -13,7 +13,7 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['disabled', 'slim', 'flat'],
+	props: ['disabled', 'slim', 'flat', 'link'],
 
 	data: function () {
 		return {
@@ -25,7 +25,8 @@ export default {
 		buttonClass: function () {
 			return utils.computeClasses({
 				slim: 'slim',
-				flat: 'flat'
+				flat: 'flat',
+				link: 'link'
 			}, this)
 		}
 	}
@@ -39,7 +40,7 @@ export default {
 @import './base.scss';
 
 $icon-size: 20px;
-$button-height: 32px;
+$button-height: 2.25em;
 
 $icon-color: #2c3e50;
 
@@ -84,19 +85,32 @@ $button-active-transform: translateY(1px);
 		background-color: #eee;
 	}
 
+	&.link:hover {
+		box-shadow: none;
+	}
+
 	&:focus {
 		outline: none;
 		box-shadow: 0px 0px 1px 2px rgba(64, 64, 64, 0.25);
 		z-index:100;
 	}
 
-	&.flat:active {
-		background-color: #ccc;
-	}
+	&.link:focus {
+		box-shadow: none;
+		color: $color-primary;		
+	}		
 
 	&:active {
 		box-shadow: $button-active-shadow;
 		transform: $button-active-transform;
+	}
+
+	&.flat:active {
+		background-color: #ccc;
+	}
+
+	&.link:active {
+		box-shadow: none;
 	}
 
 }

@@ -3,6 +3,7 @@
 	<div
 		class="dv-combo" 
 		:class="divClass"
+		:style="divStyle"
 		@focusin="onFocusin"
 		@focusout="onFocusout"
 	>
@@ -13,7 +14,11 @@
 
 <script>
 
+import utils from './utils.js'
+
 export default {
+
+	props: ['width', 'slim'],
 
 	data: function () {
 		return {
@@ -24,8 +29,15 @@ export default {
 	computed: {
 
 		divClass: function () {
-			if (this.hasFocus)
-				return 'focus'
+			return utils.computeClasses({
+				focus: this.hasFocus,
+				slim: utils.isPropOn(this.slim)
+			}	)
+		},
+
+		divStyle: function () {
+			if (this.width)
+				return `width:${this.width};`
 			return ''
 		}
 
@@ -53,17 +65,15 @@ export default {
 
 .dv-combo {
 	display: inline-flex;
-	//align-items: stretch;
+	align-items: center;
 	border: 1px solid $border-color;
 	background-color: #fff;
 	border-radius: 8px;
-
-	&:focus-within {
-		border: 3px solid $focus-color;
-	}
+	vertical-align: text-top;
 
 	&.focus {
 		box-shadow: 0px 0px 1px 1px $focus-color;
+		z-index: 100;
 	}
 
 	& > * {
@@ -72,7 +82,11 @@ export default {
 		margin: 0;
 	}
 
-	& > .dv-button:not(:active) {
+	&.slim > * {
+		height: auto !important;
+	}
+
+	&:not(.slim) > .dv-button:not(:active) {
 		height: 31px;
 	}
 
@@ -93,6 +107,11 @@ export default {
 		border-radius: 0px;
 	}
 
+	&.slim > .dv-iconbutton {
+		min-height: 0;
+		line-height:100%;
+	}
+
 	& > *:first-child {
 		border-top-left-radius: 8px;
 		border-bottom-left-radius: 8px;
@@ -107,26 +126,28 @@ export default {
 
 	& > input:focus {
 		outline: none !important;
-		z-index:10;
 	}
 
+	& > .dv-icon,
 	& > .material-icons {
 		padding-left: 0.125em;
 		padding-right: 0.125em;
 		font-size: 20px;
-		line-height: 160%;
 		cursor: default;
 		user-select: none;
 		opacity: 0.75;
 	}
 
+	& > .dv-icon,
 	& > .material-icons:first-child {
 		padding-left: 0.25em;
 	}
 
+	& > .dv-icon,
 	& > .material-icons:last-child {
 		padding-right: 0.1825em;
 	}
+
 
 }
 
