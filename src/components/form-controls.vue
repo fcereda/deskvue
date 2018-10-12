@@ -12,8 +12,8 @@
 		Hello World!
 
 		<br>Slim buttons:
-		<dv-iconbutton slim>save</dv-iconbutton>
-		<dv-iconbutton slim>search</dv-iconbutton> 
+		<dv-iconbutton slim flat>save</dv-iconbutton>
+		<dv-iconbutton slim flat>search</dv-iconbutton> 
 
 
 		<br>
@@ -74,8 +74,8 @@
 		</dv-combo>
 <br><br>
 		<dv-combo>
-			<dv-button class="border"> OK <dv-icon>keyboard_arrow_right</dv-icon></dv-button>
-			<dv-button class="border" wide>Cancelar <dv-icon style="background-color:yellow;">keyboard_arrow_right</dv-icon></dv-button>			
+			<dv-button class="border"><dv-icon>check_circle_outline</dv-icon>  OK</dv-button>
+			<dv-button class="border" wide><dv-icon>cancel</dv-icon> Cancelar</dv-button>			
 		</dv-combo>
 
 <div style="position:absolute;

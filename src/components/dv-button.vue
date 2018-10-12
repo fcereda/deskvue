@@ -159,6 +159,10 @@ export default {
       box-shadow: 0px 0px 0px 0px;
   }    
 
+  & > .dv-icon {
+    opacity: 0.75;
+  }
+
   &.primary,
   &.danger,
   &.error,
@@ -166,6 +170,10 @@ export default {
   &.warning {
     color: white;
     font-weight: 700;
+
+    & > .dv-icon {
+      opacity: 0.95;
+    }
   }
 
   &.primary {
@@ -203,7 +211,7 @@ export default {
 
 }
 
-  
+
 
   
  
