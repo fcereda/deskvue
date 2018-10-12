@@ -91,7 +91,7 @@ export default {
   cursor: pointer;
   user-select: none;
   font-family: inherit;
-  height: 2.25em;
+  height: $form-control-height;
   margin-left: 0.4em;
 }  
 
@@ -118,11 +118,12 @@ export default {
   }  
 
 .circle {
-    min-width:0.5em !important;
-    width: 2.75em !important;
-    text-align:center;
-    height: 2.75em;
-    border-radius:50%;
+    min-width: $form-control-height !important;
+    height: $form-control-height;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+    border-radius: 50em;
  }  
 
 .pill {
@@ -137,12 +138,6 @@ export default {
     font-size:1.5em;
   }  
   
-.purple {
-    background-color: #2196F3;
-    color: white;
-    font-weight:700;  
-    text-transform: uppercase;
-}  
   
 .dv-button:hover {
     filter: drop-shadow(0px 3px 3px gray);
@@ -214,80 +209,5 @@ export default {
 	background-color: $bg-color-dark;
 }
 
-/* 
-.primary {
-    background-color: $bg-color-primary;
-    color: white;
-    font-weight:700;
-}
   
-.secondary {
-    background-color: #6c757d;  
-    color: white;
-    //font-weight: 700;
-}  
-  
-.warning {
-    background-color: #FF9800;
-    color: white;
-    font-weight: 700;
-}  
-
-.danger {
-    background-color: #cb2431; 
-    border-color: #cb2431; 
-    color: white;
-    font-weight: 700;
-  }
-  
-.success {
-    background-color: #28a745; 
-  border-color: #28a745; 
-  color: white;
-  font-weight: 700;
-}
-  
- 
-.info {
-  background-color: #4FC3F7; 
-  color: black;
-}  
- 
-.dark {
-    background-color: #607D8B;
-    border-color: #607D8B;
-    color: white;
-    font-weight:700;
-} 
-*/ 
-
-.purple {
-    background-color: #9C27B0;
-    color: white;
-    font-weight:700;  
-    text-transform: uppercase;
-}  
-  
-.purple:hover {
-    filter: drop-shadow(2px 2px 2px gray);
-}  
-      
-.purple:active {
-    transform: translateY(1px);
-    box-shadow: inset 0px 2px 2px 2px rgba(0,0,0,0.15) !important;
-    filter: none;
-}  
-  
-.1dv-button:hover {
-	text-decoration: none;
-  box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.25);
-
-  }  
-
-.ml-2 {
-    margin-left: 0.5em;
-  }  
-  
-
-
 </style>

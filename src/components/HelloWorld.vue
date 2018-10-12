@@ -48,7 +48,7 @@
     <dv-button circle no-border>$</dv-button>
     <dv-button circle no-focus no-border>%</dv-button>
     <dv-button circle no-focus no-border>&</dv-button>
-    <dv-button circle no-focus no-border>#</dv-button>
+    <dv-button circle no-focus no-border>#1HHH</dv-button>
     <dv-button circle no-focus no-border>§</dv-button>
     <h4>Button group</h4>
     <dv-btn-group>
