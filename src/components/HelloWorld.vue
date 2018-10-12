@@ -126,14 +126,15 @@
     	<dv-tab-item title="Custom HTML" v-html="'<h3>Hello</h3>Para remover um tab, foque nele e pressione <kbd>Del</kbd>'"></dv-tab-item>
     	<dv-tab-item title="Nested tab">
     		<dv-tabs ref="nested" 
+    			align="right"
 	   			width="100%"
     	    	active-color="none"
     			content-background-color="white"
     			content-border
     			tab-width="25%">
     			<dv-tab-item title="Tab 1">This is tab 1</dv-tab-item>
-    			<dv-tab-item title="Fixed width tabs">This is the second tab</dv-tab-item>
     			<dv-tab-item disabled title="Disabled">This should be a hidden tab</dv-tab-item>
+    			<dv-tab-item title="Fixed width tabs">This is the second tab</dv-tab-item>
     		</dv-tabs>
     	</dv-tab-item>		
     </dv-tabs>

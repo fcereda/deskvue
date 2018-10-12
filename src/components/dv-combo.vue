@@ -53,7 +53,7 @@ export default {
 
 .dv-combo {
 	display: inline-flex;
-	align-items: stretch;
+	//align-items: stretch;
 	border: 1px solid $border-color;
 	background-color: #fff;
 	border-radius: 8px;
@@ -87,6 +87,10 @@ export default {
 
 	& > *:focus {
 		z-index:100;
+	}
+
+	& > .dv-iconbutton {
+		border-radius: 0px;
 	}
 
 	& > *:first-child {

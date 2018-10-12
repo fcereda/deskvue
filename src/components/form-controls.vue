@@ -7,10 +7,36 @@
 	<br>
 	<div style="text-align:left">
 
+		<dv-iconbutton>save</dv-iconbutton>
+		<dv-iconbutton>search</dv-iconbutton> 
+		Hello World!
+
+		<br>Slim buttons:
+		<dv-iconbutton slim>save</dv-iconbutton>
+		<dv-iconbutton slim>search</dv-iconbutton> 
+
+
+		<br>
+
+		Simple combo:<br>
+		<dv-combo>
+			<i class="material-icons" style="cursor:pointer">search</i>
+			<input class="dv-input-text" v-model="text2">
+			<dv-iconbutton flat>keyboard_arrow_down</dv-iconbutton>
+			<dv-button class="border">OK</dv-button>			
+		</dv-combo>
+
+		<br>
+
 		Search Google:<br>
 		<dv-combo>
 			<input class="dv-input-text" v-model="text2">
 			<i class="material-icons" style="cursor:pointer">search</i>
+		</dv-combo>
+
+		<dv-combo>
+			<input class="dv-input-text" v-model="text2">
+			<dv-iconbutton>search</dv-iconbutton>
 		</dv-combo>
 
 
@@ -146,6 +172,7 @@
 
 import dvButton from './dv-button.vue'
 import dvCombo from './dv-combo.vue'
+import dvIconbutton from './dv-iconbutton.vue'
 import dvTextbox from './dv-textbox.vue'
 import dvSelectbox from './dv-selectbox.vue'
 import dvInputSelect from './dv-input-select.vue'
@@ -155,6 +182,7 @@ export default {
 	components: {
 		dvButton,
 		dvCombo,
+		dvIconbutton,
 		dvTextbox,
 		dvSelectbox,
 		dvInputSelect

@@ -6,10 +6,24 @@ function isPropOn(prop) {
 	return prop || (prop === '')
 }
 
+function computeClasses (classesObj, component) {
+	let classes = []
+	for (let cls in classesObj) {
+		let value = classesObj[cls]
+		if (typeof value == 'string') {
+			value = isPropOn(component[value])
+		}
+		if (value) {
+			classes.push(cls)
+		}
+	}
+	return classes.join(' ')
+}
 
 export default {
 
 	isPropOn,	
+	computeClasses,
 
 	getComponentClasses (component, props) {
 		let classes = []
