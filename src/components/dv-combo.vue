@@ -65,7 +65,7 @@ export default {
 
 .dv-combo {
 	display: inline-flex;
-	align-items: stretch;
+	align-items: center;
 	border: 1px solid $border-color;
 	background-color: #fff;
 	border-radius: 8px;
@@ -73,7 +73,7 @@ export default {
 	position: relative;
 
 	&.focus {
-		z-index: 1100 !important;
+		z-index: 100 !important;
 		box-shadow: 0px 0px 1px 1px $focus-color;
 	}
 
@@ -91,8 +91,15 @@ export default {
 		min-height: 31px;
 	}
 
+	& > input {
+		flex-grow: 2;
+	}
+
 	& > .dv-button {
+		align-self: stretch;
 		height: auto;
+		min-width: inherit;
+		flex-grow: 1;
 	}		
 
 	& > *.border {
@@ -135,7 +142,6 @@ export default {
 
 	& > .dv-icon,
 	& > .material-icons {
-		align-self: center;
 		padding-left: 0.125em;
 		padding-right: 0.125em;
 		font-size: 20px;
@@ -144,16 +150,27 @@ export default {
 		opacity: 0.75;
 	}
 
-	& > .dv-icon,
-	& > .material-icons:first-child {
-		padding-left: 0.25em;
+	& > .dv-iconbutton {
+		min-width: 1.825em;
+		padding-left: 0.125em;
+		padding-right: 0.125em;
 	}
 
-	& > .dv-icon,
-	& > .material-icons:last-child {
-		padding-right: 0.1825em;
+	& > *:first-child {
+		&.dv-icon,
+		&.dv-iconbutton,
+		&.material-icons:first-child {
+			padding-left: 0.25em;
+		}
 	}
 
+	& > *:last-child {
+		&.dv-icon,
+		&.dv-iconbutton,
+		&.material-icons:last-child {
+			padding-right: 0.1825em;
+		}
+	}
 
 }
 

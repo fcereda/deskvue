@@ -79,19 +79,22 @@ export default {
 @import './base.scss';
 
 .dv-button {
+  box-sizing: border-box;
+
+  min-width: 5em;
+  height: $form-control-height;
   padding-left: 1.0em;
   padding-right: 1.0em;
+
   background-color: #fff;
   color: #333;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;		
   outline: 1px transparent;
-  min-width: 5em;
-  line-height: 150%;
+
   cursor: pointer;
   user-select: none;
   font-family: inherit;
-  height: $form-control-height;
   margin-left: 0.4em;
 
   &.no-border {
@@ -207,6 +210,10 @@ export default {
 
   &.dark {
     background-color: $bg-color-dark;
+  }
+
+  & > br {
+    line-height: 170%;
   }
 
 }

@@ -19,6 +19,7 @@
 
     <h3>Buttons</h3>
     <dv-button primary wide>Hello</dv-button>
+    <dv-button>Cancelar</dv-button>
     <dv-button warning class="warning">Warning</dv-button>
     <dv-button danger>Error</dv-button>
     <dv-button success>Done</dv-button>

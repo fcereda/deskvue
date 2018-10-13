@@ -59,22 +59,31 @@
 		<dv-combo>
 			<i class="material-icons">save</i>
 			<input class="dv-input-text" v-model="text2">
-			<dv-button class="border">OK</dv-button>
-			<i class="material-icons" style="cursor:pointer">keyboard_arrow_down</i>
+			<dv-button tall class="border"><dv-icon>save</dv-icon><br>Save</dv-button>
+			<dv-button tall class="border"><dv-icon>save</dv-icon><br>Save&nbsp;or store</dv-button>
+			<dv-iconbutton link>keyboard_arrow_down</dv-iconbutton>
 		</dv-combo>
 
 		<br>This is a combo component<br>
-		<dv-combo>
+		<dv-combo width="30em">
+			<i class="material-icons">drag_indicator</i>
+			<i class="material-icons">save</i>
+			<input class="dv-input-text" v-model="text2">
+			<dv-button tall class="border">OK</dv-button>
+			<dv-button class="border">Cancelarrr</dv-button>			
+			<i class="material-icons" style="cursor:pointer">keyboard_arrow_down</i>
+		</dv-combo>
+
+		<dv-combo width="30em">
 			<i class="material-icons">drag_indicator</i>
 			<i class="material-icons">save</i>
 			<input class="dv-input-text" v-model="text2">
 			<dv-button class="border">OK</dv-button>
-			<dv-button class="border" wide>Cancelar</dv-button>			
-			<i class="material-icons" style="cursor:pointer">keyboard_arrow_down</i>
+			<dv-button class="border">Cancelarrr</dv-button>			
+			<dv-iconbutton>keyboard_arrow_down</dv-iconbutton>
 		</dv-combo>
 
-
-		<dv-combo>
+		<dv-combo width="30em">
 
 			<dv-icon>search</dv-icon>
 	
@@ -86,7 +95,7 @@
 
 		<br>
 
-		<dv-combo>
+		<dv-combo width="30em">
 
 			<dv-icon>search</dv-icon>
 	
