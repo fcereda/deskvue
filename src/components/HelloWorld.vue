@@ -48,7 +48,7 @@
     <dv-button pill>What is this?</dv-button>
     <dv-button circle no-border>$</dv-button>
     <dv-button circle no-focus no-border>%</dv-button>
-    <dv-button circle no-focus no-border>&</dv-button>
+    <dv-button circle no-focus no-border><dv-icon>commute</dv-icon></dv-button>
     <dv-button circle no-focus no-border>#1HHH</dv-button>
     <dv-button circle no-focus no-border>§</dv-button>
     <h4>Button group</h4>
@@ -419,6 +419,20 @@
 		<br>
 		{{ option3 }}
 	</fieldset>		
+
+	<br><br>
+
+	<dv-pane 
+		vertical
+		default-scroll
+		width="20em"
+		height="15em"
+		border="1px solid #aaa"
+	>
+
+		{{ lorenIpsun }}
+
+	</dv-pane>
 	
 
     <h3>Installed CLI Plugins</h3>
@@ -451,11 +465,13 @@ import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
 import dvCombo from './dv-combo.vue'
+import dvIcon from './dv-icon.vue'
 import dvMenu from './dv-menu.vue'
 import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
 import dvRadio from './dv-radio.vue'
 import dvRadiogroup from './dv-radiogroup.vue'
+import dvPane from './dv-pane.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
@@ -477,9 +493,11 @@ export default {
     	dvBtnGroup,
     	dvCheckbox,
     	dvCombo,
+    	dvIcon,
     	dvMenu,
     	dvOptionbox,
     	dvOptions,
+    	dvPane,
     	dvRadio,
     	dvRadiogroup,
     	dvSelectbox,
@@ -574,6 +592,13 @@ export default {
 	   		option2: null,
 	   		option3: null,
 	   		option4: [],
+	   		lorenIpsun: (function () {
+	   			let line = firstNames.join(' ')
+	   			let lines = []
+	   			for (let i=0; i<100; i++)
+	   				lines.push(line)
+	   			return lines.join('<br>')
+			})()	   			
 		} 
 
     },

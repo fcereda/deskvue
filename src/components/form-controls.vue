@@ -125,6 +125,30 @@
 
 		<br><br>
 
+		A native select component<br>
+		<dv-select-native
+			v-model="nativePilot"
+			style="float:left;">
+			<option v-for="pilot in pilots">{{ pilot }}</option>				
+		</dv-select-native>
+
+		<dv-select-native
+			
+			width="10em"
+			v-model="nativePilot"
+			style="float:left;">
+			<option v-for="pilot in pilots">{{ pilot }}</option>				
+		</dv-select-native>
+
+		<dv-textbox
+			:value="nativePilot"
+			style="float:left"
+			width="10em"
+		></dv-textbox>			
+
+		<br>{{ myPilots}}<br>
+
+
 
 		Who are you going to vote for? <br>
 		<dv-input-select search placeholder="Selecione seu candidato">
@@ -224,6 +248,7 @@ import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
 import dvTextbox from './dv-textbox.vue'
 import dvSelectbox from './dv-selectbox.vue'
+import dvSelectNative from './dv-select-native.vue'
 import dvInputSelect from './dv-input-select.vue'
 
 export default {
@@ -235,6 +260,7 @@ export default {
 		dvIconbutton,
 		dvTextbox,
 		dvSelectbox,
+		dvSelectNative,
 		dvInputSelect
 	},
 
@@ -244,6 +270,7 @@ export default {
 	   		pilots: ['Wilson Fittipaldi', 'Emerson Fittipaldi', 'José Carlos Pace', 'Ingo Hoffman', 'Alex Dias Ribeiro', 'Nelson Piquet'],
 	   		currentPilots: ['Hamilton', 'Bottas', 'Vettel', 'Raikkonen', 'Max', 'Riccardo', 'Alonso', 'Leclerc', 'Grosjean'],
 	   		myPilots: null,
+	   		nativePilot: null,
 	   		text1: '',
 	   		text2: 'John Stewart',
 	   		text3: '',
