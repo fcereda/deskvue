@@ -3,7 +3,8 @@
 	<button 
 		class="dv-iconbutton" 
 		:class="buttonClass"
-	><i class="material-icons"><slot></slot></i></button>
+		@click="onclick"
+	><i class="material-icons" :style="iconStyle"><slot></slot></i></button>
 
 </template>
 
@@ -13,7 +14,7 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['disabled', 'slim', 'flat', 'link'],
+	props: ['disabled', 'slim', 'flat', 'link', 'rotate'],
 
 	data: function () {
 		return {
@@ -28,6 +29,21 @@ export default {
 				flat: 'flat',
 				link: 'link'
 			}, this)
+		},
+
+		iconStyle: function () {
+			if (!this.rotate)
+				return ''
+			let rotation = this.rotate
+			if (typeof rotation == 'number')
+				rotation = `${rotation}deg`
+			return `transform:rotate(${rotation});`
+		}
+	},
+
+	methods: {
+		onclick: function (e) {
+			this.$emit('click', e)
 		}
 	}
 
