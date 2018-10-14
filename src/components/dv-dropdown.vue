@@ -1,47 +1,26 @@
 <template>
 
 	<div 
-		class="dv-dropdown-container"
-		@click="blockClick">
-		<dv-combo 
-			ref="parent"
-			:rounded="rounded"
-		>
-			<div @click="toggleDisplay"><slot name="head"></slot></div>
-			<dv-iconbutton 
-				:rotate="display ? 180 : 0"
-				@click="toggleDisplay"
-			>keyboard_arrow_down</dv-iconbutton>
-		</dv-combo>	
-		<div 
-			ref="popup"
-			class="dv-dropdown-pane"
-			:style="paneStyle"> 
-			<slot name="pane" @close="display=false"></slot>
-		</div>
-	</div>	
+		class="dv-dropdown"
+		:style="paneStyle"
+		@click="blockEvent"
+		@keydown="onKeydown"> 
+		<slot></slot>
+	</div>
 
 </template>
 
 <script>
 
 import utils from './utils.js'
-import dvCombo from './dv-combo.vue'
-import dvIconbutton from './dv-iconbutton.vue'
 import Popper from 'popper.js'
 
 export default {
 
-	props: ['rounded'],
+	props: ['anchor', 'placement', 'show', 'closeOnEsc'],
 
-	components: {
-		dvCombo,
-		dvIconbutton
-	},
-	
 	data: function () {
 		return {
-			display: false,
 			popper: null,
 			windowClickEvent: null
 		}
@@ -49,19 +28,31 @@ export default {
 
 	computed: {
 		paneStyle: function () {
-			if (this.display) 
+			if (this.show) {
+				this.popper.update()
 				return 'display:inline-block;'
+			}
+			return ''
+		}
+	},
+
+	watch: {
+		show: function (e) {
+			const show = !!this.show
+			this.$emit(show ? 'show' : 'hide', show)
 		}
 	},
 
 	mounted: function () {
-		let {parent, popup} = this.$refs
-		parent = parent.$el
-		this.popper = new Popper(parent, popup, {
-			placement: 'bottom-start',
+		let anchor = this.$parent.$refs[this.anchor].$el
+		let popup = this.$el
+		this.popper = new Popper(anchor, popup, {
+			placement: this.placement || 'bottom-start',
 		})
 		this.windowClickEvent = () => {
-			this.display = false
+			if (this.show) {
+				this.$emit('close')
+			}				
 		}
 		document.addEventListener('click', this.windowClickEvent)
 	},
@@ -72,13 +63,21 @@ export default {
 	},
 
 	methods: {
-		toggleDisplay: function () {
-			this.display = !this.display
+		blockEvent: function (e) {
+			if (!e) 
+				return
+			e.stopPropagation()
+			e.preventDefault()
 		},
 
-		blockClick: function (e) {
-			e.stopPropagation()
-			e.preventDefault
+		onKeydown: function (e) {
+			// NOT WORKING!!
+			if (!utils.isPropOn(this.closeOnEsc))
+				return
+			if (e && e.key == 'Escape') {
+				this.$emit('close')
+				this.blockEvent(e)
+			}	
 		}
 	}
 
@@ -90,18 +89,10 @@ export default {
 
 @import './base.scss';
 
-.dv-dropdown-container {
-	display: inline-block;
-}
-
-.dv-dropdown-pane {
+.dv-dropdown {
 	display: none;
-	border: 1px solid rgba(0,0,0,0.125);
-	border-color: $border-color;
-	padding: 0.5em;
-	background-color: white;
-	color: #333;
-	z-index:101;
+	background-color:white;
+	z-index:110;
 }
 
 </style>
