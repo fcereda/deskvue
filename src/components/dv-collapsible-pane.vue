@@ -110,6 +110,7 @@ export default {
 
 	&.rounded {
 		border-radius: 8px;
+		overflow: hidden;
 	}
 }
 
@@ -123,16 +124,24 @@ export default {
 	padding-left: 1em;
 	padding-right: 0;
 
+/*
+
 	&.rounded {
 		border-top-left-radius: 8px;
 		border-top-right-radius: 8px;
 	}
+
+*/	
 }
+
+/*
 
 .dv-collapsible-pane.closed > .dv-collapsible-pane-head.rounded {
 	border-bottom-left-radius: 8px;
 	border-bottom-right-radius: 8px;
 }
+
+*/
 
 .dv-collapsible-pane-content {
 	box-sizing: border-box;
