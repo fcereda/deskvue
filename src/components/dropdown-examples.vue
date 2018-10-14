@@ -30,18 +30,21 @@
 
 	<br><br>
 
+
 	Changing the anchor of a dropdown:
 
-	<div 
+	<br><br>
+
+	<a 
 		ref="anchorleft"
 		@click="setAnchorAndShow('anchorleft')"
 		style="padding-left:40px;float:left"
-	>First anchor</div>
-	<div 
+	>First anchor</a>
+	<a 
 		ref="anchorright"
 		@click="setAnchorAndShow('anchorright')"
 		style="margin-right:40px;float:right"
-	>Second anchor</div>
+	>Second anchor</a>
 
 	<dv-dropdown
 		:anchor="linkAnchor"
@@ -80,7 +83,7 @@ export default {
 		dvIconbutton
 	},
 
-	data: function () {
+	data () {
 		return {
 			showDropdown: false,
 			showDropdown2: false,
@@ -89,11 +92,11 @@ export default {
 	},
 
 	methods: {
-		onMousedown: function (e) {
+		onMousedown (e) {
 			this.showDropdown = !this.showDropdown
 		},
 
-		onClick: function (e) {
+		onClick (e) {
 			if (!e.detail) {
 				// this is a keyboard generated click event; 
 				// we always toggle showDropdown in this case
@@ -102,24 +105,24 @@ export default {
 			this.blockEvent(e)
 		},
 
-		blockEvent: function (e) {
+		blockEvent (e) {
 			if (!e) 
 				return
 			e.stopPropagation()
 			e.preventDefault()
 		},
 
-		onKeydown: function (e) {
+		onKeydown (e) {
 			if (e && e.key == 'Escape') {
 				this.showDropdown = false
 			}
 		},
 
-		onShowHide: function (show) {
+		onShowHide (show) {
 			console.log('Entrou em onShowHide, show = ' + show)
 		},
 
-		setAnchorAndShow: function (anchor) {
+		setAnchorAndShow (anchor) {
 			this.$nextTick(() => {
 				this.linkAnchor = anchor
 				this.showDropdown2 = true

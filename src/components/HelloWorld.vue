@@ -434,15 +434,19 @@
 		{{ lorenIpsun }}
 	</dv-pane>
 
+	<br><br>
 
-	<dv-collapsible-pane title="Hello World" :open="true">
-		{{ lorenIpsun }}
-	</dv-collapsible-pane>	
+	<dv-accordion rounded>
+		<dv-collapsible-pane v-for="pilot in pilots" :title="pilot" :open="true">
+			<div v-for="pilot in pilots">{{ pilot }}</div>
+		</dv-collapsible-pane>	
+	</dv-accordion>
+	<br>
 	<dv-collapsible-pane :open="true">
 		<template slot="head">
 			<div style="padding:0.5em">Another test</div>
 		</template>
-		{{ lorenIpsun }}
+		<div v-for="pilot in pilots">{{ pilot }}</div>
 	</dv-collapsible-pane>	
 	
 
@@ -472,6 +476,7 @@
 
 <script>
 
+import dvAccordion from './dv-accordion.vue'
 import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
@@ -503,6 +508,7 @@ export default {
     name: 'HelloWorld',
 
     components: {
+    	dvAccordion,
     	dvButton,
     	dvBtnGroup,
     	dvCheckbox,
