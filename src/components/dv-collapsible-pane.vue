@@ -154,10 +154,14 @@ export default {
 	transition-delay: 0s;
 	transition-duration: 0.5s;
 
+/*
+
 	&.rounded {
 		border-bottom-left-radius: 8px;
 		border-bottom-right-radius: 8px;
 	}
+
+*/
 
 }
 
