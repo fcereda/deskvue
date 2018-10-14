@@ -50,8 +50,8 @@ export default {
 			this.classes = utils.getComponentClasses(this, booleanProps)
 		},
 
-		onclick: function () {
-			this.$emit('click')
+		onclick: function (e) {
+			this.$emit('click', e)
 		}
 
 	},
