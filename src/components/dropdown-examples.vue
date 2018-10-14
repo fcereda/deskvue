@@ -11,7 +11,6 @@
 		@mousedown.native="onMousedown"
 		@click="onClick"
 		@keydown.native="onKeydown"
-		style="float:right;"
 	>A dropdown button <dv-icon :rotate="showDropdown ? 180 : 0">keyboard_arrow_down</dv-icon></dv-button>
 
 	<dv-dropdown 
@@ -27,6 +26,35 @@
 			elevation="1"
 			border
 		>Hello World! This is a dropdown pane<br><dv-iconbutton>save</dv-iconbutton></dv-pane>			
+	</dv-dropdown>		
+
+	<br><br>
+
+	Changing the anchor of a dropdown:
+
+	<div 
+		ref="anchorleft"
+		@click="setAnchorAndShow('anchorleft')"
+		style="padding-left:40px;float:left"
+	>First anchor</div>
+	<div 
+		ref="anchorright"
+		@click="setAnchorAndShow('anchorright')"
+		style="margin-right:40px;float:right"
+	>Second anchor</div>
+
+	<dv-dropdown
+		:anchor="linkAnchor"
+		:show="showDropdown2"
+		@close="showDropdown2 = false"
+	>
+		<dv-pane 
+			width="10em"
+			height="5em"
+			elevation="1"
+			border
+			style="padding:10px;"
+		>Movable dropdown</dv-pane>
 	</dv-dropdown>		
 
 </div>
@@ -54,7 +82,9 @@ export default {
 
 	data: function () {
 		return {
-			showDropdown: false
+			showDropdown: false,
+			showDropdown2: false,
+			linkAnchor: 'anchorleft'
 		}
 	},
 
@@ -87,6 +117,13 @@ export default {
 
 		onShowHide: function (show) {
 			console.log('Entrou em onShowHide, show = ' + show)
+		},
+
+		setAnchorAndShow: function (anchor) {
+			this.$nextTick(() => {
+				this.linkAnchor = anchor
+				this.showDropdown2 = true
+			})
 		}
 	}
 

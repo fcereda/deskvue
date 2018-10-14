@@ -40,15 +40,17 @@ export default {
 		show: function (e) {
 			const show = !!this.show
 			this.$emit(show ? 'show' : 'hide', show)
+		},
+
+		anchor: function () {
+			this.popper.destroy()
+			this.popper = null
+			this.createPopper()
 		}
 	},
 
 	mounted: function () {
-		let anchor = this.$parent.$refs[this.anchor].$el
-		let popup = this.$el
-		this.popper = new Popper(anchor, popup, {
-			placement: this.placement || 'bottom-start',
-		})
+		this.popper = this.createPopper()
 		this.windowClickEvent = () => {
 			if (this.show) {
 				this.$emit('close')
@@ -59,6 +61,7 @@ export default {
 
 	beforeDestroy: function () {
 		document.removeEventListener('click', this.windowClickEvent)
+		this.popper.destroy
 		this.popper = null
 	},
 
@@ -78,6 +81,28 @@ export default {
 				this.$emit('close')
 				this.blockEvent(e)
 			}	
+		},
+
+		createPopper: function () {
+			let anchor = this.getAnchorElement()
+			let popup = this.$el
+			if (!anchor) {
+				throw 'Error in dv-dropdown: anchor prop is not valid'
+			}	
+			this.popper = new Popper(anchor, popup, {
+				placement: this.placement || 'bottom-start',
+			})
+			return this.popper
+		},
+
+		getAnchorElement: function () {
+			if (!this.anchor)
+				return null
+			let anchor = this.$parent.$refs[this.anchor]
+			if (anchor.$el) {
+				anchor = anchor.$el // We want the element, not the Vue component
+			}
+			return anchor
 		}
 	}
 

@@ -4,7 +4,7 @@
 		class="dv-label"
 		:class="labelClass"
 		:style="labelStyle"
-	><slot></slot></span>
+	><span><slot></slot></span></span>
 
 </template>
 
@@ -40,15 +40,19 @@ export default {
 @import './base.scss';
 
 .dv-label {
-	font-size: $font-size - 1;
-	font-weight: 700;
-	line-height: $form-control-height;
+	display:inline-flex;
+	align-self:stretch;
+	align-items:center;
 
-	align-right: {
+	font-weight: 700;
+	font-size: $font-size - 1;
+	padding-top:1px;
+
+	&.align-right {
 		text-align: right;
 	}
 	
-	align-center {
+	&.align-center {
 		text-align: center;
 	}	
 }
