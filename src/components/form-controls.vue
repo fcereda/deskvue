@@ -114,8 +114,10 @@
 		<br><br>Onde procurar:<br>
 
 		<dv-combo>
+			<dv-label> &nbsp;Cidade:</dv-label>
 			<input class="dv-input-text" v-model="cidade" />
-			<dv-select-native v-model="raio" class="border" width="9em">
+			<dv-label class="border-left"> &nbsp;Raio:</dv-label>
+			<dv-select-native v-model="raio" width="10.5em">
 				<option v-for="r in raios" :value="r">{{ r }} km</option>
 			</dv-select-native>	
 		</dv-combo>
@@ -264,6 +266,7 @@ import dvCombo from './dv-combo.vue'
 import dvDropdown from './dv-select-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
+import dvLabel from './dv-label.vue'
 import dvTextbox from './dv-textbox.vue'
 import dvSelectbox from './dv-selectbox.vue'
 import dvSelectNative from './dv-select-native.vue'
@@ -277,6 +280,7 @@ export default {
 		dvDropdown,
 		dvIcon,
 		dvIconbutton,
+		dvLabel,
 		dvTextbox,
 		dvSelectbox,
 		dvSelectNative,

@@ -103,11 +103,20 @@ export default {
 	}		
 
 	& > *.border {
-		border-left-color: $border-color !important;
-		border-right-color: $border-color !important;
+		border-left: 1px solid $border-color !important;
+		border-right: 1px solid $border-color !important;
 	}
 
-	& > *.border + *.border {
+	& > *.border-left {
+		border-left: 1px solid $border-color !important;
+	}
+
+	& > *.border-right {
+		border-right: 1px solid $border-color !important;
+	}
+
+	& > *.border + *.border,
+	& > *.border-right + *.border-left {
 		border-left-width: 0;
 	}
 
