@@ -111,6 +111,15 @@
 			<dv-button class="border" wide><dv-icon>cancel</dv-icon> Cancelar</dv-button>			
 		</dv-combo>
 
+		<br><br>Onde procurar:<br>
+
+		<dv-combo>
+			<input class="dv-input-text" v-model="cidade" />
+			<dv-select-native v-model="raio" class="border" width="9em">
+				<option v-for="r in raios" :value="r">{{ r }} km</option>
+			</dv-select-native>	
+		</dv-combo>
+
 <div style="position:absolute;
 	background-color:transparent;
 	top:100px;
@@ -146,8 +155,16 @@
 			width="10em"
 		></dv-textbox>			
 
-		<br>{{ myPilots}}<br>
+		<br><br>
 
+		A dropdown component<br>
+
+		<dv-dropdown>
+			<template slot="head"><span style="padding-left:0.5em; padding-right: 0.5em; font-size:14px;">{{ nativePilot }}</span></template>
+			<template slot="pane"><div v-for="pilot in pilots" @click="closePane" @keydown="closePane">{{ pilot }}</div></template>
+		</dv-dropdown>	
+
+		<br><br>
 
 
 		Who are you going to vote for? <br>
@@ -244,6 +261,7 @@
 
 import dvButton from './dv-button.vue'
 import dvCombo from './dv-combo.vue'
+import dvDropdown from './dv-select-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
 import dvTextbox from './dv-textbox.vue'
@@ -256,6 +274,7 @@ export default {
 	components: {
 		dvButton,
 		dvCombo,
+		dvDropdown,
 		dvIcon,
 		dvIconbutton,
 		dvTextbox,
@@ -277,6 +296,9 @@ export default {
 	   		text4: 'Emerson Fittipaldi',
 	   		text5: 'Niki Lauda',
 	   		text6: 'Nelson Piquet',
+	   		raios: [25, 50, 100, 200, 300, 500, 1000],
+	   		raio: '',
+	   		cidade: '',
 		}
 	},
 
@@ -286,6 +308,13 @@ export default {
 			if (this.rotation >= 360)
 				this.rotation -= 360
 		}, 200)
+	},
+
+	methods: {
+		closePane: function () {
+			console.log('close pane')
+			this.$emit('close')
+		}
 	}
 
 }

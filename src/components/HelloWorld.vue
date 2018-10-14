@@ -142,6 +142,7 @@
 
     <form-controls></form-controls>
 
+    <dropdown-examples></dropdown-examples>
 
 	<h3>Simple inputs</h3><p>
 	<fieldset>
@@ -423,16 +424,26 @@
 	<br><br>
 
 	<dv-pane 
-		vertical
-		default-scroll
+		vertical-scroll
+		scrollbar="slim"
+		elevation="1"
 		width="20em"
 		height="15em"
-		border="1px solid #aaa"
+		border
 	>
-
 		{{ lorenIpsun }}
-
 	</dv-pane>
+
+
+	<dv-collapsible-pane title="Hello World" :open="true">
+		{{ lorenIpsun }}
+	</dv-collapsible-pane>	
+	<dv-collapsible-pane :open="true">
+		<template slot="head">
+			<div style="padding:0.5em">Another test</div>
+		</template>
+		{{ lorenIpsun }}
+	</dv-collapsible-pane>	
 	
 
     <h3>Installed CLI Plugins</h3>
@@ -464,6 +475,7 @@
 import dvButton from './dv-button.vue'
 import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
+import dvCollapsiblePane from './dv-collapsible-pane.vue'
 import dvCombo from './dv-combo.vue'
 import dvIcon from './dv-icon.vue'
 import dvMenu from './dv-menu.vue'
@@ -481,7 +493,9 @@ import dvSelectbox from './dv-selectbox.vue'
 import dvInputSelect from './dv-input-select.vue'
 import dvMultiselect from './dv-multiselect.vue'
 
+import dropdownExamples from './dropdown-examples.vue'
 import formControls from './form-controls.vue'
+
 
 import './form.scss'
 
@@ -492,6 +506,7 @@ export default {
     	dvButton,
     	dvBtnGroup,
     	dvCheckbox,
+    	dvCollapsiblePane,
     	dvCombo,
     	dvIcon,
     	dvMenu,
@@ -509,6 +524,7 @@ export default {
     	dvInputSelect,
     	dvMultiselect,
 
+    	dropdownExamples,
     	formControls,
     },
 
