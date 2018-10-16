@@ -43,7 +43,7 @@
 				<input class="dv-input-text" v-model="text2">
 
 				<i class="material-icons">save</i>
-				<i class="material-icons" style="cursor:pointer">search</i>
+				<dv-iconbutton>search</dv-iconbutton>
 			</dv-combo> 
 
 			<dv-combo width="15em">
@@ -65,7 +65,7 @@
 		</dv-combo>
 
 		<br>This is a combo component<br>
-		<dv-combo width="30em">
+		<dv-combo width="30em" rounded>
 			<i class="material-icons">drag_indicator</i>
 			<i class="material-icons">save</i>
 			<input class="dv-input-text" v-model="text2">
@@ -74,7 +74,7 @@
 			<i class="material-icons" style="cursor:pointer">keyboard_arrow_down</i>
 		</dv-combo>
 
-		<dv-combo width="30em">
+		<dv-combo width="30em" rounded>
 			<i class="material-icons">drag_indicator</i>
 			<i class="material-icons">save</i>
 			<input class="dv-input-text" v-model="text2">
@@ -83,7 +83,7 @@
 			<dv-iconbutton>keyboard_arrow_down</dv-iconbutton>
 		</dv-combo>
 
-		<dv-combo width="30em">
+		<dv-combo width="30em" rounded>
 
 			<dv-icon>search</dv-icon>
 	
@@ -95,7 +95,7 @@
 
 		<br>
 
-		<dv-combo width="30em">
+		<dv-combo width="30em" rounded>
 
 			<dv-icon>search</dv-icon>
 	
@@ -106,14 +106,14 @@
 		</dv-combo>		<br>	
 
 <br><br>
-		<dv-combo>
+		<dv-combo rounded>
 			<dv-button class="border"><dv-icon>check_circle_outline</dv-icon>  OK</dv-button>
 			<dv-button class="border" wide><dv-icon>cancel</dv-icon> Cancelar</dv-button>			
 		</dv-combo>
 
 		<br><br>Onde procurar:<br>
 
-		<dv-combo>
+		<dv-combo rounded>
 			<dv-label> &nbsp;Cidade:</dv-label>
 			<input class="dv-input-text" v-model="cidade" />
 			<dv-label class="border-left"> &nbsp;Raio:</dv-label>

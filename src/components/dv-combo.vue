@@ -18,7 +18,7 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['width', 'slim'],
+	props: ['width', 'rounded', 'slim'],
 
 	data: function () {
 		return {
@@ -30,9 +30,10 @@ export default {
 
 		divClass: function () {
 			return utils.computeClasses({
+				rounded: 'rounded',
 				focus: this.hasFocus,
-				slim: utils.isPropOn(this.slim)
-			}	)
+				slim: 'slim'
+			}, this)
 		},
 
 		divStyle: function () {
@@ -68,9 +69,31 @@ export default {
 	align-items: center;
 	border: 1px solid $border-color;
 	background-color: #fff;
-	border-radius: 8px;
+	border-radius: $border-radius;
 	vertical-align: text-top;
 	position: relative;
+
+	& > *.first-child {
+		border-left-radius: $border-radius;
+	}
+
+	& > *:last-child {
+		border-right-radius: $border-radius;
+	}
+
+	&.rounded {
+		border-radius: $border-radius-rounded;
+
+		& > *:first-child {
+			border-top-left-radius: $border-radius-rounded;
+			border-bottom-left-radius: $border-radius-rounded;
+		}
+
+		& > *:last-child {
+			border-top-right-radius: $border-radius-rounded;
+			border-bottom-right-radius: $border-radius-rounded;
+		}
+	}
 
 	&.focus {
 		z-index: 100 !important;
@@ -81,6 +104,10 @@ export default {
 		border-color: transparent !important;
 		border-radius: 0;
 		margin: 0;
+
+		&:hover {
+			position:relative;
+		}	
 	}
 
 	&.slim > * {
@@ -102,22 +129,30 @@ export default {
 		flex-grow: 1;
 	}		
 
+
 	& > *.border {
-		border-left: 1px solid $border-color !important;
-		border-right: 1px solid $border-color !important;
+
+		&:not(:first-child) {
+			border-left: $border !important;
+		}	
+
+		&:not(:last-child) {
+			border-right: $border !important;
+		}	
 	}
 
 	& > *.border-left {
-		border-left: 1px solid $border-color !important;
+		border-left: $border !important;
 	}
 
 	& > *.border-right {
-		border-right: 1px solid $border-color !important;
+		border-right: $border !important;
 	}
 
 	& > *.border + *.border,
-	& > *.border-right + *.border-left {
-		border-left-width: 0;
+	& > *.border-right + *.border-left,
+	& > *.border-right + *.border {
+		border-left-width: 0 !important;
 	}
 
 	& > *:focus {
@@ -131,18 +166,6 @@ export default {
 	&.slim > .dv-iconbutton {
 		min-height: 0;
 		line-height:100%;
-	}
-
-	& > *:first-child {
-		border-top-left-radius: 8px;
-		border-bottom-left-radius: 8px;
-		border-left-width: 0;
-	}
-
-	& > *:last-child {
-		border-top-right-radius: 8px !important;
-		border-bottom-right-radius: 8px !important;
-		border-right-width: 0;
 	}
 
 	& > input:focus {
@@ -166,6 +189,7 @@ export default {
 	}
 
 	& > *:first-child {
+
 		&.dv-icon,
 		&.dv-iconbutton,
 		&.material-icons:first-child {
