@@ -9,7 +9,7 @@
 		:value="value"
 	><slot></slot>
 	</select>
-
+	
 </template>
 
 <script>
@@ -69,6 +69,9 @@ select.dv-select {
     font-size: $font-size;
     height: $form-control-height;
     position: relative;
+
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='#555'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E") no-repeat right;
+    -webkit-appearance: none;
 
     &:focus {
     	outline: none;

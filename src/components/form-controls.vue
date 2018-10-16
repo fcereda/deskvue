@@ -55,7 +55,9 @@
 
 
 
-		<br>This is a combo component<br>
+		<br>This is a combo component   
+		<div style="width:20px"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg></div>
+		<br>
 		<dv-combo>
 			<i class="material-icons">save</i>
 			<input class="dv-input-text" v-model="text2">
