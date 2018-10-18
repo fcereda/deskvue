@@ -17,7 +17,16 @@ import Popper from 'popper.js'
 
 export default {
 
-	props: ['anchor', 'placement', 'show', 'closeOnEsc'],
+	props: {
+		anchor: String,
+		placement: String,
+		show: Boolean,
+		closeOnEsc: Boolean,
+		closeOnClick: {
+			type: Boolean,
+			default: true
+		}
+	},
 
 	data: function () {
 		return {
@@ -52,6 +61,9 @@ export default {
 	mounted: function () {
 		this.popper = this.createPopper()
 		this.windowClickEvent = () => {
+			if (!this.closeOnClick) {
+				return
+			}
 			if (this.show) {
 				this.$emit('close')
 			}				
@@ -105,7 +117,6 @@ export default {
 			return anchor
 		}
 	}
-
 }
 
 </script>

@@ -73,6 +73,10 @@ export default {
 	vertical-align: text-top;
 	position: relative;
 
+	&:hover {
+		z-index: 100;
+	}	
+
 	& > *.first-child {
 		border-left-radius: $border-radius;
 	}
@@ -107,6 +111,7 @@ export default {
 
 		&:hover {
 			position:relative;
+			z-index: 100;
 		}	
 	}
 

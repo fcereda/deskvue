@@ -256,6 +256,13 @@
 	</div>	
 	Textos digitados: {{ [text1, text2, text3, text4, text5, text6].join(', ')}}
 
+	<br><br>
+
+	Datepicker
+
+	<dv-datepicker v-model="dateValue"></dv-datepicker>&nbsp; <dv-datepicker range v-model="dateRange"></dv-datepicker>
+	<br><br>{{ dateValue }}
+
 
 </div>
 
@@ -265,6 +272,7 @@
 
 import dvButton from './dv-button.vue'
 import dvCombo from './dv-combo.vue'
+import dvDatepicker from './dv-datepicker.vue'
 import dvDropdown from './dv-select-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
@@ -279,6 +287,7 @@ export default {
 	components: {
 		dvButton,
 		dvCombo,
+		dvDatepicker,
 		dvDropdown,
 		dvIcon,
 		dvIconbutton,
@@ -305,6 +314,8 @@ export default {
 	   		raios: [25, 50, 100, 200, 300, 500, 1000],
 	   		raio: '',
 	   		cidade: '',
+	   		dateValue: new Date(),
+	   		dateRange: null
 		}
 	},
 
