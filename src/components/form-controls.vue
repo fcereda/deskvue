@@ -260,7 +260,8 @@
 
 	Datepicker
 
-	<dv-datepicker v-model="dateValue"></dv-datepicker>&nbsp; <dv-datepicker range v-model="dateRange"></dv-datepicker>
+	<dv-datepicker not-after="2019-04-04" v-model="dateValue"></dv-datepicker>&nbsp; 
+	<dv-datepicker range rounded v-model="dateRange"></dv-datepicker>
 	<br><br>{{ dateValue }}
 
 

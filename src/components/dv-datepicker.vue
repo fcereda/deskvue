@@ -1,13 +1,10 @@
 <template>
 
 <date-picker
-	v-model="value"
-
-	:range="range"
-	format="DD/MM/YYYY"
-	lang="en"
-	placeholder=""
-	input-class="dv-datepicker-input"
+	v-bind="pickerProps"
+	:input-class="inputClass"
+	:value="value"
+	@input="onInput"
 ></date-picker>
 
 </template>
@@ -15,6 +12,8 @@
 <script>
 
 import datePicker from 'vue2-datepicker'
+import utils from './utils.js'
+
 
 export default {
 	
@@ -22,29 +21,80 @@ export default {
 		datePicker
 	},
 
-	props: ['range', 'value'],
+	props: {
+		value: [Date, String, Array],
+		rounded: [Boolean, String],
+		type: String,
+		range: Boolean,
+		format: {
+			type: String,
+			default: 'MM/DD/YYYY'
+		},
+		rangeSeparator: {
+			type: String,
+			default: '-'
+		},
+		lang: {
+			type: [String, Object],
+			default: 'en'
+		},
+		clearable: Boolean,
+		confirm: Boolean,
+		editable: Boolean,
+		disabled: Boolean,
+		placeholder: {
+			type: String,
+			default: ''
+		},
+		width: {
+			type: [String, Number],
+			default: 200
+		},
+		notBefore: [String, Date],
+		notAfter: [String, Date],
+		disabledDays: [Array, Function],
+		shortcuts: [Boolean, Array],
+		timePickerOptions: Object,
+		minuteStep: Number,
+		firstDayOfWeek: Number,
+		confirmText: String,
+		dateFormat: {
+			type: String,
+			default: 'hh:mm'
+		}
+	},
 
 	data: function () {
 		return {}
 	},
 
+	computed: {
+		inputClass: function () {
+			let classes = ['dv-datepicker-input']
+			if (utils.isPropOn(this.rounded))
+				classes.push('rounded')
+			return classes
+		},  
+
+		pickerProps: function () {
+			let props = {}
+			for (let prop in this.$props) {
+				if (prop != 'value') {
+					props[prop] = this.$props[prop]
+				}	
+			}
+			console.log(props)
+			return props
+		}
+	},
+
 	mounted: function () {
 		let mxInputAppendElement = this.$el.getElementsByClassName('mx-input-append')
 		mxInputAppendElement[0].innerHTML = '<i class="material-icons dv-datepicker-icon">today</i>'
-		return
-
-
-		let iconElement = this.$el.getElementsByClassName('mx-calendar-icon')
-		console.log(iconElement[0])
-		//return
-		icon
-		iconElement[0].innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>'
-		console.log(iconElement[0])
 	},
 
 	methods: {
 		onInput: function (e) {
-			console.log(e)
 			this.$emit('input', e)
 		}
 	}
@@ -74,14 +124,9 @@ export default {
     padding-left: 10px;
     font-size: $font-size;
     line-height: 1.4;
-    /* color: #555; */
     background-color: #fff;
     border: $border;
-    border-radius: $border-radius-rounded;
-/*    
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-*/    
+    border-radius: $border-radius;
 }
 
 .dv-datepicker-input.rounded {
@@ -99,7 +144,7 @@ export default {
 }
 
 .dv-datepicker-icon {
-	font-size:20px;
+	font-size: 20px;
 	color: #555;
 }
 
