@@ -464,14 +464,14 @@
 
 		<div>
 		<dv-button 
-			ref="mybutton2"
+			data-name="mybutton2"
 			wide
 			:active="showDropdown"
 			@click.native="showDropdown = !showDropdown"
 		>A dropdown button <dv-icon :rotate="showDropdown ? 180 : 0">keyboard_arrow_down</dv-icon></dv-button>
 
 		<dv-dropdown 
-			anchor="mybutton2"
+			anchor-name="mybutton2"
 			:show="showDropdown"
 			placement="bottom"
 			@close="showDropdown = false"

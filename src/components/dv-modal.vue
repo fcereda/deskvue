@@ -1,8 +1,11 @@
 <template>
 
+<div>
+
 <div 
 	class="dv-dialog-background" 
-	v-show="show"
+	v-if="show"
+	ref="background"
 	@click="onBackgroundClick"
 	@keydown.native="onBackgroundKeydown"
 	>
@@ -26,7 +29,7 @@
 					<dv-iconbutton flat>close</dv-iconbutton>
 				</div>
 			</div>
-			<div class="dv-dialog-text">{{ text }}<dv-pane><slot></slot></dv-pane></div>
+			<div class="dv-dialog-text">{{ text }}<slot></slot></div>
 			<div class="dv-dialog-buttons">
 				<dv-button 
 					v-for="btn in buttonsObj" 
@@ -42,6 +45,8 @@
 		<div  style="flex:1">&nbsp;</div>		
 	</div>	
 	<div style="flex:2">&nbsp;</div>
+
+</div>
 
 </div>
 
@@ -63,7 +68,7 @@ function trapFocus(element) {
         lastFocusableEl = focusableEls[focusableEls.length - 1]
     const KEYCODE_TAB = 9;
 
-    element.addEventListener('keydown', function(e) {
+    const keydownWatcher = function(e) {
         var isTabPressed = (e.key === 'Tab' || e.keyCode === KEYCODE_TAB);
 
         if (!isTabPressed) { 
@@ -81,8 +86,10 @@ function trapFocus(element) {
                 e.preventDefault();
             }
         }
+    }
 
-    });
+    element.addEventListener('keydown', keydownWatcher)
+    return keydownWatcher
 }
 
 export default {
@@ -117,7 +124,9 @@ export default {
 	},
 
 	data: function () {
-		return {}
+		return {
+			keydownWatcher: null
+		}
 	},
 
 	computed: {
@@ -150,7 +159,6 @@ export default {
 						buttons = [buttons]
 				}	
 			}
-			console.log(buttons)
 
 			return buttons.map((btn, index) => {
 				if (typeof btn == 'string') {
@@ -172,8 +180,16 @@ export default {
 	watch: {
 		show: function () {
 			if (this.show) {
-				this.$nextTick(() => trapFocus(this.$refs.dialog))
-				//this.$nextTick(() => this.$refs.dialog.focus())
+				this.$nextTick(() => {
+					this.keydownWatcher = trapFocus(this.$refs.dialog)
+				})
+			}
+			else {
+				if (this.keydownWatcher) {
+					const dialogEl = this.$refs.dialog
+					dialogEl.removeEventListener('keydown', this.keydownWatcher)
+					this.keydownWatcher = null
+				}
 			}	
 		}
 	},
@@ -188,6 +204,8 @@ export default {
 		},
 
 		onBackgroundClick: function (e) {
+			if (e.path.indexOf(this.$refs.dialog) >= 0)
+				return
 			if (this.closeOnClick) {
 				this.close()
 			}
@@ -202,8 +220,7 @@ export default {
 		},
 
 		onDialogClick: function (e) {
-			e.preventDefault()
-			e.stopPropagation()
+			return
 		},
 
 		onButtonClick: function (btn) {

@@ -18,7 +18,9 @@ import Popper from 'popper.js'
 export default {
 
 	props: {
-		anchor: String,
+		anchorRef: String,
+		anchorId: String,
+		anchorName: String,
 		placement: String,
 		show: Boolean,
 		closeOnEsc: Boolean,
@@ -37,7 +39,6 @@ export default {
 
 	computed: {
 		paneStyle: function () {
-			debugger
 			if (this.show) {
 				if (this.popper)
 					this.popper.update()
@@ -112,13 +113,29 @@ export default {
 		},
 
 		getAnchorElement: function () {
-			if (!this.anchor)
-				return null
-			let anchor = this.$parent.$refs[this.anchor]
-			if (anchor.$el) {
-				anchor = anchor.$el // We want the element, not the Vue component
+			let anchor = null
+			let parent = this.$parent
+			let parentEl = parent.$el ? parent.$el : parent
+			if (this.anchorRef)	{
+				anchor = parent.$refs[this.anchorRef]
+				if (anchor)
+					return anchor
+			}	
+			if (this.anchorId) {
+				anchor = parentEl.getElementById(this.anchorId)
+				if (anchor)
+					return anchor
 			}
-			return anchor
+			if (this.anchorName) {
+				anchor = parentEl.querySelectorAll(`[data-name='${this.anchorName}']`)
+				if (anchor) {
+					if (anchor[0])
+						return anchor[0]
+					return anchor
+				}	
+			}
+
+			return null
 		}
 	}
 }
