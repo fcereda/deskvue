@@ -125,7 +125,8 @@ export default {
 
 	data: function () {
 		return {
-			keydownWatcher: null
+			keydownWatcher: null,
+			originalOverflow: null,
 		}
 	},
 
@@ -181,6 +182,8 @@ export default {
 		show: function () {
 			if (this.show) {
 				this.$nextTick(() => {
+					this.originalOverflow = document.body.style.overflow
+					document.body.style.overflow = 'hidden'
 					this.keydownWatcher = trapFocus(this.$refs.dialog)
 				})
 			}
@@ -188,6 +191,7 @@ export default {
 				if (this.keydownWatcher) {
 					const dialogEl = this.$refs.dialog
 					dialogEl.removeEventListener('keydown', this.keydownWatcher)
+					document.body.style.overflow = this.originalOverflow
 					this.keydownWatcher = null
 				}
 			}	
