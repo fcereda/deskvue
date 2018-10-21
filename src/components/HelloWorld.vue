@@ -142,7 +142,9 @@
 
     <form-controls></form-controls>
 
+<!--
     <dropdown-examples></dropdown-examples>
+-->    
 
 	<h3>Simple inputs</h3><p>
 	<fieldset>
@@ -436,6 +438,75 @@
 
 	<br><br>
 
+	Dialogs<br>
+	<dv-button @click="openDialog = 1">OK Cancel</dv-button>
+	<dv-dialog
+		:show="openDialog == 1"
+		type="primary"
+		:closeOnClick="false"
+		title="Dialog open"
+		text="Loren ipsun this is the dialog text"
+		:buttons="[{text:'OK', type:'primary'}, 'Cancel']"
+		@close="openDialog = null"
+	></dv-dialog>
+	&nbsp;
+	<br><br>
+	<dv-button @click="openDialog = 2">Error, ok</dv-button>
+	<dv-dialog
+		:show="openDialog == 2"
+		type="error"
+		:closeOnClick="true"
+		title="Error dialog"
+		buttons="ok"
+		@close="openDialog = null"
+	>
+		This is a dropdown button:<br><br>
+
+		<div>
+		<dv-button 
+			ref="mybutton2"
+			wide
+			:active="showDropdown"
+			@click.native="showDropdown = !showDropdown"
+		>A dropdown button <dv-icon :rotate="showDropdown ? 180 : 0">keyboard_arrow_down</dv-icon></dv-button>
+
+		<dv-dropdown 
+			anchor="mybutton2"
+			:show="showDropdown"
+			placement="bottom"
+			@close="showDropdown = false"
+		>
+			<dv-pane 
+				width="20em"
+				height="10em"
+				elevation="1"
+				border
+			>This is a dropdown pane inside a dialog box<br><dv-iconbutton>save</dv-iconbutton></dv-pane>			
+		</dv-dropdown>	
+		</div>
+
+
+	</dv-dialog>
+	&nbsp;
+
+	<dv-button @click="openDialog = 3">Yes No</dv-button>
+	<dv-dialog
+		:show="openDialog == 3"
+		type="success"
+		title="Error dialog"
+		buttons="yes-no"
+		@close="openDialog = null"
+	>Escolha seu piloto favorito:<br>
+				<dv-options :options="options3" type="radio" full-width v-model="option2"></dv-options>
+				<br><br>
+				<div tabindex="0" style="display:inline-block;border:1px solid #aaa;padding:8px;">A tabindex element</div>
+	</dv-dialog>
+
+	<br><br>
+
+
+
+
 	<dv-accordion rounded>
 		<dv-collapsible-pane v-for="pilot in pilots" :title="pilot" :open="true">
 			<div v-for="pilot in pilots">{{ pilot }}</div>
@@ -482,13 +553,16 @@ import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
 import dvCollapsiblePane from './dv-collapsible-pane.vue'
 import dvCombo from './dv-combo.vue'
+import dvDialog from './dv-modal.vue'
+import dvDropdown from './dv-dropdown.vue'
 import dvIcon from './dv-icon.vue'
+import dvIconbutton from './dv-iconbutton.vue'
 import dvMenu from './dv-menu.vue'
 import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
+import dvPane from './dv-pane.vue'
 import dvRadio from './dv-radio.vue'
 import dvRadiogroup from './dv-radiogroup.vue'
-import dvPane from './dv-pane.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
@@ -514,7 +588,10 @@ export default {
     	dvCheckbox,
     	dvCollapsiblePane,
     	dvCombo,
+    	dvDialog,
+    	dvDropdown,
     	dvIcon,
+    	dvIconbutton,
     	dvMenu,
     	dvOptionbox,
     	dvOptions,
@@ -620,7 +697,9 @@ export default {
 	   			for (let i=0; i<100; i++)
 	   				lines.push(line)
 	   			return lines.join('<br>')
-			})()	   			
+			})(),
+			openDialog: null,
+			showDropdown: false
 		} 
 
     },
@@ -695,7 +774,7 @@ export default {
         			}
     			},
     		})
-    	}
+    	},
 
     }
 

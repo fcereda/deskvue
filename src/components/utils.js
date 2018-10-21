@@ -1,6 +1,11 @@
+const defaultColors = [
+	'primary', 'danger', 'error', 'warning', 'success', 'info', 'secondary', 'dark'
+]
+
 function toClassName (str) {
 	return str.split(/(?=[A-Z])/).join('-').toLowerCase()
 }
+
 
 function isPropOn(prop) {
 	return prop || (prop === '')
@@ -24,6 +29,7 @@ export default {
 
 	isPropOn,	
 	computeClasses,
+	defaultColors,
 
 	getComponentClasses (component, props) {
 		let classes = []

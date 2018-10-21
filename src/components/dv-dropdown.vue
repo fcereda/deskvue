@@ -37,8 +37,10 @@ export default {
 
 	computed: {
 		paneStyle: function () {
+			debugger
 			if (this.show) {
-				this.popper.update()
+				if (this.popper)
+					this.popper.update()
 				return 'display:inline-block;'
 			}
 			return ''
@@ -59,16 +61,18 @@ export default {
 	},
 
 	mounted: function () {
-		this.popper = this.createPopper()
-		this.windowClickEvent = () => {
-			if (!this.closeOnClick) {
-				return
+		setTimeout(() => {
+			this.popper = this.createPopper()
+			this.windowClickEvent = () => {
+				if (!this.closeOnClick) {
+					return
+				}
+				if (this.show) {
+					this.$emit('close')
+				}				
 			}
-			if (this.show) {
-				this.$emit('close')
-			}				
-		}
-		document.addEventListener('click', this.windowClickEvent)
+			document.addEventListener('click', this.windowClickEvent)
+		})
 	},
 
 	beforeDestroy: function () {
