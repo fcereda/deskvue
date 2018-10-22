@@ -104,7 +104,10 @@ export default {
 		show: Boolean,
 		title: String,
 		text: String,
-		buttons: [Array, String, Object],
+		buttons: {
+			type: [Array, String, Object],
+			default: 'OK'
+		},
 		closeOnEsc: {
 			type: Boolean,
 			default: true

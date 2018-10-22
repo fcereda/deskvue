@@ -504,7 +504,10 @@
 
 	<br><br>
 
+	$alert and $confirm<br>
+	<dv-button @click="showAlert">Show $alert</dv-button>
 
+	<br><br>
 
 
 	<dv-accordion rounded>
@@ -775,6 +778,18 @@ export default {
     			},
     		})
     	},
+
+    	showAlert: function () {
+    		this.$alert('This is an alert!')
+    		.then(() => {
+    			console.log('Exibiu o primeiro $alert')
+    			return this.$alert('Another alert!', 'error')
+			})
+			.then(() => {
+				console.log('Exibiu o segundo $alert')
+				alert('This is a native alert')
+			})    			
+    	}
 
     }
 
