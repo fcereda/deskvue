@@ -97,12 +97,12 @@ export default {
 			thisOptions: options.map((option, index) => {
 				if (typeof(option) == 'string') {
 					return {
-						html: option,
+						html: `<span class="dv-option-text">${option}</span>`,
 						id: index
 					}
 				}
 				let html = []
-				let separator = '&nbsp;'
+				let separator = ''  //'&nbsp;'
 				let id = index				
 
 				if (option.icon)
@@ -110,9 +110,7 @@ export default {
 				if (option.text)
 					html.push(`<span class="dv-option-text">${option.text}</span>`)
 				if (utils.isPropOn(this.stacked))
-					separator = '<br>'
-				else
-					console.log('separator = ' + separator)
+					separator = ''  //'<br>'
 				if (option.id) 
 					id = option.id
 				return {
@@ -284,6 +282,12 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 	user-select: none;
 	cursor: pointer;
 
+	&:not(.stacked) {
+		& > .dv-option > .material-icons {
+			padding-right: 0.125em;
+		}
+	}		
+
 	&:not(.stacked):not(.vertical) {
 		height: $form-control-height;	
 
@@ -321,7 +325,6 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 	&:focus {
 		outline: none;
 	}
-
 
 	&.vertical { 
 	
@@ -404,14 +407,16 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 .dv-option {
 	position: relative;		
 	/* position:relative and z-index:2 on .hover are necessary to make sure the outline is displayed correctly */
-	display:inline-block;
+	display:inline-flex;
 	box-sizing: border-box;
 	padding-left: 1em;
 	padding-right: 1em;
 	height: 100%; 
 	line-height: $form-control-height;
 	overflow-x: hidden;
+	overflow-y: visible;
 	flex-grow:1;
+	color: #333;
 
 	&.no-padding {
 		padding-left: 0;
@@ -462,10 +467,15 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 		opacity: 1.0;
 	}
 
+	& > .dv-option-text {
+		display: inline;
+		flex: 1;
+		text-align: center;
+	}
+
 }
 
 .dv-options.slim > .dv-option > .dv-option-text {
-	transform: translateY(-0.125em);
 	vertical-align:text-bottom;
 }
 
@@ -475,8 +485,15 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 
 .dv-options.stacked {
 
+	& > .dv-option {
+		flex-direction: column;
+		padding-top: 0.25em;
+		padding-bottom: 0.5em;
+	}
+
 	& > .dv-option > i.material-icons {	
-		transform: translateY(0.325em);
+		//transform: translateY(0.325em);
+		padding-bottom: 0.25em;
 	}
 
 	& > .dv-option > .dv-option-text {
