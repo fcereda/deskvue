@@ -22,11 +22,32 @@ function Dialogs (Vue, globalOptions) {
 			dvModalInstance.type = type
 			dvModalInstance.buttons = 'OK'
 			dvModalInstance.show = true
-			dvModalInstance.$on('close', () => {
+			dvModalInstance.$once('close', () => {
 				dvModalInstance.show = false
 				dvModalInstance.$nextTick(resolve)
 			})
 		})	
+	}
+
+	this.confirm = (text, title, type="primary", options) => {
+		return new Promise((resolve, reject) => {
+			dvModalInstance.text = text
+			dvModalInstance.title = title
+			dvModalInstance.type = type
+			dvModalInstance.buttons = 'ok-cancel'
+			dvModalInstance.show = true
+
+			const clickHandler = (e) => {
+				console.log('Clicou botão no dialog box')
+				console.log(e)
+				dvModalInstance.show = false
+				dvModalInstance.$nextTick(e == 'ok' ? resolve : reject)
+				dvModalInstance.$off()
+			}
+
+			dvModalInstance.$once('click', clickHandler)
+			dvModalInstance.$once('close', clickHandler)
+		})
 	}
 
 }
@@ -42,6 +63,7 @@ export default {
 
 		Vue.dialogs = new Dialogs(Vue, opts) 
 		Vue.prototype.$alert = Vue.dialogs.alert
+		Vue.prototype.$confirm = Vue.dialogs.confirm
 	}
 }
 

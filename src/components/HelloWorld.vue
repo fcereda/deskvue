@@ -544,6 +544,8 @@
 
 	$alert and $confirm<br>
 	<dv-button @click="showAlert">Show $alert</dv-button>
+	<br>
+	<dv-button @click="showConfirm">Show $confirm</dv-button>
 
 	<br><br>
 
@@ -827,6 +829,16 @@ export default {
 				console.log('Exibiu o segundo $alert')
 				alert('This is a native alert')
 			})    			
+    	},
+
+    	showConfirm: function () {
+    		this.$confirm('Do you want to proceed?', 'Confirmation', 'warning')
+    		.then(() => {
+    			alert('User clicked OK')
+    		})
+    		.catch(() => {
+    			alert('User clicked cancel')
+    		})
     	}
 
     }

@@ -240,7 +240,6 @@ export default {
 		},
 
 		onButtonClick: function (btn) {
-			this.close()
 			this.$emit('click', btn)
 		}
 	}
