@@ -15,10 +15,10 @@ function Dialogs (Vue, globalOptions) {
 	dvModalInstance.$mount()
 	document.querySelector('body').appendChild(dvModalInstance.$el)
 
-	this.alert = (text, type='primary') => {
+	this.alert = (text, title, type='primary') => {
 		return new Promise((resolve, reject) => {
 			dvModalInstance.text = text
-			dvModalInstance.title = 'Alert'
+			dvModalInstance.title = title
 			dvModalInstance.type = type
 			dvModalInstance.buttons = 'OK'
 			dvModalInstance.show = true

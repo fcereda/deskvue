@@ -444,11 +444,48 @@
 		:show="openDialog == 1"
 		type="primary"
 		:closeOnClick="false"
-		title="Dialog open"
-		text="Loren ipsun this is the dialog text"
+		title="Do you want to save your personal data in the cloud?"
+		text="This will remove your data from your local machine and make it vulnerable to hackers."
+		size="large"
 		:buttons="[{text:'OK', type:'primary'}, 'Cancel']"
 		@close="openDialog = null"
 	></dv-dialog>
+
+	<dv-button @click="openDialog = 4">No title</dv-button>
+	<dv-dialog
+		:show="openDialog == 4"
+		type="primary"
+		:closeOnClick="false"
+		text="This is a very simple dialog box."
+		size="small"
+		:buttons="[{text:'OK', type:'primary'}, 'Cancel']"
+		@close="openDialog = null"
+	></dv-dialog>
+
+	<dv-button @click="openDialog = 6">No title and error</dv-button>
+	<dv-dialog
+		:show="openDialog == 6"
+		type="error"
+		:closeOnClick="false"
+		text="This is a very simple dialog box. It should have a red bar in the top"
+		:buttons="[{text:'OK', type:'secondary'}, 'Cancel']"
+		@close="openDialog = null"
+	></dv-dialog>
+
+
+	<dv-button @click="openDialog = 5">No title and h1</dv-button>
+	<dv-dialog
+		:show="openDialog == 5"
+		type="primary"
+		:closeOnClick="false"
+		:buttons="[{text:'OK', type:'primary'}, 'Cancel']"
+		@close="openDialog = null"
+	>
+		<h1>Do you want to open the emergency door?</h1>
+		<p>An alarm will sound. If there is not an emergency in the building, please use the regular stairs.</p>
+	</dv-dialog>
+
+
 	&nbsp;
 	<br><br>
 	<dv-button @click="openDialog = 2">Error, ok</dv-button>
@@ -456,7 +493,7 @@
 		:show="openDialog == 2"
 		type="error"
 		:closeOnClick="true"
-		title="Error dialog"
+		title="Houston, we have a problem"
 		buttons="ok"
 		@close="openDialog = null"
 	>
@@ -493,8 +530,9 @@
 	<dv-dialog
 		:show="openDialog == 3"
 		type="success"
-		title="Error dialog"
+		title="Qual é seu piloto brasileiro favorito?"
 		buttons="yes-no"
+		size="medium"
 		@close="openDialog = null"
 	>Escolha seu piloto favorito:<br>
 				<dv-options :options="options3" type="radio" full-width v-model="option2"></dv-options>
@@ -783,7 +821,7 @@ export default {
     		this.$alert('This is an alert!')
     		.then(() => {
     			console.log('Exibiu o primeiro $alert')
-    			return this.$alert('Another alert!', 'error')
+    			return this.$alert('Another alert!', null, 'error')
 			})
 			.then(() => {
 				console.log('Exibiu o segundo $alert')

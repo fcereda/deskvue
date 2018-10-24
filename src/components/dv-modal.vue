@@ -20,25 +20,21 @@
 			ref="dialog"
 			tabindex="1"
 		>
-			<div class="dv-dialog-header">
-				<div class="dv-dialog-title" v-html="title"></div>
+			<div class="dv-dialog-header" :class="title ? '' : 'no-title'">
+				<div 
+					class="dv-dialog-title" 
+					v-html="title"></div>
 				<div 
 					class="dv-dialog-close-button" 
 					v-if="closeButton" 					
 					@click="close">
-					<dv-iconbutton flat>close</dv-iconbutton>
-				</div>
+					<dv-iconbutton :style="title ? 'color:white;' : ''">close</dv-iconbutton></div>
 			</div>
-			<div class="dv-dialog-text">{{ text }}<slot></slot></div>
+			<div class="dv-dialog-text" :class="title ? '' : 'no-title'">{{ text }}<slot></slot></div>
 			<div class="dv-dialog-buttons">
 				<dv-button 
 					v-for="btn in buttonsObj" 
-					:primary="btn.type == 'primary'"
-					:danger="btn.type == 'danger' || btn.type == 'error'"
-					:warning="btn.type == 'warning'"
-					:success="btn.type == 'success'"
-					:dark="btn.type == 'dark'"
-					:info="btn.type == 'info'"
+					v-bind="btn"
 					@click="onButtonClick(btn)">{{ btn.text  }}</dv-button>
 			</div>	
 		</div>	
@@ -104,6 +100,8 @@ export default {
 		show: Boolean,
 		title: String,
 		text: String,
+		size: String,
+		width: String,
 		buttons: {
 			type: [Array, String, Object],
 			default: 'OK'
@@ -135,10 +133,14 @@ export default {
 
 	computed: {
 		dialogClass: function () {
+			let classes = []
 			if (utils.defaultColors.indexOf(this.type) >= 0) {
-				return this.type
+				classes.push(this.type)
 			}
-			return ''
+			if (['small', 'large'].indexOf(this.size) >= 0) {
+				classes.push(this.size)
+			}
+			return classes
 		},
 
 		buttonsObj: function () {
@@ -165,18 +167,23 @@ export default {
 			}
 
 			return buttons.map((btn, index) => {
+				let btnObj = {}
 				if (typeof btn == 'string') {
-					return {
+					btnObj = {
 						text: btn,
 						type: index > 0 ? null : this.type,
 					}
 				}
 				if (typeof btn == 'object') {
-					return {
+					btnObj = {
 						text: btn.text || '',
 						type: btn.type
 					}
 				}
+				if (btnObj.type) {
+					btnObj[btnObj.type] = true
+				}
+				return btnObj
 			}).reverse()
 		}
 	},
@@ -188,9 +195,11 @@ export default {
 					this.originalOverflow = document.body.style.overflow
 					document.body.style.overflow = 'hidden'
 					this.keydownWatcher = trapFocus(this.$refs.dialog)
+					document.addEventListener('keydown', this.onDocumentKeydown)
 				})
 			}
 			else {
+				document.removeEventListener('keydown', this.onDocumentKeydown)
 				if (this.keydownWatcher) {
 					const dialogEl = this.$refs.dialog
 					dialogEl.removeEventListener('keydown', this.keydownWatcher)
@@ -202,7 +211,7 @@ export default {
 	},
 
 	mounted: function () {
-
+		
 	},
 
 	methods: {
@@ -218,12 +227,12 @@ export default {
 			}
 		},
 
-		onBackgroundKeydown: function (e) {
+		onDocumentKeydown: function (e) {
+			console.log('Keydown!')
+			console.log(e.key)			
 			if (e.key == 'Escape' && this.closeOnEsc) {
 				this.close()
 			}
-			e.preventDefault()
-			e.stopPropagation()
 		},
 
 		onDialogClick: function (e) {
@@ -245,7 +254,7 @@ export default {
 
 @import './base.scss';
 
-$border-top-width: 5px;
+$border-top-width: 6px;
 
 div.dv-dialog-background {
 	position: fixed;
@@ -253,7 +262,7 @@ div.dv-dialog-background {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background-color: rgba(0, 0, 0, 0.25);
+	background-color: rgba(0, 0, 0, 0.15);
 	z-index:200;
 	text-align: center;
 	height: 100%;
@@ -264,13 +273,15 @@ div.dv-dialog-background {
 
 .dv-dialog {
 	min-width: 20em;
+	max-width: 30em;
 
 	background-color: #fff;
-	border-radius: 4px;
+	//border-radius: 4px;
 	text-align: left;
 	flex-direction: column;
 	outline: none;
-	box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.75);
+/*
 
 	&.primary {
 		border-top: $border-top-width solid $bg-color-primary;
@@ -300,17 +311,45 @@ div.dv-dialog-background {
 	&.dark {
 		border-top: $border-top-width solid $bg-color-dark;
 	}
+*/
+
+	&.small {
+		min-width: 17em;
+		max-width: 25em;
+	}
+
+	&.large {
+		min-width: 25em;
+		max-width: 40em;
+	}
 
 	& > .dv-dialog-header {
 		display: flex;
+		background-color: $bg-color-primary;
+		color: white;
+
+		&.no-title {
+			background-color: inherit;
+			height:5px;
+			border-top: $border-top-width solid $bg-color-primary;
+		}
 
 		& > .dv-dialog-title {
-			font-size: 16px;
-			color: rgba(0, 0, 0, 0.5);
-			padding-top: 0.75em;
-			padding-left: $font-size;
 			flex: 1;
+			font-weight: 500;
+		}	
+
+		&:not(.no-title) > .dv-dialog-title {
+			font-size: 20px;
+			padding-left: $font-size;
+			padding-top: 1em;
+			padding-bottom: 1em;
 		}
+
+		&.no-title > .dv-dialog-title {
+			padding:0;
+		}
+
 
 		& > .dv-dialog-close-button {
 			display: inline-block;
@@ -321,13 +360,52 @@ div.dv-dialog-background {
 			}
 		}
 
+		&:not(.no-title) > .dv-dialog-close-button {
+			transform: translateY(1em);
+			padding-right: 0.5em;			
+		}
+
 	}
 
 
+	&.error,
+	&.danger {
+		& > .dv-dialog-header:not(.no-title) {
+			background-color: $bg-color-danger;
+		}
+
+		& > .dv-dialog-header.no-title {
+			border-color: $bg-color-danger;
+		}
+	}
+
+	&.success {
+		& > .dv-dialog-header:not(.no-title) {
+			background-color: $bg-color-success;
+		}
+
+		& > .dv-dialog-header.no-title {
+			border-color: $bg-color-success;
+		}
+	}	
+
+	&.dark {
+		& > .dv-dialog-header:not(.no-title) {
+			background-color: $bg-color-dark;
+		}
+
+		& > .dv-dialog-header.no-title {
+			border-color: $bg-color-dark;
+		}
+	}	
+
 	& > .dv-dialog-text {
-		padding: 1em;
-		padding-top: 2em;
+		padding: 2em 1em;	
 		font-size: $font-size;
+
+		&.no-title {
+			padding-right: 3em;
+		}
 	}
 
 	& > .dv-dialog-buttons {
@@ -336,16 +414,11 @@ div.dv-dialog-background {
 	  	text-align:right;
 	  	position: relative;
 
-	  	&:after {
-	  		content: "";
-	  		width: 100%;
-	  		height: 2px;
-	  		border-top: 1px solid #ccc;
-	  		border-bottom: 1px solid #ccc;
-	  		position: absolute;
-	  		left: 0px;
-	  		bottom: 2px;
-	  	}	
+	}
+
+	& > .dv-dialog-text > h1 {
+		font-size: 22px;
+		font-weight: 600;
 	}
 
 
