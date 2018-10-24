@@ -1,7 +1,5 @@
 <template>
 
-<div>
-
 <div 
 	class="dv-dialog-background" 
 	v-if="show"
@@ -26,14 +24,15 @@
 					v-html="title"></div>
 				<div 
 					class="dv-dialog-close-button" 
-					v-if="closeButton" 					
+					v-if="showCloseButton" 					
 					@click="close">
 					<dv-iconbutton :style="title ? 'color:white;' : ''">close</dv-iconbutton></div>
 			</div>
 			<div class="dv-dialog-text" :class="title ? '' : 'no-title'">{{ text }}<slot></slot></div>
 			<div class="dv-dialog-buttons">
 				<dv-button 
-					v-for="btn in buttonsObj" 
+					v-for="btn, index in buttonsObj" 
+					:key="btn.index"
 					v-bind="btn"
 					@click="onButtonClick(btn)">{{ btn.text  }}</dv-button>
 			</div>	
@@ -41,8 +40,6 @@
 		<div  style="flex:1">&nbsp;</div>		
 	</div>	
 	<div style="flex:2">&nbsp;</div>
-
-</div>
 
 </div>
 
@@ -114,7 +111,11 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		closeButton: {
+		closeOnButtonClick: {
+			type: Boolean,
+			default: true
+		},
+		showCloseButton: {
 			type: Boolean,
 			default: true
 		},
@@ -183,6 +184,7 @@ export default {
 				if (btnObj.type) {
 					btnObj[btnObj.type] = true
 				}
+				btnObj.index = index
 				return btnObj
 			}).reverse()
 		}
@@ -196,6 +198,7 @@ export default {
 					document.body.style.overflow = 'hidden'
 					this.keydownWatcher = trapFocus(this.$refs.dialog)
 					document.addEventListener('keydown', this.onDocumentKeydown)
+					this.getFocus()
 				})
 			}
 			else {
@@ -219,6 +222,12 @@ export default {
 			this.$emit('close')
 		},
 
+		getFocus: function () {
+			let buttons = this.$refs.dialog.querySelectorAll('button')
+			let focusButton = this.showCloseButton ? buttons[1] : buttons[0]
+			focusButton.focus()
+		},
+
 		onBackgroundClick: function (e) {
 			if (e.path.indexOf(this.$refs.dialog) >= 0)
 				return
@@ -240,7 +249,10 @@ export default {
 		},
 
 		onButtonClick: function (btn) {
-			this.$emit('click', btn)
+			this.$emit('click', btn.index, btn.text)
+			if (this.closeOnButtonClick) {
+				this.$emit('close')
+			}
 		}
 	}
 
@@ -376,6 +388,17 @@ div.dv-dialog-background {
 		& > .dv-dialog-header.no-title {
 			border-color: $bg-color-danger;
 		}
+	}
+
+	&.warning {
+		& > .dv-dialog-header:not(.no-title) {
+			background-color: $bg-color-warning;
+			font-weight: 500;
+		}
+		
+		& > .dv-dialog-header.no-title {
+			border-color: $bg-color-warning;
+		}	
 	}
 
 	&.success {

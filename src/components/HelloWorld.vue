@@ -546,6 +546,8 @@
 	<dv-button @click="showAlert">Show $alert</dv-button>
 	<br>
 	<dv-button @click="showConfirm">Show $confirm</dv-button>
+	<br>
+	<dv-button @click="showConfirmOptions">Show $confirm with options object</dv-button>
 
 	<br><br>
 
@@ -838,6 +840,21 @@ export default {
     		})
     		.catch(() => {
     			alert('User clicked cancel')
+    		})
+    	},
+
+    	showConfirmOptions: function () {
+    		this.$confirm({
+    			text: 'This action will probably break your computer. Are you sure you want to ahead?',
+    			title: 'Danger zone!',
+    			type: 'danger',
+    			okButtonText: 'Yes'
+    		})
+    		.then(() => {
+    			alert('Yes')
+    		})
+    		.catch(() => {
+    			alert('No')
     		})
     	}
 

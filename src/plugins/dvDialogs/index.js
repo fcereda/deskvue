@@ -16,12 +16,19 @@ function Dialogs (Vue, globalOptions) {
 	document.querySelector('body').appendChild(dvModalInstance.$el)
 
 	this.alert = (text, title, type='primary') => {
+		if (typeof text == 'object') {
+			let options = text
+			text = options.text
+			title = options.title
+			type = options.type || 'primary'
+		}
 		return new Promise((resolve, reject) => {
 			dvModalInstance.text = text
 			dvModalInstance.title = title
 			dvModalInstance.type = type
 			dvModalInstance.buttons = 'OK'
 			dvModalInstance.show = true
+			dvModalInstance.$once('click', () => dvModalInstance.$emit('close'))
 			dvModalInstance.$once('close', () => {
 				dvModalInstance.show = false
 				dvModalInstance.$nextTick(resolve)
@@ -29,19 +36,40 @@ function Dialogs (Vue, globalOptions) {
 		})	
 	}
 
-	this.confirm = (text, title, type="primary", options) => {
+	this.confirm = (text, title, type, options) => {
+		if (typeof text == 'object')
+			options = text
+		else if (typeof title == 'object')
+			options = {...title, text}
+		else if (typeof type == 'object')
+			options = {...type, text, title}
+		else
+			options = {...options, text, title, type}
+
+		let buttons = options.buttons
+		if (!buttons) {
+			if (options.okButtonText) {
+				buttons = [options.okButtonText, 'Cancel']
+			}
+			else {
+				buttons = 'ok-cancel'
+			}
+		} 
+
 		return new Promise((resolve, reject) => {
-			dvModalInstance.text = text
-			dvModalInstance.title = title
-			dvModalInstance.type = type
-			dvModalInstance.buttons = 'ok-cancel'
+			dvModalInstance.text = options.text
+			dvModalInstance.title = options.title
+			dvModalInstance.type = options.type || 'primary'
+			dvModalInstance.buttons = buttons
+			dvModalInstance.closeOnButtonClick = false
+			dvModalInstance.closeOnClick = false
 			dvModalInstance.show = true
 
-			const clickHandler = (e) => {
+			const clickHandler = (btn) => {
 				console.log('Clicou botão no dialog box')
-				console.log(e)
+				console.log(btn)
 				dvModalInstance.show = false
-				dvModalInstance.$nextTick(e == 'ok' ? resolve : reject)
+				dvModalInstance.$nextTick(btn == 0 ? resolve : reject)
 				dvModalInstance.$off()
 			}
 
