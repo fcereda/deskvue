@@ -1,6 +1,9 @@
 <template>
 
-	<div class="dv-accordion" :class="divClass">
+	<div class="dv-accordion" 
+		:class="divClass"
+		@keydown="onKeydown"
+	>
 		<slot></slot>
 	</div>
 
@@ -16,37 +19,81 @@ export default {
 
 	data: function () {
 	    return {
-	    	panes: []
+	    	panes: [],
+	    	indexOpenPane: -1
 	    }
 	},
 
 	computed: {
 		divClass: function () {
-			return utils.computeClasses({
-				rounded: 'rounded'
-			}, this)
+			if (utils.isPropOn(this.rounded))
+				return 'rounded'
+			return ''
 		}
 	},
 
 	mounted: function (e) {
-		this.$el.addEventListener('addpane', (e) => {
-			console.log('added pane')
-			console.log(e)
-			console.log(e.title)
+		this.$children.forEach(pane => {
+			this._addPane(pane)
 		})
+		return
 	},
 
 	methods: {
 		addPane: function (pane) {
+			console.log('Bogus addpane')
+		},
+
+		_addPane: function (pane) {
 			this.panes.push(pane)
-			pane.open = false
-			pane.rounded = this.rounded
-			pane.$on('open', (openPane) => {
-				console.log('open collapsible pane event')
-				this.panes.forEach(pane => {
-					pane.open = (pane == openPane)
+			pane.closePane()
+			pane.setRounded(this.rounded)
+			pane.$on('open', (openedPane) => {
+				this.panes.forEach((pane, index) => {
+					if (pane == openedPane) {
+						pane.openPane()
+						this.indexOpenPane = index
+					}
+					else {
+						pane.closePane()
+					}
 				})
 			})
+			pane.$on('close', (closedPane) => {
+				closedPane.closePane()
+			})
+		},
+
+		onKeydown: function (e) {
+			console.log(e)
+			const indexFocusedElement = this.panes.map(pane => pane.$el).indexOf(e.srcElement)
+			let index = indexFocusedElement
+			switch (e.key) {
+				case 'ArrowUp':
+					index -= 1
+					break;
+				case 'ArrowDown':
+					index += 1
+					break
+				case 'Home':
+					index = 0
+					break
+				case 'End':
+					index = this.panes.length - 1
+					break
+				default:
+					return	
+			}
+			if (index < 0) {				
+				index = this.panes.length - 1
+			}	
+			else if (index >= this.panes.length) {
+				index = 0
+			}
+			this.panes[index].focus()
+
+			e.stopPropagation()
+			e.preventDefault()
 		}
 	}
 }	
