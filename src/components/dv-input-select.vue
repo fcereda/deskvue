@@ -1,6 +1,9 @@
 <template>
 
-<div class="dv-select-container" :class="divClass">
+<div 
+	class="dv-select-container" 
+	:class="divClass"
+	:style="divStyle">
 	<select ref="select" :multiple="multiple">
 
 		<slot></slot>
@@ -17,7 +20,7 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['value', 'search', 'multiple', 'placeholder', 'rounded', 'no-border'],
+	props: ['value', 'search', 'multiple', 'placeholder', 'rounded', 'no-border', 'width'],
 
 	data: function () {
 
@@ -34,6 +37,12 @@ export default {
 				return 'rounded no-border'
 			if (utils.isPropOn(this.rounded))
 				return 'rounded'
+		},
+
+		divStyle: function () {
+			if (this.width)
+				return `width:${this.width};`
+			return ''
 		}
 
 	},
