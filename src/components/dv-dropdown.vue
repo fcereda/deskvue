@@ -28,6 +28,9 @@ export default {
 			type: Boolean,
 			default: true
 		},
+		offsetX: {
+			type: String
+		},
 		offsetY: {
 			type: String,
 		}
@@ -48,8 +51,18 @@ export default {
 					this.popper.update()
 				styles.push('display:inline-block;')
 			}
-			if (this.offsetY)
-				styles.push(`margin-top:${this.offsetY};`)
+			if (this.offsetX) {
+				if (parseInt(this.offsetX) > 0)
+					styles.push(`margin-left:${this.offsetX};`)
+				else 
+					styles.push(`margin-right:${-parseInt(this.offsetX)}px;`)
+			}
+			if (this.offsetY) {
+				if (parseInt(this.offsetY) > 0)
+					styles.push(`margin-top:${this.offsetY};`)
+				else
+					styles.push(`margin-bottom:${-parseInt(this.offsetY)}px;`)
+			}
 			return styles.join('')
 		}
 	},

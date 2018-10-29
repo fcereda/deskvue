@@ -193,6 +193,9 @@ export default {
     user-select:none;  
 }  
 
+.dv-menu:focus {
+    outline: 0; 
+}
   
 .dv-menu-item > div {
     padding: 0.5em 0.5em;

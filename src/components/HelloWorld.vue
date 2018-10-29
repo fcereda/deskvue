@@ -1,8 +1,10 @@
 <template>
   <div class="hello">
     <dv-toolbar>
-    	<dv-toolbar-section width="200px" border="right">
+    	<dv-toolbar-section width="200px" align="left">
+    		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
     		<span style="font-size:24px; font-weight: 600;">DeskVue</span>
+    		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
     	</dv-toolbar-section>	
     	<dv-toolbar-spacer></dv-toolbar-spacer>
     	<dv-toolbar-section>
@@ -21,16 +23,25 @@
     	</dv-toolbar-section>
     	<dv-toolbar-section align="right" border="left">
     		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
-			<span @click="showUserDropdown=true" >
-			John Smith<dv-iconbutton link :rotate="showUserDropdown ? '180deg' : 0" data-name="user-name">keyboard_arrow_down</dv-iconbutton>&nbsp;
-			</span>
-			<dv-dropdown :show="showUserDropdown" @close="showUserDropdown=false" anchor-name="user-name" offset-y="6px" elevation>
+			<dv-link 
+				@click="showUserDropdown=!showUserDropdown" 
+				data-name="user-name"
+				>John Smith&nbsp;<dv-icon :rotate="showUserDropdown ? '180deg' : 0" data-name="user-name">keyboard_arrow_down</dv-icon>
+			</dv-link>
+			<dv-toolbar-spacer width="8px"></dv-toolbar-spacer>
+			<dv-dropdown 
+				:show="showUserDropdown" 
+				@close="showUserDropdown=false" 
+				anchor-name="user-name" 
+				offset-y="12px" 
+				elevation
+			>
 				<dv-pane border elevation="1">
 					<dv-menu
 						:items="menuItems"
 						size="medium"
 						
-						@click="showUserDropDown=false"
+						@click="showUserDropdown=false"
 					></dv-menu>	
 				</dv-pane>
 			</dv-dropdown>
@@ -53,6 +64,7 @@
     	@click="onMenuClick"
     ></dv-menu>	
 
+    <pane-test></pane-test>
 
 
     <h3>Buttons</h3>
@@ -98,6 +110,17 @@
           @click="clickBtnGroup(i)">{{ i }}
         </dv-button>
     </dv-btn-group>    
+
+    <dv-toolbar sticky top="0px" topbar="none">
+    	<dv-toolbar-section width="200px">Hello World</dv-toolbar-section>
+    	<dv-toolbar-spacer></dv-toolbar-spacer>
+    	<dv-toolbar-section>
+    		<dv-iconbutton>save</dv-iconbutton>
+    		<dv-iconbutton>save</dv-iconbutton>
+    		<dv-iconbutton>save</dv-iconbutton>
+    	</dv-toolbar-section>
+    </dv-toolbar>	
+
 
     <br><br>
 
@@ -640,6 +663,7 @@ import dvDialog from './dv-modal.vue'
 import dvDropdown from './dv-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
+import dvLink from './dv-link.vue'
 import dvMenu from './dv-menu.vue'
 import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
@@ -662,6 +686,7 @@ import dvSelectNative from './dv-select-native.vue'
 
 import dropdownExamples from './dropdown-examples.vue'
 import formControls from './form-controls.vue'
+import paneTest from './pane-test.vue'
 
 
 import './form.scss'
@@ -680,6 +705,7 @@ export default {
     	dvDropdown,
     	dvIcon,
     	dvIconbutton,
+    	dvLink,
     	dvMenu,
     	dvOptionbox,
     	dvOptions,
@@ -701,6 +727,7 @@ export default {
 
     	dropdownExamples,
     	formControls,
+    	paneTest,
     },
 
     props: {

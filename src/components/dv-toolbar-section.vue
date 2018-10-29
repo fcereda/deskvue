@@ -27,7 +27,7 @@ export default {
 			if (this.border == 'left')
 				classes.push('border-left')
 			if (this.align == 'left')
-				classes.push('align-center')
+				classes.push('align-left')
 			if (this.align == 'right')
 				classes.push('align-right')
 			return classes

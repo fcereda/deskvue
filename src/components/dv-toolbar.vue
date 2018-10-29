@@ -1,10 +1,8 @@
 <template>
 
-	<header>
-		<div class="dv-toolbar">
-
+	<header :style="headerStyle">
+		<div class="dv-toolbar" :class="toolbarClass">
 			<slot></slot>
-
 		</div>
 	</header>
 
@@ -12,9 +10,30 @@
 
 <script>
 
+import utils from './utils.js'
+
 export default {
+	props: ['sticky', 'top', 'topbar'],
+
 	data: function () {
 	    return {}
+	},
+
+	computed: {
+		headerStyle: function () {
+			let styles = []
+			if (utils.isPropOn(this.sticky))
+				styles.push(`position:sticky;`)
+			if (this.top)
+				styles.push(`top:${this.top};`)
+			return styles.join('')
+		},
+
+		toolbarClass: function () {
+			if (this.topbar == 'none')
+				return 'no-topbar'
+			return ''
+		}
 	}
 }
 
@@ -23,6 +42,10 @@ export default {
 <style lang="scss">
 
 @import './base.scss';
+
+header {
+	z-index: 10;
+}
 
 .dv-toolbar {
 	box-sizing: border-box;
@@ -37,28 +60,16 @@ export default {
 	border-bottom: 1px solid $border-color;
 	--topbar-color: firebrick;
 	text-align:left;
-	//padding-top: 8px;
-	//padding-left: 8px;
-	//padding-right: 8px;
 	border-top: 6px solid var(--topbar-color);
 
 	&:not(.topbar) {
 		--topbar-color: #888;
 	}
 
-/*
+	&.no-topbar {
+		border-top: 1px solid $border-color;
+	}	
 
-	&.topbar:after {
-	  content: "";
-	  position: absolute;
-	  left: 0;
-	  width: 100%;
-	  top: 0;
-	  box-sizing: border-box;
-	  border-top: 6px solid var(--topbar-color);
-	}
-
-*/
 
 }
 
