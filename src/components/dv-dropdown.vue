@@ -27,6 +27,9 @@ export default {
 		closeOnClick: {
 			type: Boolean,
 			default: true
+		},
+		offsetY: {
+			type: String,
 		}
 	},
 
@@ -39,12 +42,15 @@ export default {
 
 	computed: {
 		paneStyle: function () {
+			let styles = []
 			if (this.show) {
 				if (this.popper)
 					this.popper.update()
-				return 'display:inline-block;'
+				styles.push('display:inline-block;')
 			}
-			return ''
+			if (this.offsetY)
+				styles.push(`margin-top:${this.offsetY};`)
+			return styles.join('')
 		}
 	},
 

@@ -24,15 +24,15 @@
 			<span @click="showUserDropdown=true" >
 			John Smith<dv-iconbutton link :rotate="showUserDropdown ? '180deg' : 0" data-name="user-name">keyboard_arrow_down</dv-iconbutton>&nbsp;
 			</span>
-			<dv-dropdown :show="showUserDropdown" @close="showUserDropdown=false" anchor-name="user-name">
-
+			<dv-dropdown :show="showUserDropdown" @close="showUserDropdown=false" anchor-name="user-name" offset-y="6px" elevation>
+				<dv-pane border elevation="1">
 					<dv-menu
 						:items="menuItems"
 						size="medium"
-						border
+						
 						@click="showUserDropDown=false"
 					></dv-menu>	
-
+				</dv-pane>
 			</dv-dropdown>
     	</dv-toolbar-section>
 
