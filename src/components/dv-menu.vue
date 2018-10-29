@@ -3,7 +3,7 @@
 <div>
   <ul 
       class="dv-menu"
-      :class="menuClass()" 
+      :class="menuClass" 
       tabindex="0"
       @keydown="menuKeydown"
       @mouseout="menuMouseout"
@@ -19,7 +19,7 @@
 				<div :class="menuButtonClass(item, index)"
              @mouseover="menuItemHover(item)"
              @click="menuItemClick(item, index)">
-					<span style="width:1.5em;float:left;text-align:left;">{{ item.icon }}</span>
+					<span class="dv-menu-icon"><dv-icon v-if="item.icon">{{ item.icon }}</dv-icon></span>
           <span class="menu-item-text" style="float:left;">{{ item.text }}</span>
       		<span class="label">{{ item.key }}</span>
         </div>
@@ -32,14 +32,17 @@
 
 <script>
 
+import dvIcon from './dv-icon.vue'
+
 export default {
+
+  components: {
+    dvIcon
+  },
 
   props: ['size', 'classes', 'border', 'items'],
 
   data: function () {
-
-    console.log('entrou em data()')
-    console.log(this)
 
     let menuItems = this.items.map(item => {
       return {
@@ -67,8 +70,7 @@ export default {
     
   },
 
-  methods: {
-
+  computed: {
     menuClass: function () {
       let classes = []
       if (this.hasBorder)
@@ -77,9 +79,12 @@ export default {
         classes.push(this.classes)
       if (this.size)          
         classes.push(this.size)
-      return classes.join(' ')
+      return classes
     },
-    
+  },
+
+  methods: {
+
     menuButtonClass: function (item, index) {
       let classes = item.classes || ''
       if (item.active)
@@ -154,7 +159,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
 .dv-menu {
     background-color: #fff;
@@ -167,6 +172,7 @@ export default {
 .dv-menu-border {
     border: 1px solid #686868;
     padding: 0.25em;
+    margin:0;
 }  
   
 .dv-menu.small {
@@ -196,8 +202,9 @@ export default {
     border: none;
 	  user-select: none;
     cursor: default;
-  
     display: flex;
+    align-items: center;
+
     flex-direction: row;
 }
   
@@ -281,5 +288,11 @@ export default {
 .dv-menu > .dv-menu-item:not(:first-child) > .category {
     margin-top:1.5em;
 }   
+
+.dv-menu-icon {
+    display:inline-block;
+    width:1.75em;
+    text-align:left;
+}
 
 </style>
