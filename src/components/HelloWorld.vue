@@ -1,5 +1,43 @@
 <template>
   <div class="hello">
+    <dv-toolbar>
+    	<dv-toolbar-section width="200px" border="right">
+    		<span style="font-size:24px; font-weight: 600;">DeskVue</span>
+    	</dv-toolbar-section>	
+    	<dv-toolbar-spacer></dv-toolbar-spacer>
+    	<dv-toolbar-section>
+    		<dv-iconbutton flat>computer</dv-iconbutton>
+    		<dv-iconbutton flat>desktop_mac</dv-iconbutton>
+    		<dv-iconbutton flat>desktop_windows</dv-iconbutton>
+    	</dv-toolbar-section>
+    	<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
+    	<dv-toolbar-section>
+			<dv-select-native search width="100px">
+				<option v-for="tag in tags">{{ tag }}</option>
+			</dv-select-native>&nbsp;
+    		<dv-iconbutton flat>all_inbox</dv-iconbutton>
+    		<dv-iconbutton flat>dns</dv-iconbutton>
+    		<dv-iconbutton flat>build</dv-iconbutton>
+    	</dv-toolbar-section>
+    	<dv-toolbar-section align="right" border="left">
+    		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
+			<span @click="showUserDropdown=true" >
+			John Smith<dv-iconbutton link :rotate="showUserDropdown ? '180deg' : 0" data-name="user-name">keyboard_arrow_down</dv-iconbutton>&nbsp;
+			</span>
+			<dv-dropdown :show="showUserDropdown" @close="showUserDropdown=false" anchor-name="user-name">
+
+					<dv-menu
+						:items="menuItems"
+						size="medium"
+						border
+						@click="showUserDropDown=false"
+					></dv-menu>	
+
+			</dv-dropdown>
+    	</dv-toolbar-section>
+
+    </dv-toolbar>
+
     <h1>{{ msg }}</h1>
     <p>
       For guide and recipes on how to configure / customize this project,<br>
@@ -612,10 +650,15 @@ import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
 import dvTextbox from './dv-textbox.vue'
+import dvToolbar from './dv-toolbar.vue'
+import dvToolbarSection from './dv-toolbar-section.vue'
+import dvToolbarSpacer from './dv-toolbar-spacer.vue'
 import dvSelectbox from './dv-selectbox.vue'
+
 
 import dvInputSelect from './dv-input-select.vue'
 import dvMultiselect from './dv-multiselect.vue'
+import dvSelectNative from './dv-select-native.vue'
 
 import dropdownExamples from './dropdown-examples.vue'
 import formControls from './form-controls.vue'
@@ -648,9 +691,13 @@ export default {
     	dvTabItem,
     	dvTag,
     	dvTextbox,
+    	dvToolbar,
+    	dvToolbarSection,
+		dvToolbarSpacer,
 
     	dvInputSelect,
     	dvMultiselect,
+    	dvSelectNative,
 
     	dropdownExamples,
     	formControls,
@@ -667,16 +714,16 @@ export default {
 			clicked: null,
 			menuItems: [
 				{ text: 'File operations', category: true },
-				{ text: 'New...', icon: 'N', key: 'Ctrl-N' },
-				{ text: 'Save', icon: '$', key: 'Ctrl-S'  },
-				{ text: 'Save as...', icon: '%', key: 'Ctrl-A', },
+				{ text: 'New...', icon: 'insert_drive_file', key: 'Ctrl-N' },
+				{ text: 'Save', icon: 'save', key: 'Ctrl-S'  },
+				{ text: 'Save as...', icon: 'save', key: 'Ctrl-A', },
 				{ divider: true },
-				{ text: 'Save and exit', disabled: true, index: 10 },
-				{ text: 'Exit', icon: 'º', key: 'Ctrl-X', callback: this.testCallback.bind(this) },
+				{ text: 'Save and exit', disabled: true, icon: 'exit_to_app', index: 10 },
+				{ text: 'Exit', icon: 'exit_to_app', key: 'Ctrl-X', callback: this.testCallback.bind(this) },
 				{ text: 'Text editing', category: true },
-				{ text: 'Copy', icon: 'C', key: 'Ctrl-C' },
-				{ text: 'Cut', icon: 'X', key: 'Ctrl-X' },
-				{ text: 'Paste', icon: 'V', key: 'Ctrl-V' }
+				{ text: 'Copy', icon: 'file_copy', key: 'Ctrl-C' },
+				{ text: 'Cut', icon: 'file_copy', key: 'Ctrl-X' },
+				{ text: 'Paste', key: 'Ctrl-V' }
     		],
     		tags: [
       			'Lula', 'Bolsonaro', 'Ciro', 'Alckmin', 'Marina', 'Dias', 'Meirelles', 'Daciolo'
@@ -744,7 +791,9 @@ export default {
 	   			return lines.join('<br>')
 			})(),
 			openDialog: null,
-			showDropdown: false
+			showDropdown: false,
+
+			showUserDropdown: false
 		} 
 
     },
