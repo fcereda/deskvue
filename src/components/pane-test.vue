@@ -48,6 +48,7 @@
 			<dv-sliding-pane 
 				:show="showSlidingPane3" 
 				dock="top"
+				:floating="false"
 				class="sliding-pane-test">
 
 				<div class="pane-test-content top">
@@ -60,7 +61,7 @@
 
 			<dv-sliding-pane 
 				:show="showSlidingPane4"
-				:floating="false" 
+				:floating="true" 
 				dock="bottom"
 				class="sliding-pane-test">
 
@@ -80,6 +81,7 @@
 				:show="showSlidingPane5" 
 				dock="top"
 				:floating="false"
+				:duration="800"
 				class="sliding-pane-test">
 
 				<div class="pane-test-content top">

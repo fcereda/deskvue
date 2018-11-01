@@ -31,6 +31,10 @@ export default {
 		'floating': {
 			type: Boolean,
 			default: true
+		},
+		'duration': {
+			type: [Number, String],
+			default: '0.3s'
 		}	
 	},
 
@@ -79,11 +83,16 @@ export default {
 	watch: {
 		show: function () {
 			this.setSizeAndPosition()
+		},
+
+		duration: function () {
+			this.setDuration()
 		}
 	},
 
 	mounted: function () {
 		this.setSizeAndPosition()
+		this.setDuration()		
 	},
 
 	methods: {
@@ -101,6 +110,14 @@ export default {
 					this.position = -contentSize
 				}
 			}
+		},
+
+		setDuration: function () {
+			let duration = this.duration
+			if (typeof duration == 'number') {
+				duration = duration + 'ms' 
+			}
+			this.$el.style.setProperty('--transition-duration', duration)
 		}
 	}
 }
@@ -115,7 +132,8 @@ $transition-duration: 0.3s;
 
 
 .dv-sliding-pane-container {
-	transition: all $transition-duration ease;
+	--transition-duration: 0.3s;
+	transition: all var(--transition-duration) ease;
 	overflow: hidden;
 	background-color: blue;
 	position: absolute;
@@ -131,24 +149,24 @@ $transition-duration: 0.3s;
 			float: right;
 		}
 	}
-}
 
-.dv-sliding-pane-content {
-	display: inline-block;
-	background-color: firebrick;
-	position: relative;
-	transition: all $transition-duration ease;	
 
-	&.horizontal {
-		height: 100%;	
+	& > .dv-sliding-pane-content {
+		display: inline-block;
+		background-color: firebrick;
+		position: relative;
+		transition: all var(--transition-duration) ease;	
+
+		&.horizontal {
+			height: 100%;	
+		}
+
+		&.vertical {
+			width: 100%;
+		}
+
 	}
 
-	&.vertical {
-		width: 100%;
-	}
-
 }
-
-
 
 </style>
