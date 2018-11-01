@@ -489,6 +489,7 @@ $slim-height: $form-control-height - ($slim-margin * 2);
 		flex-direction: column;
 		padding-top: 0.25em;
 		padding-bottom: 0.5em;
+		overflow-y:hidden;
 	}
 
 	& > .dv-option > i.material-icons {	
