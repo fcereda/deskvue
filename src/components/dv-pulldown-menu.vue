@@ -122,8 +122,9 @@ export default {
 		},
 
 		selectMenuItem: function (menuItem) {
-			if (menuItem == this.currentActiveItem) {
-				// User clicked on an already open menu item
+			if (menuItem == this.currentActiveItem || !menuItem) {
+				// User clicked on an already open menu item,
+				// or menuItem == null
 				this.currentActiveItem = null
 				return
 			}
@@ -187,6 +188,10 @@ export default {
 				case 'ArrowDown':
 					openSubmenu = true	
 					break
+				case 'Escape':
+					this.returnToMainMenu()
+					e.preventDefault()
+					return
 				default:
 					return
 			}
@@ -204,6 +209,12 @@ export default {
 			}
 			e.preventDefault()
 			e.stopPropagation()
+		},
+
+		returnToMainMenu () {
+			this.currentFocusedItem = this.currentActiveItem
+			this.selectMenuItem(null)
+			this.$el.focus()					
 		},
 
 		onKeydownSubmenu: function (e) {
@@ -235,9 +246,10 @@ export default {
     user-select:none;  
 
 	display: inline-block;
-	line-height: 44px;
+	line-height: 42px;
 	padding-left: 12px;
 	padding-right: 12px;
+	margin-top: 2px;
 
 	border: 1px solid transparent;
 	border-top: none;
@@ -257,11 +269,13 @@ export default {
 	}
 
 	&.focus {
-		color: $color-primary;
+		background-color: #BBDEFB;
+
+		//color: $color-primary;
 	}
 
 	&.active {
-		color: $color-primary;
+		// color: $color-primary;
 		border-bottom: 1px solid white;
 
 		&:not(.no-border) {
