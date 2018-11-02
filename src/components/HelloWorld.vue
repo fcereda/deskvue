@@ -1,11 +1,16 @@
 <template>
   <div class="hello">
     <dv-toolbar>
-    	<dv-toolbar-section width="200px" align="left">
+    	<dv-toolbar-section width="120px" align="left">
     		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
     		<span style="font-size:24px; font-weight: 600;">DeskVue</span>
     		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
     	</dv-toolbar-section>	
+    	<dv-toolbar-section>
+    		<dv-pulldown-menu
+    			:items="pulldownMenuItems"
+    		></dv-pulldown-menu>
+    	</dv-toolbar-section>		
     	<dv-toolbar-spacer></dv-toolbar-spacer>
     	<dv-toolbar-section>
     		<dv-iconbutton flat>computer</dv-iconbutton>
@@ -21,7 +26,18 @@
     		<dv-iconbutton flat>dns</dv-iconbutton>
     		<dv-iconbutton flat>build</dv-iconbutton>
     	</dv-toolbar-section>
-    	<dv-toolbar-section align="right" border="left">
+    	<dv-toolbar-section>
+    		<dv-pulldown-menu
+    			:items="[{
+    				text: '&nbsp; Fábio',
+    				iconAfter: 'keyboard_arrow_down', 
+    				submenu: menuItems, 
+    				noBorder:true
+    			}]"
+    			:permanent-border="true"
+    		></dv-pulldown-menu>
+    	</dv-toolbar-section>
+    	<dv-toolbar-section align="right">
     		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
 			<dv-link 
 				@click="showUserDropdown=!showUserDropdown" 
@@ -668,6 +684,7 @@ import dvMenu from './dv-menu.vue'
 import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
 import dvPane from './dv-pane.vue'
+import dvPulldownMenu from './dv-pulldown-menu.vue'
 import dvRadio from './dv-radio.vue'
 import dvRadiogroup from './dv-radiogroup.vue'
 import dvTabs from './dv-tabs.vue'
@@ -710,6 +727,7 @@ export default {
     	dvOptionbox,
     	dvOptions,
     	dvPane,
+    	dvPulldownMenu,
     	dvRadio,
     	dvRadiogroup,
     	dvSelectbox,
@@ -739,6 +757,40 @@ export default {
 		return {
 			counter: 0,
 			clicked: null,
+			pulldownMenuItems: [
+				{ 
+					text: 'File',
+					iconAfter: 'keyboard_arrow_down',
+					submenu: [
+						{ text: 'New', icon: 'insert_drive_file', key: 'Ctrl-N' },
+						{ text: 'Save', icon: 'save', key: 'Ctrl-S'  },
+						{ text: 'Save as...', icon: 'save', key: 'Ctrl-A', }
+					]
+				}, {
+					text: 'Edit',
+					submenu: [
+						{ text: 'Copy', icon: 'file_copy', key: 'Ctrl-C' },
+						{ text: 'Cut', icon: 'file_copy', key: 'Ctrl-X' },
+						{ text: 'Paste', key: 'Ctrl-V' }
+					] 
+				}, {
+					text: 'View',
+					disabled: true,					
+					submenu: [
+						{ text: 'History' },
+						{ text: 'Article' },
+						{ text: 'Object view' }
+					]
+				}, {
+					text: 'Format',
+					iconBefore: 'settings',
+					submenu: [
+						{ text: 'Font...' },
+						{ text: 'Paragraph...' },
+						{ text: 'Page...'}
+					]
+				}
+			],
 			menuItems: [
 				{ text: 'File operations', category: true },
 				{ text: 'New...', icon: 'insert_drive_file', key: 'Ctrl-N' },

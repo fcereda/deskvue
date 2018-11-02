@@ -3,7 +3,8 @@
 <div>
   <ul 
       class="dv-menu"
-      :class="menuClass" 
+      :class="menuClass"
+      ref="dvMenu" 
       tabindex="0"
       @keydown="menuKeydown"
       @mouseout="menuMouseout"
@@ -120,11 +121,12 @@ export default {
         default:
           return
       }    
-      e.preventDefault();
+      e.preventDefault()
+      e.stopPropagation()
       if (newIndex <= -1)
         newIndex = this.activeMenuItems.length - 1
       else 
-        newIndex =  newIndex % this.activeMenuItems.length 
+        newIndex = newIndex % this.activeMenuItems.length 
       this.indexCurrentMenuItem = newIndex
     },  
     
@@ -150,6 +152,13 @@ export default {
         return
       this.$emit('click', this.items[index])
       this.activeMenuItems.forEach(thisItem => this.$set(thisItem, 'active', thisItem == item))
+    },
+
+    focus: function () {
+      this.$refs.dvMenu.focus()
+      if (this.indexCurrentMenuItem < 0) {
+        this.indexCurrentMenuItem = 0
+      }
     }  
     
   }, 
