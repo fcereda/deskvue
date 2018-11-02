@@ -1,6 +1,15 @@
 <template>
 
-	<ul class="dv-pulldown-menu">
+<!-- Temos que implementar o tab e o shift-tab para o menu pulldown! -->
+
+
+	<ul 
+		class="dv-pulldown-menu" 
+		tabindex="0"
+		@focus="onFocus"
+		@blur="onBlur"
+		@keydown="onKeydown"
+	>
 		<li 
 			v-for="item in items"
 			class="dv-pulldown-menu-item"
@@ -9,7 +18,7 @@
 			:key="item.text"
 			:data-name="item.text"
 			@click="onClickMenuItem(item, $event)"
-			@keydown="onKeydown"
+
 		>
 			<span v-if="item.iconBefore" class="dv-icon-before"><dv-icon>{{ item.iconBefore }}</dv-icon></span>
 			<span v-html="item.text"></span>
@@ -69,6 +78,8 @@ export default {
 
 	data:function () {
 		return {
+			currentFocusedItem: null,
+			lastFocusedItem: null,
 			currentActiveItem: null
 		}	
 	},
@@ -90,6 +101,8 @@ export default {
 				classes.push('permanent-border')
 			if (menuItem == this.currentActiveItem)
 				classes.push('active')
+			else if (menuItem == this.currentFocusedItem)
+				classes.push('focus')
 			return classes
 		},
 
@@ -125,17 +138,35 @@ export default {
 			})	
 		},
 
+		onFocus: function (e) {
+			this.currentFocusedItem = this.lastFocusedItem || this.enabledItems[0]
+		},
+
+		onBlur: function (e) {
+			console.log('Entrou em onBlur')
+			//this.lastFocusedItem = this.currentFocusedItem
+			this.currentFocusedItem= null
+		},
+
 		onClickMenuItem: function (menuItem, e) {
 			e.preventDefault()
 			e.stopPropagation()
 			if (menuItem.disabled)
 				return
 			this.selectMenuItem(menuItem)
+			this.currentFocusedItem = menuItem
+			this.lastFocusedItem = menuItem
 		},
 
 		onKeydown: function (e) {
-			console.log(e.key)
-			let indexActiveMenu = this.enabledItems.indexOf(this.currentActiveItem)
+			let openSubmenu = false
+			let indexActiveMenu = -1
+			if (this.currentFocusedItem) {
+				indexActiveMenu = this.enabledItems.indexOf(this.currentFocusedItem)
+			}
+			else if (this.currentActiveItem) {
+				indexActiveMenu = this.enabledItems.indexOf(this.currentActiveItem)
+			}
 			if (indexActiveMenu < 0) {
 				return 
 			}
@@ -152,6 +183,10 @@ export default {
 				case 'End':
 					indexActiveMenu = this.enabledItems.length - 1
 					break
+				case 'Enter':
+				case 'ArrowDown':
+					openSubmenu = true	
+					break
 				default:
 					return
 			}
@@ -161,14 +196,19 @@ export default {
 			else if (indexActiveMenu >= this.enabledItems.length) {
 				indexActiveMenu = 0
 			}
-			this.selectMenuItem(this.enabledItems[indexActiveMenu])
-			
+			let newlySelectedItem = this.enabledItems[indexActiveMenu]
+			this.currentFocusedItem = newlySelectedItem
+			this.lastFocusedItem = newlySelectedItem
+			if (this.currentActiveItem || openSubmenu) {
+				this.selectMenuItem(newlySelectedItem)
+			}
 			e.preventDefault()
 			e.stopPropagation()
 		},
 
 		onKeydownSubmenu: function (e) {
-			if (e.key == 'Home' || e.key == 'End')
+			console.log('Entrou em onKeydown submenu')
+			if (e.key == 'Home' || e.key == 'End' || e.key == 'Enter' || e.key == 'ArrowDown')
 				return
 			this.onKeydown(e)
 		}
@@ -182,10 +222,14 @@ export default {
 @import './base.scss';
 
 .dv-pulldown-menu {
+	&:focus {
+		outline: 0;
+	}
 
 }
 
 .dv-pulldown-menu-item {
+	box-sizing: border-box;
     list-style-type: none;  
     margin-left: 0px;
     user-select:none;  
@@ -195,9 +239,9 @@ export default {
 	padding-left: 12px;
 	padding-right: 12px;
 
-	border-left: 1px solid transparent;
-	border-right: 1px solid transparent;
-	border-bottom: 1px solid $border-color;
+	border: 1px solid transparent;
+	border-top: none;
+	border-bottom-color: $border-color;
 
 	&.permanent-border {
 		border-left-color: $border-color;
@@ -210,6 +254,10 @@ export default {
 
 	&.disabled {
 		color: $color-disabled;
+	}
+
+	&.focus {
+		color: $color-primary;
 	}
 
 	&.active {

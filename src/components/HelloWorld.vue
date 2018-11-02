@@ -26,6 +26,7 @@
     		<dv-iconbutton flat>dns</dv-iconbutton>
     		<dv-iconbutton flat>build</dv-iconbutton>
     	</dv-toolbar-section>
+<!--
     	<dv-toolbar-section>
     		<dv-pulldown-menu
     			:items="[{
@@ -37,6 +38,7 @@
     			:permanent-border="true"
     		></dv-pulldown-menu>
     	</dv-toolbar-section>
+-->
     	<dv-toolbar-section align="right">
     		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
 			<dv-link 
