@@ -1,8 +1,5 @@
 <template>
 
-<!-- Temos que implementar o tab e o shift-tab para o menu pulldown! -->
-
-
 	<ul 
 		class="dv-pulldown-menu" 
 		tabindex="0"
@@ -23,22 +20,24 @@
 			<span v-if="item.iconBefore" class="dv-icon-before"><dv-icon>{{ item.iconBefore }}</dv-icon></span>
 			<span v-html="item.text"></span>
 			<span v-if="item.iconAfter" class="dv-icon-after"><dv-icon>{{ item.iconAfter }}</dv-icon></span>
-		<dv-dropdown 
-			:anchor-name="item.text"
-			offset-x="1px"
-			close-on-esc
-			:show="currentActiveItem == item"
-			@close="currentActiveItem = false">
-			<div class="dv-pulldown-submenu">
-				<dv-menu
-					:items="item.submenu"
-					size="medium"
-					:ref="menuRef(item)"
-					@click="currentActiveItem = null"
-					@keydown.native="onKeydownSubmenu"
-				></dv-menu>	
-			</div>
-		</dv-dropdown>
+	
+			<dv-dropdown 
+				:anchor-name="item.text"
+				offset-x="1px"
+				close-on-esc
+				:show="currentActiveItem == item"
+				@close="currentActiveItem = false">
+				<div class="dv-pulldown-submenu">
+					<dv-menu
+						:items="item.submenu"
+						size="medium"
+						:ref="menuRef(item)"
+						@click="currentActiveItem = null"
+						@keydown.native="onKeydownSubmenu"
+						@focusout.native="onBlurSubmenu(item)"
+					></dv-menu>	
+				</div>
+			</dv-dropdown>
 		</li>		
 	</ul>
 
@@ -144,7 +143,6 @@ export default {
 		},
 
 		onBlur: function (e) {
-			console.log('Entrou em onBlur')
 			//this.lastFocusedItem = this.currentFocusedItem
 			this.currentFocusedItem= null
 		},
@@ -185,6 +183,7 @@ export default {
 					indexActiveMenu = this.enabledItems.length - 1
 					break
 				case 'Enter':
+				case ' ':
 				case 'ArrowDown':
 					openSubmenu = true	
 					break
@@ -218,10 +217,16 @@ export default {
 		},
 
 		onKeydownSubmenu: function (e) {
-			console.log('Entrou em onKeydown submenu')
 			if (e.key == 'Home' || e.key == 'End' || e.key == 'Enter' || e.key == 'ArrowDown')
 				return
 			this.onKeydown(e)
+		},
+
+		onBlurSubmenu: function (menuItem) {
+			this.$nextTick(() => {
+				if (this.currentActiveItem == menuItem)
+					this.currentActiveItem = null
+			})
 		}
 	}
 }

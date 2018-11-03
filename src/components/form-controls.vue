@@ -4,7 +4,25 @@
 
 	<h3>Form controls</h3><p>
 
+	Text inputs:<br>
+		<dv-textbox
+			:value="nativePilot"
+			style="float:left"
+			width="10em"
+		></dv-textbox>			
+
+
+	<dv-input-text v-model="text1" placeholder="Type here" style="float:left;"></dv-input-text>
+	<dv-input-text v-model="text1" placeholder="Type here" style="float:left;"></dv-input-text>
+
 	<br>
+	<dv-input-text v-model="text2" placeholder="What's up?" rounded></dv-input-text>
+	<br>
+	Password:
+	<br>
+	<dv-input-text v-model="password1" password></dv-input-text> 
+
+	<br><br>
 	<div style="text-align:left">
 
 		<dv-iconbutton>save</dv-iconbutton>
@@ -277,6 +295,7 @@ import dvDatepicker from './dv-datepicker.vue'
 import dvDropdown from './dv-select-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
+import dvInputText from './dv-input-text.vue'
 import dvLabel from './dv-label.vue'
 import dvTextbox from './dv-textbox.vue'
 import dvSelectbox from './dv-selectbox.vue'
@@ -292,6 +311,7 @@ export default {
 		dvDropdown,
 		dvIcon,
 		dvIconbutton,
+		dvInputText,
 		dvLabel,
 		dvTextbox,
 		dvSelectbox,
@@ -312,6 +332,7 @@ export default {
 	   		text4: 'Emerson Fittipaldi',
 	   		text5: 'Niki Lauda',
 	   		text6: 'Nelson Piquet',
+	   		password1: null,
 	   		raios: [25, 50, 100, 200, 300, 500, 1000],
 	   		raio: '',
 	   		cidade: '',
