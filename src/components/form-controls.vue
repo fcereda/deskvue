@@ -23,6 +23,11 @@
 	<dv-input-text v-model="password1" password></dv-input-text> 
 
 	<br><br>
+	Number:
+	<br>
+	<dv-input-number v-model="number1" placeholder="Type a number" width="20em" :min="100" :max="1999" :step="5"></dv-input-number> {{ number1 }}
+
+	<br><br>
 	<div style="text-align:left">
 
 		<dv-iconbutton>save</dv-iconbutton>
@@ -295,6 +300,7 @@ import dvDatepicker from './dv-datepicker.vue'
 import dvDropdown from './dv-select-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
+import dvInputNumber from './dv-input-number.vue'
 import dvInputText from './dv-input-text.vue'
 import dvLabel from './dv-label.vue'
 import dvTextbox from './dv-textbox.vue'
@@ -311,6 +317,7 @@ export default {
 		dvDropdown,
 		dvIcon,
 		dvIconbutton,
+		dvInputNumber,
 		dvInputText,
 		dvLabel,
 		dvTextbox,
@@ -333,6 +340,7 @@ export default {
 	   		text5: 'Niki Lauda',
 	   		text6: 'Nelson Piquet',
 	   		password1: null,
+	   		number1: null,
 	   		raios: [25, 50, 100, 200, 300, 500, 1000],
 	   		raio: '',
 	   		cidade: '',

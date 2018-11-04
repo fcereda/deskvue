@@ -94,10 +94,8 @@ input.__dv-input-text {
 		cursor: no-drop;
 	}		
 
-	&:focus {
-		outline: 0;
-		border:1px solid $focus-color;
-		box-shadow: 0px 0px 2px 0px $focus-color;	
+	&:not(.no-border):focus {
+		box-shadow: 0px 0px 1px 1px $focus-color;	
 	  	z-index:100;
 	}	
 }  

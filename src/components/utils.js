@@ -50,7 +50,11 @@ export default {
 		if (colors.indexOf(color) < 0)
 			return ''
 		return color
-	}
+	},
 
+	isNumeric: function (value) {
+		// This function comes from Angular 4.3
+		return !isNaN(value - parseFloat(value))
+	}
 
 }
