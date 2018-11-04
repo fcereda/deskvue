@@ -14,8 +14,8 @@
 			@keydown.native="onKeydown"
 			@input="onInput"
 		></dv-input-text>
-		<dv-iconbutton flat @click="addToValue(-step)">remove</dv-iconbutton>
-		<dv-iconbutton flat @click="addToValue(step)">add</dv-iconbutton>
+		<dv-iconbutton flat @click="addToValue(-step)">remove_circle_outline</dv-iconbutton>
+		<dv-iconbutton flat @click="addToValue(step)">add_circle_outline</dv-iconbutton>
 
 	</dv-combo>
 
@@ -28,9 +28,6 @@ import dvIconbutton from './dv-iconbutton.vue'
 import dvInputText from './dv-input-text.vue'
 import utils from './utils.js'
 
-function validateNumberProp (propValue) {
-	return utils.isNumeric(propValue)
-}
 
 export default {
 
@@ -56,15 +53,17 @@ export default {
 		min: {
 			type: [String, Number],
 			default: -Infinity,
-			validator: validateNumberProp
+			validator: utils.isNumeric
 		},
 		max: {
 			type: Number,
-			default: Infinity
+			default: Infinity,
+			validator: utils.isNumeric
 		},
 		step: {
 			type: Number,
-			default: 1
+			default: 1,
+			validator: utils.isNumeric
 		},
 		value: {
 			type: Number,
@@ -95,17 +94,6 @@ export default {
 			return this.value.toString()
 		},
 
-		nMin: function () {
-			return Number(this.min)
-		},
-
-		nMax: function () {
-			return Number(this.max)
-		},
-
-		nStep: function () {
-			return Number(this.step)
-		}
 	},
 
 	methods: {
@@ -198,15 +186,18 @@ export default {
 
 .dv-input-number > .__dv_input_text:focus {
 	border-color: transparent !important;
-}
-/*
-.dv-input-number-text:focus {
-	box-shadow: 0px 0px 1px 1px transparent !important;
-}
-*/
-.dv-input-number.focus > .dv-input-number-text {
 	outline-color: transparent;
 }
+
+.dv-input-number > button  {
+	color: #606060;
+}
+
+
+/*
+.dv-input-number.focus > .dv-input-number-text {
+}
+*/
 
 .dv-input-number-error {
 	border-color: $color-error;

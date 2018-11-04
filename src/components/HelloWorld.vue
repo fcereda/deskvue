@@ -644,6 +644,15 @@
 		</template>
 		<div v-for="pilot in pilots">{{ pilot }}</div>
 	</dv-collapsible-pane>	
+
+	<h3>Lists</h3>
+
+	<dv-list border rounded width="200px">
+		<dv-list-item v-for="pilot in pilots">
+			<div style="text-align:left;font-weight:600">{{ pilot}}</div>
+			<div style="text-align:left;font-weight:400">Copersucar Fittipaldi</div>
+		</dv-list-item>
+	</dv-list>	
 	
 
     <h3>Installed CLI Plugins</h3>
@@ -683,6 +692,8 @@ import dvDropdown from './dv-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
 import dvLink from './dv-link.vue'
+import dvList from './dv-list.vue'
+import dvListItem from './dv-list-item.vue'
 import dvMenu from './dv-menu.vue'
 import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
@@ -726,6 +737,8 @@ export default {
     	dvIcon,
     	dvIconbutton,
     	dvLink,
+    	dvList,
+    	dvListItem,
     	dvMenu,
     	dvOptionbox,
     	dvOptions,
