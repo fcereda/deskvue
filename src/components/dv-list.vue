@@ -17,6 +17,10 @@ export default {
 	props: {
 		border: Boolean,
 		rounded: Boolean,
+		divider: {
+			type: Boolean,
+			default: false
+		},
 		width: String,
 	},
 
@@ -28,7 +32,8 @@ export default {
 		listClass: function () {
 			return utils.computeClasses({
 				border: this.border,
-				rounded: this.rounded
+				rounded: this.rounded,
+				divider: this.divider
 			},this)
 		},
 
@@ -49,6 +54,7 @@ export default {
 ul.dv-list {
 
 	margin: 0;
+	overflow: hidden;
 
 	& > li {
 		margin: 0;
@@ -58,11 +64,19 @@ ul.dv-list {
 		border: 1px solid $border-color;
 		border-radius: 0;
 
-		& > .dv-list-item + .dv-list-item {
-			border-top: 1px solid $border-color;
-		}
+		& > .dv-list-label:first-child {
+			padding-top: 0.5em;
+		}	
 
+		&.divider {
+			& > .dv-list-item + .dv-list-item {
+				border-top: 1px solid $border-color;
+			}
 
+			& > .dv-list-item + .dv-list-label {
+				border-top: 1px solid $border-color;
+			}
+		}	
 	}
 	
 	&.rounded {

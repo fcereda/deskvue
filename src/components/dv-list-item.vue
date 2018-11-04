@@ -31,6 +31,10 @@ export default {
 li.dv-list-item {
 	display: block  !important;
 	padding: 0.5em 1em;
+	text-align: left;
+	line-height: 125%;
+	cursor: default;
+	user-select: none;
 
 	&:hover {
 		background-color: $hover-color;

@@ -647,11 +647,24 @@
 
 	<h3>Lists</h3>
 
-	<dv-list border rounded width="200px">
+	<dv-list border rounded divider width="200px">
 		<dv-list-item v-for="pilot in pilots">
 			<div style="text-align:left;font-weight:600">{{ pilot}}</div>
 			<div style="text-align:left;font-weight:400">Copersucar Fittipaldi</div>
 		</dv-list-item>
+	</dv-list>
+	<br>
+
+	<dv-list border rounded divider width="250px">
+		<template v-for="countryObj in pilotsByCountry">
+			<dv-list-label>
+				{{ countryObj.country }}
+			</dv-list-label>
+			<dv-list-item v-for="pilot in countryObj.pilots">
+				<div style="text-align:left;font-weight:600">{{ pilot.name }}</div>
+				<div style="text-align:left;font-weight:400" v-for="title in pilot.titles">{{ title.year }}: {{ title.team }}{{ title.engine ? '-' + title.engine : '' }}</div>
+			</dv-list-item>
+		</template>	
 	</dv-list>	
 	
 
@@ -694,6 +707,7 @@ import dvIconbutton from './dv-iconbutton.vue'
 import dvLink from './dv-link.vue'
 import dvList from './dv-list.vue'
 import dvListItem from './dv-list-item.vue'
+import dvListLabel from './dv-list-label.vue'
 import dvMenu from './dv-menu.vue'
 import dvOptionbox from './dv-optionbox.vue'
 import dvOptions from './dv-options.vue'
@@ -739,6 +753,7 @@ export default {
     	dvLink,
     	dvList,
     	dvListItem,
+    	dvListLabel,
     	dvMenu,
     	dvOptionbox,
     	dvOptions,
@@ -832,6 +847,201 @@ export default {
 	   		multiselect1: null,
 
 	   		pilots: ['Wilson Fittipaldi', 'Emerson Fittipaldi', 'José Carlos Pace', 'Ingo Hoffman', 'Alex Dias Ribeiro', 'Nelson Piquet'],
+	   		pilotsByCountry: [{
+	   			country: 'Brazil',
+	   			pilots: [{
+	   				name: 'Emerson Fittipaldi', 
+	   				titles: [{
+	   					year: 1972,
+	   					team: 'Lotus',
+	   					engine: 'Ford'
+	   				}, {
+	   					year: 1974,
+	   					team: 'McLaren',
+	   					engine: 'Ford'
+	   				}],
+	   			}, {
+	   				name: 'Nelson Piquet', 
+	   				titles: [{
+	   					year: 1981,
+	   					team: 'Brabham',
+	   					engine: 'Ford'
+	   				}, {
+	   					year: 1983,
+	   					team: 'Brabham',
+	   					engine: 'Ford'
+	   				}, {
+	   					year: 1986,
+	   					team: 'Williams',
+	   					engine: 'Honda'	
+	   				}] 
+	   			}, {
+	   				name: 'Ayrton Senna',
+	   				titles: [{
+	   					year: 1988,
+	   					team: 'McLaren',
+	   					engine: 'Honda' 
+	   				}, {
+	   					year: 1990,
+	   					team: 'McLaren',
+	   					engine: 'Honda'
+	   				}, {
+	   					year: 1991,
+	   					team: 'McLaren',
+	   					engine: 'Honda'
+	   				}]
+	   			}]
+	   		}, {
+	   			country: 'UK',
+	   			pilots: [{
+	   				name: 'Jim Clark', 
+	   				titles: [{
+	   					year: 1965,
+	   					team: 'Lotus',
+	   					engine: 'Climax'
+	   				}, {
+	   					year: 1967,
+	   					team: 'Lotus',
+	   					engine: 'Ford'
+	   				}]
+	   			}, {
+	   				name: 'Jackie Stewart',
+	   				titles: [{
+	   					year: 1969,
+	   					team: 'Matra',
+	   					engine: 'Matra'
+	   				}, {
+	   					year: 1971,
+	   					team: 'Tyrrel',
+	   					engine: 'Ford'
+	   				}, {
+	   					year: 1973,
+	   					team: 'Tyrrel',
+	   					engine: 'Ford'
+	   				}]	
+	   			}, {
+	   				name: 'Nigel Mansell', 
+	   				titles: [{
+	   					year: 1992,
+	   					team: 'Williams',
+	   					engine: 'Renault'
+	   				}]
+	   			}, {
+	   				name: 'Damon Hill',
+	   				titles: [{
+	   					year: 1996,
+	   					team: 'Williams',
+	   					engine: 'Renault'
+	   				}]
+	   			}, {	
+	   				name: 'Jenson Button',
+	   				titles: [{
+	   					year: 2009,
+	   					team: 'Brawn GP',
+	   					engine: 'Mercedes'
+	   				}]
+	   			}, {
+	   				name: 'Lewis Hamilton',
+	   				titles: [{
+	   					year: 2008,
+	   					team: 'McLaren',
+	   					engine: 'Mercedes'
+	   				}, {
+	   					year: 2014,
+	   					team: 'Mercedes',
+	   				}, {
+	   					year: 2015,
+	   					team: 'Mercedes',
+	   				}, {
+	   					year: 2017,
+	   					team: 'Mercedes',
+	   				}, {
+	   					year: 2018,
+	   					team: 'Mercedes',
+	   				}]
+	   			}]
+	   		}, {
+	   			country: 'Finland', 
+	   			pilots: [{
+	   				name: 'Keke Rosberg', 
+	   				titles: [{
+	   					year: 1982,
+	   					team: 'Williams',
+	   					engine: 'Ford'
+	   				}]
+	   			}, {
+	   				name: 'Mika Hakkinen', 
+	   				titles: [{
+	   					year: 1998,
+	   					team: 'McLaren',
+	   					engine: 'Mercedes'
+	   				}, {
+	   					year: 1999,
+	   					team: 'McLaren',
+	   					engine: 'Mercedes'
+	   				}]
+	   			}, {
+	   				name: 'Kimi Raikkonen',
+	   				titles: [{
+	   					year: 2007,
+	   					team: 'Ferrari'
+	   				}]
+	   			}]	
+	   		}, {
+	   			country: 'Germany',
+	   			pilots: [{
+	   				name: 'Michael Schumacher',
+	   				titles: [{
+	   					year: 1994,
+	   					team: 'Benetton',
+	   					engine: 'Ford'
+	   				}, {
+	   					year: 1995,
+	   					team: 'Benetton',
+	   					engine: 'Renault'
+	   				}, {
+	   					year: 2000,
+	   					team: 'Ferrari'
+	   				}, {
+	   					year: 2001,
+	   					team: 'Ferrari'
+	   				}, {
+	   					year: 2002,
+	   					team: 'Ferrari'
+	   				}, {
+	   					year: 2003,
+	   					team: 'Ferrari'
+	   				}, {
+	   					year: 2004,
+	   					team: 'Ferrari'
+	   				}]
+	   			}, {	 
+	   				name: 'Sebastian Vettel',
+	   				titles: [{
+	   					year: 2010,
+	   					team: 'Red Bull',
+	   					engine: 'Renault'
+	   				}, {
+	   					year: 2011,
+	   					team: 'Red Bull',
+	   					engine: 'Renault'
+	   				}, {
+	   					year: 2012,
+	   					team: 'Red Bull',
+	   					engine: 'Renault'
+	   				}, {
+	   					year: 2013,
+	   					team: 'Red Bull',
+	   					engine: 'Renault'
+	   				}] 
+	   			}, {
+	   				name: 'Nico Rosberg',
+	   				titles: [{
+	   					year: 2016,
+	   					team: 'Mercedes' 
+	   				}]
+	   			}]
+	   		}],
 	   		myPilots: null,
 	   		text1: '',
 	   		text2: 'John Stewart',
