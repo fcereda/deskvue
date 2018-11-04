@@ -5,7 +5,10 @@
 		class="__dv-input-text" 
 		:class="inputClass"
 		:style="inputStyle"
-		:placeholder="placeholder" 
+		:placeholder="placeholder"
+		:maxlength="maxlength"
+		:minlength="minlength" 
+		:pattern="pattern"
 		:disabled="disabled"
 		:value="value"
 		ref="input"
@@ -19,7 +22,7 @@
 import utils from './utils.js'
 
 export default {
-	props: ['width', 'password', 'placeholder', 'disabled', 'rounded', 'noBorder', 'color', 'mask', 'info', 'error', 'value'],
+	props: ['width', 'password', 'placeholder', 'disabled', 'rounded', 'noBorder', 'minlength', 'maxlength', 'pattern', 'color', 'mask', 'info', 'error', 'value'],
 
 	data: function () {
 		return {}
@@ -33,7 +36,8 @@ export default {
 		inputClass: function () {
 			return utils.computeClasses({
 				rounded: 'rounded',
-				'no-border': 'noBorder' 
+				'no-border': 'noBorder',
+				password: 'password' 
 			}, this)		
 		},
 
@@ -68,6 +72,7 @@ input.__dv-input-text {
     color: $text-color;
 	border: 1px solid $border-color;    
 	border-radius: $border-radius;
+	outline:none;
     line-height: 150%;
     font-family: inherit;
     font-size: $font-size;
@@ -79,6 +84,10 @@ input.__dv-input-text {
 
     &.no-border {
     	border: 1px solid transparent;
+    }
+
+    &.password {
+    	letter-spacing:0.1em;
     }
 
     &:disabled {

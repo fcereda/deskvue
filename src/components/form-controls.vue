@@ -20,7 +20,14 @@
 	<br>
 	Password:
 	<br>
-	<dv-input-text v-model="password1" password></dv-input-text> 
+	<dv-input-text 
+		v-model="password1" 
+		password 
+		pattern=".{6,}"
+		minlength="6"
+		maxlength="10"
+		rounded
+	></dv-input-text> 
 
 	<br><br>
 	Number:
