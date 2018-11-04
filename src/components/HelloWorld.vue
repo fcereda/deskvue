@@ -51,7 +51,8 @@
 				:show="showUserDropdown" 
 				@close="showUserDropdown=false" 
 				anchor-name="user-name" 
-				offset-y="12px" 
+				offset-y="11.5px"
+				offset-x="-100px" 
 				elevation
 			>
 				<dv-pane border elevation="1">

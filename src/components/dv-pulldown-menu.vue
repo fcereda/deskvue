@@ -24,6 +24,7 @@
 			<dv-dropdown 
 				:anchor-name="item.text"
 				offset-x="1px"
+				offset-y="-1px"
 				close-on-esc
 				:show="currentActiveItem == item"
 				@close="currentActiveItem = false">
@@ -254,11 +255,11 @@ export default {
 	line-height: 42px;
 	padding-left: 12px;
 	padding-right: 12px;
-	margin-top: 2px;
+	margin-top: 1px;
 
 	border: 1px solid transparent;
 	border-top: none;
-	border-bottom-color: $border-color;
+	//border-bottom: none;	
 
 	&.permanent-border {
 		border-left-color: $border-color;
@@ -280,13 +281,14 @@ export default {
 	}
 
 	&.active {
-		// color: $color-primary;
-		border-bottom: 1px solid white;
+		border-bottom: 2px solid white;
+		margin-bottom: -1px;
 
 		&:not(.no-border) {
 			border-left: 1px solid $border-color;
 			border-right: 1px solid $border-color;
-		}	
+		}
+		
 	}
 }
 

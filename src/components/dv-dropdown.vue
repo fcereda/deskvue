@@ -29,10 +29,10 @@ export default {
 			default: true
 		},
 		offsetX: {
-			type: String
+			type: [String, Number]
 		},
 		offsetY: {
-			type: String,
+			type: [String, Number],
 		}
 	},
 
@@ -54,14 +54,19 @@ export default {
 			if (this.offsetX) {
 				if (parseInt(this.offsetX) > 0)
 					styles.push(`margin-left:${this.offsetX};`)
-				else 
+				else {
+					styles.push(`margin-left:${this.offsetX};`)
 					styles.push(`margin-right:${-parseInt(this.offsetX)}px;`)
+				}
 			}
 			if (this.offsetY) {
+				styles.push(`margin-top:${this.offsetY};`)
 				if (parseInt(this.offsetY) > 0)
 					styles.push(`margin-top:${this.offsetY};`)
-				else
+				else {
+					styles.push(`margin-top:${this.offsetY};`)
 					styles.push(`margin-bottom:${-parseInt(this.offsetY)}px;`)
+				}
 			}
 			return styles.join('')
 		}
