@@ -35,10 +35,14 @@ li.dv-list-item {
 	line-height: 125%;
 	cursor: default;
 	user-select: none;
-
+/*
 	&:hover {
 		background-color: $hover-color;
 	}	
+*/
+	&.focus {
+		background-color: $hover-color;
+	}
 }
 
 </style>

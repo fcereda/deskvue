@@ -655,7 +655,8 @@
 	</dv-list>
 	<br>
 
-	<dv-list border rounded divider width="250px">
+	<dv-pane width="260px" height="500px" border vertical-scroll scrollbar="slim">
+	<dv-list rounded divider>
 		<template v-for="countryObj in pilotsByCountry">
 			<dv-list-label>
 				{{ countryObj.country }}
@@ -666,6 +667,7 @@
 			</dv-list-item>
 		</template>	
 	</dv-list>	
+	</dv-pane>
 	
 
     <h3>Installed CLI Plugins</h3>
@@ -896,13 +898,13 @@ export default {
 	   			pilots: [{
 	   				name: 'Jim Clark', 
 	   				titles: [{
-	   					year: 1965,
+	   					year: 1963,
 	   					team: 'Lotus',
 	   					engine: 'Climax'
 	   				}, {
-	   					year: 1967,
+	   					year: 1965,
 	   					team: 'Lotus',
-	   					engine: 'Ford'
+	   					engine: 'Climax'
 	   				}]
 	   			}, {
 	   				name: 'Jackie Stewart',
