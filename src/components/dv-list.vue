@@ -55,10 +55,6 @@ export default {
 		}
 	},
 
-	watch: {
-
-	}, 
-
 	mounted: function () {
 		this.computeListItems()
 	},
@@ -69,29 +65,97 @@ export default {
 		},
 
 		getTargetItem: function (e) {
-			let targetElement = e.path.find(element => element.classList.contains('dv-list-item'))
+			let targetElement = e.path.find(element => element.classList && element.classList.contains('dv-list-item'))
 			let targetItem = this.listItems.find(item => item.$el == targetElement)
 			return targetItem
 		},
 
 		scrollItemIntoView (item) {
-			let itemRect = item.$el.getBoundingClientRect()
-			let itemTop = itemRect.top
-			let itemBottom = itemTop + itemRect.height
-			while (item.$parent) {
-				let parent = item.$parent.$el
+			let itemRect, 
+				itemTop, 
+				itemBottom
+
+			let recalcItemRect = function () {
+				itemRect = item.$el.getBoundingClientRect()
+				itemTop = itemRect.top
+				itemBottom = itemTop + itemRect.height
+				//console.log(`*** itemTop = ${itemTop}, itemBottom = ${itemBottom}`)
+			}
+
+			// First, we check if there are outer divs or panes that must be scrolled
+			// to put the item on view
+			recalcItemRect()
+			var element = item.$parent,
+				parent
+			while (element) {
+				parent = element.$el
 				let parentRect = parent.getBoundingClientRect()
 				let parentTop = parentRect.top
 				let parentBottom = parentTop + parentRect.height
+				console.log(parent.classList, parent.scrollTop)
+				//console.log(`*** parentTop = ${parentTop}, parentBottom = ${parentBottom}`)
 				if (itemTop < parentTop) {
 					let delta = parentTop - itemTop
 					parent.scrollTop = parent.scrollTop - delta
+					recalcItemRect()
+					break
 				}
 				else if (itemBottom > parentBottom) {
 					let delta = itemBottom - parentBottom
 					parent.scrollTop = parent.scrollTop + delta
+					recalcItemRect()
+					break
 				}
-				item = item.$parent
+				element = element.$parent
+			}
+			// Afterwards, we check if the window must be scrolled as well
+
+			let windowHeight = document.documentElement.clientHeight
+			if (itemTop < 0 || itemBottom > windowHeight) {
+				var delta = itemTop < 0 ? itemTop : itemBottom - windowHeight
+				// We start checking where we stopped before
+				parent = parent.$parent
+				while (parent) {
+					let el = parent.$el
+					if (el.scrollHeight - el.clientHeight >= Math.abs(delta)) {
+						// if el.scrollHeight > el.clientHeight, el is scrollable	
+						el.scrollTop += itemTop
+						return
+					}
+					parent = parent.$parent	
+				}
+				// If we get through here, no parent element was scrollable;
+				// we'll need to scroll document.documentElement
+				document.documentElement.scrollTop += delta
+			}
+			return
+
+/*
+			if (itemTop < 0) {
+				console.log('itemTop < 0')
+				let parent = item.$parent
+				while (parent) {
+					let el = parent.$el
+					console.log(`${el.classList}, scrollHeight = ${el.scrollHeight}, clientHeight = ${el.clientHeight}`)
+					console.log(`scrollTop: ${el.scrollTop}`)
+					console.log(el.style)
+					console.log(el.style.overflowY)
+					parent = parent.$parent
+				}
+				let el = document.documentElement
+				console.log('document.documentElement')
+				console.log(`${el.classList}, scrollHeight = ${el.scrollHeight}, clientHeight = ${el.clientHeight}`)
+				console.log(`scrollTop: ${el.scrollTop}`)	
+			}	
+*/
+			if (itemTop < 0) {
+				document.documentElement.scrollTop += itemTop
+			}
+			else {
+				let windowHeight = document.documentElement.clientHeight
+				if (itemBottom > windowHeight) {
+					document.documentElement.scrollTop += (itemBottom - windowHeight)
+				}	
 			}
 
 		},
