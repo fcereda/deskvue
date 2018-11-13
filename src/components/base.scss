@@ -49,7 +49,22 @@ $box-shadow-focus: 0px 0px 2px 0px $focus-color;
 
 body {
 	font-family: 'San Francisco', 'Roboto', 'Segoe UI', sans-serif;
-	//font-size:16px;
+
+	--color-primary: #{$color-primary};
+	--color-secondary: #{$color-secondary};
+	--color-warning: #{$color-warning};
+	--color-danger: #{$color-danger};
+	--color-error: #{$color-error};
+	--color-success: #{$color-success}; 
+	--color-info: #{$color-info}; 
+	--color-dark: #{$color-dark};
+	--color-disabled: #{$color-disabled};
+
+	--border-color: #{$border-color};
+	--border-radius: #{$border-radius};
+	--box-shadow-color: transparent;
+	--font-size: #{$font-size};
+    --form-control-height: #{$form-control-height};
 }
 
   
@@ -94,3 +109,5 @@ kbd {
 .color-disabled {
 	color: $color-disabled;  
 }
+
+@import './tooltip.scss';

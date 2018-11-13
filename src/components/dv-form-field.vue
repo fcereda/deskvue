@@ -9,6 +9,7 @@
 	<div 
 		class="textbox"
 		:class="divClass"
+		:style="divStyle"
 		ref="div"
 	>
 		<div class="slot" :class="slotClass" ref="slot">
@@ -33,14 +34,6 @@ export default {
 
 	computed: {
 
-		containerStyle: function () {
-			let style = ''
-			if (this.width) {
-				style = style + `width:${this.width};`
-			}
-			return style
-		},
-
 		containerClass: function () {
 			let classes = []
 			if (this.display == 'block')
@@ -48,6 +41,14 @@ export default {
 			if (utils.isPropOn(this.rounded))
 				classes.push('rounded')
 			return classes.join(' ')
+		},
+
+		containerStyle: function () {
+			let style = []
+			if (this.width) {
+				style.push(`width:${this.width};`)
+			}
+			return style.join('')
 		},
 
 		divClass: function () {
@@ -63,6 +64,10 @@ export default {
 				classes.push('empty')
 			}	
 			return classes.join(' ')
+		},
+
+		divStyle: function () {
+			return utils.computeColorStyle(this.color)
 		},
 
 		labelClass: function () {
@@ -213,7 +218,9 @@ $focus-color: #1867c0;
 	display: inline-block;
 	position: relative;
 	box-sizing: border-box;
-	border: 1px solid $border-color;
+	border: $border;
+	border-color: var(--border-color);
+	box-shadow: 0px 0px 2px 0px var(--box-shadow-color);
 }
 
 .textbox.no-border {

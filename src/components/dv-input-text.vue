@@ -63,13 +63,14 @@ export default {
 @import './base.scss';
 
 input.__dv-input-text {
-	display: inline-block;
+	display: inline-block; 
 	position: relative;
 	box-sizing:border-box;
+	width: 10em;
     padding-left: 0.4em;
     padding-right: 0.5em;
-    background-color: #fff;
     color: $text-color;
+    background-color: transparent;
 	border: 1px solid $border-color;    
 	border-radius: $border-radius;
 	outline:none;

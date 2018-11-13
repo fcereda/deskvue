@@ -23,8 +23,8 @@
 				<option v-for="tag in tags">{{ tag }}</option>
 			</dv-select-native>&nbsp;
     		<dv-iconbutton flat>all_inbox</dv-iconbutton>
-    		<dv-iconbutton flat>dns</dv-iconbutton>
-    		<dv-iconbutton flat>build</dv-iconbutton>
+    		<dv-iconbutton flat v-tooltip.bottom-end="'Hello'">dns</dv-iconbutton>
+    		<dv-iconbutton flat v-tooltip="'Hello'">build</dv-iconbutton>
     	</dv-toolbar-section>
 <!--
     	<dv-toolbar-section>
@@ -264,6 +264,7 @@
 				search
 				floating
 				rounded
+				color="danger"
 				:value="myPilots"
 				style="float:left">
 				<option v-for="pilot in pilots">{{ pilot }}</option>				
@@ -272,7 +273,7 @@
 				label="Lotus" 
 				floating 
 				rounded 
-				disabled
+				color="success"
 				placeholder="Type Emerson Fittipaldi" 
 				v-model="text4"
 				style="float:left"
@@ -286,7 +287,7 @@
 
 		<br>
 		<div style="text-align:left;">
-			<dv-textbox style="width:300px" label="First name" rounded placeholder="Type your first name here" v-model="text1"></dv-textbox>&nbsp;
+			<dv-textbox style="width:300px" label="First name" rounded placeholder="Type your first name right here" color="warning" v-model="text1"></dv-textbox>&nbsp;
 			<dv-textbox label="Last name" disabled width="8em" rounded placeholder="Type your last name" v-model="text2"></dv-textbox>&nbsp;
 			<dv-textbox label="Email" rounded placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>&nbsp;
 			<dv-textbox label="Lotus ppp" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
@@ -720,7 +721,7 @@ import dvRadiogroup from './dv-radiogroup.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
-import dvTextbox from './dv-textbox.vue'
+import dvTextbox from './dv-text-field.vue'
 import dvToolbar from './dv-toolbar.vue'
 import dvToolbarSection from './dv-toolbar-section.vue'
 import dvToolbarSpacer from './dv-toolbar-spacer.vue'

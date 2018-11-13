@@ -44,12 +44,30 @@ export default {
 	},
 
 	correctColor (color) {
-		const colors = ['primary', 'secondary', 'danger', 'warning', 'secondary', 'info', 'dark']
+		const colors = ['primary', 'secondary', 'danger', 'warning', 'success', 'info', 'dark']
 		if (!color) return null
 		color = color.toLowerCase()
 		if (colors.indexOf(color) < 0)
 			return ''
 		return color
+	},
+
+	computeColorStyle (thisColor) {
+		if (!thisColor)
+			return ''
+		let color = this.correctColor(thisColor)
+		if (color) {
+			color = `var(--color-${color});`
+		}
+		else {
+			color = thisColor
+		}
+		/*	
+		return `--border-color:${color};
+				box-shadow: 0px 0px 1px 0.5px ${color};`
+		*/
+		return `--border-color:${color};
+				--box-shadow-color:${color};`
 	},
 
 	isNumeric: function (value) {
