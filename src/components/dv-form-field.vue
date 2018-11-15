@@ -28,9 +28,38 @@
 <script>
 
 import utils from './utils.js'
+import props from './props.js'
 
 export default {
-	props: ['display', 'width', 'label', 'placeholder', 'disabled', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value', 'is-empty'],
+	props: {
+		...props.fieldProps,
+
+		label: {
+			type: String,
+			required: false
+		},
+
+		placeholder: {
+			type: String,
+			required: false
+		},
+
+		message: {
+			type: String,
+			required: false
+		},
+
+		floating: {
+			type: Boolean,
+			default: false
+		},
+
+		isEmpty: {
+			// Auxiliary property; used by components based on dv-form-field 
+			type: Boolean,
+			default: false
+		}
+	},
 
 	computed: {
 
@@ -38,7 +67,7 @@ export default {
 			let classes = []
 			if (this.display == 'block')
 				classes.push(this.display)
-			if (utils.isPropOn(this.rounded))
+			if (this.rounded)
 				classes.push('rounded')
 			return classes.join(' ')
 		},
@@ -53,10 +82,10 @@ export default {
 
 		divClass: function () {
 			let classes = []
-			if (this.isFloating)  classes.push('floating')				
-			if (this.isRounded)   classes.push('rounded')
-			if (this.hasNoBorder) classes.push('no-border')	
-			if (!this.label)      classes.push('no-label')	
+			if (this.floating) classes.push('floating')				
+			if (this.rounded)  classes.push('rounded')
+			if (this.noBorder) classes.push('no-border')	
+			if (!this.label)   classes.push('no-label')	
 			if (this.hasFocus) {
 				classes.push('focus') 
 			}
@@ -71,7 +100,7 @@ export default {
 		},
 
 		labelClass: function () {
-			if (utils.isPropOn(this.disabled))
+			if (this.disabled)
 				return 'disabled'
 			return this.hasFocus ? 'focus' : ''
 		},
@@ -80,18 +109,6 @@ export default {
 		slotClass: function () {
 			return ''
 		},
-
-		isFloating: function () {
-			return utils.isPropOn(this.floating)
-		},
-
-		isRounded: function () {
-			return utils.isPropOn(this.rounded)
-		},
-
-		hasNoBorder: function () {
-			return utils.isPropOn(this.noBorder)
-		}
 
 	},
 
@@ -128,12 +145,6 @@ export default {
 		setFocus: function () {
 			this.hasFocus = true
 			this.$nextTick(() => this.$emit('set-focus'))
-		},
-
-		onInput: function (e) {
-			let newValue = 	e.target.value
-			this.currentValue = newValue
-			this.$emit('input', newValue)
 		},
 
 	}
@@ -183,11 +194,11 @@ $focus-color: #1867c0;
 	text-align:left;
 
 	&.focus {
-		color: $focus-color;
+		color: var(--focus-color);
 	}
 
 	&.disabled {
-		color: $color-disabled;
+		color: var(--color-disabled);
 	}
 }
 
@@ -206,7 +217,7 @@ $focus-color: #1867c0;
 	border-radius: 8px;
 }
   
-.textbox:not(.floating) > .slot:focus {
+ .textbox:not(.floating) > .slot:focus {
     outline: 2px solid $focus-color; 
 } 
 
@@ -220,7 +231,7 @@ $focus-color: #1867c0;
 	box-sizing: border-box;
 	border: $border;
 	border-color: var(--border-color);
-	box-shadow: 0px 0px 2px 0px var(--box-shadow-color);
+	box-shadow: 0px 0px 1px 0px var(--box-shadow-color);
 }
 
 .textbox.no-border {
@@ -256,8 +267,8 @@ $focus-color: #1867c0;
 
 
 .textbox.floating.focus {
-	border:1px solid $focus-color;
-	box-shadow: 0px 0px 2px 0px $focus-color;
+	border:1px solid var(--focus-color);
+	box-shadow: 0px 0px 2px 0px var(--focus-color);
 }
 
 
@@ -290,7 +301,9 @@ $focus-color: #1867c0;
 	font-size:1em;
 
 	position: absolute;
-	padding-top: calc(1.125em + (2.25em - 1em) / 2 + 0.125em);
+	/* padding-top: calc(1.125em + (2.25em - 1em) / 2 + 0.125em); */
+	padding-top: calc((2.25em + 0.25em) / 2);
+
 	left: 0px;
 	right:0;	
 	bottom: 0;

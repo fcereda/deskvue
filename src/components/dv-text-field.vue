@@ -86,7 +86,7 @@ export default {
 	methods: {
 
 		onInput: function (e) {
-			let newValue = 	e.target.value
+			let newValue = 	e
 			this.$emit('input', newValue)
 		},
 

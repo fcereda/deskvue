@@ -49,6 +49,10 @@ export default {
 	},
 
 	methods: {
+		focus: function () {
+			this.$el.focus()
+		},
+		
 		onInput: function (e) {
 			let newValue = 	e.target.value
 			this.$emit('input', newValue)

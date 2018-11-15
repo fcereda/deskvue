@@ -49,7 +49,9 @@ $box-shadow-focus: 0px 0px 2px 0px $focus-color;
 
 body {
 	font-family: 'San Francisco', 'Roboto', 'Segoe UI', sans-serif;
+}
 
+:root {
 	--color-primary: #{$color-primary};
 	--color-secondary: #{$color-secondary};
 	--color-warning: #{$color-warning};
@@ -63,6 +65,7 @@ body {
 	--border-color: #{$border-color};
 	--border-radius: #{$border-radius};
 	--box-shadow-color: transparent;
+	--focus-color: #{$focus-color};
 	--font-size: #{$font-size};
     --form-control-height: #{$form-control-height};
 }

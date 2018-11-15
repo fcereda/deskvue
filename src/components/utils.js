@@ -67,7 +67,8 @@ export default {
 				box-shadow: 0px 0px 1px 0.5px ${color};`
 		*/
 		return `--border-color:${color};
-				--box-shadow-color:${color};`
+				--box-shadow-color:${color};
+				--focus-color:${color};`
 	},
 
 	isNumeric: function (value) {

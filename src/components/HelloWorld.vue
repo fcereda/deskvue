@@ -274,7 +274,6 @@
 				floating 
 				rounded 
 				color="success"
-				placeholder="Type Emerson Fittipaldi" 
 				v-model="text4"
 				style="float:left"
 			></dv-textbox>
@@ -288,7 +287,7 @@
 		<br>
 		<div style="text-align:left;">
 			<dv-textbox style="width:300px" label="First name" rounded placeholder="Type your first name right here" color="warning" v-model="text1"></dv-textbox>&nbsp;
-			<dv-textbox label="Last name" disabled width="8em" rounded placeholder="Type your last name" v-model="text2"></dv-textbox>&nbsp;
+			<dv-textbox label="Last name" :disabled="true" rounded width="8em" rounded placeholder="Emerson" v-model="text2"></dv-textbox>&nbsp;
 			<dv-textbox label="Email" rounded placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>&nbsp;
 			<dv-textbox label="Lotus ppp" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
 			<dv-textbox label="Ferrari qp" floating rounded inset placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
