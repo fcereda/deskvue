@@ -79,7 +79,6 @@ export default {
 				itemRect = item.$el.getBoundingClientRect()
 				itemTop = itemRect.top
 				itemBottom = itemTop + itemRect.height
-				//console.log(`*** itemTop = ${itemTop}, itemBottom = ${itemBottom}`)
 			}
 
 			// First, we check if there are outer divs or panes that must be scrolled
@@ -92,8 +91,6 @@ export default {
 				let parentRect = parent.getBoundingClientRect()
 				let parentTop = parentRect.top
 				let parentBottom = parentTop + parentRect.height
-				console.log(parent.classList, parent.scrollTop)
-				//console.log(`*** parentTop = ${parentTop}, parentBottom = ${parentBottom}`)
 				if (itemTop < parentTop) {
 					let delta = parentTop - itemTop
 					parent.scrollTop = parent.scrollTop - delta
@@ -130,24 +127,6 @@ export default {
 			}
 			return
 
-/*
-			if (itemTop < 0) {
-				console.log('itemTop < 0')
-				let parent = item.$parent
-				while (parent) {
-					let el = parent.$el
-					console.log(`${el.classList}, scrollHeight = ${el.scrollHeight}, clientHeight = ${el.clientHeight}`)
-					console.log(`scrollTop: ${el.scrollTop}`)
-					console.log(el.style)
-					console.log(el.style.overflowY)
-					parent = parent.$parent
-				}
-				let el = document.documentElement
-				console.log('document.documentElement')
-				console.log(`${el.classList}, scrollHeight = ${el.scrollHeight}, clientHeight = ${el.clientHeight}`)
-				console.log(`scrollTop: ${el.scrollTop}`)	
-			}	
-*/
 			if (itemTop < 0) {
 				document.documentElement.scrollTop += itemTop
 			}
@@ -234,6 +213,7 @@ export default {
 				case ' ':
 					this.$emit('click', this.focusedItem)
 					e.preventDefaut()
+					return
 				default:
 					return			
 			}

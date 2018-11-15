@@ -36,7 +36,6 @@ export default {
 		props.forEach(propName => {
 			if (this.isPropOn(component[propName])) {
 				const className = toClassName(propName)
-				console.log(className)
 				classes.push(className)	
 			}
 		})			

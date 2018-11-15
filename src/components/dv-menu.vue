@@ -59,8 +59,6 @@ export default {
     })
     let activeMenuItems = menuItems.filter(item => !item.category && !item.disabled && !item.divider) 
     
-    console.log(menuItems)
-
     return {
       hasBorder: this.border !== undefined,
       clicked: -1,
