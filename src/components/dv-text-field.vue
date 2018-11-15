@@ -9,8 +9,6 @@
 		:no-border="noBorder"
 		:disabled="disabled"
 		:color="color"
-		:info="info"
-		:error="error"
 		:is-empty="isEmpty"
 		@set-focus="setFocus"
 	>
@@ -21,7 +19,7 @@
 			:placeholder="placeholder" 
 			:disabled="disabled"
 			:color="color"
-			:no-border="isFloating"
+			:no-border="floating"
 			width="100%"
 			:value="value"
 			ref="input"
@@ -37,6 +35,7 @@
 import dvFormField from './dv-form-field.vue'
 import dvInputText from './dv-input-text.vue'
 import utils from './utils.js'
+import props from './props.js'
 
 export default {
 	components: {
@@ -44,31 +43,31 @@ export default {
 		dvInputText
 	},
 
-	props: ['display', 'width', 'label', 'placeholder', 'disabled', 'floating', 'rounded', 'no-border', 'color', 'mask', 'info', 'error', 'value'],
+	props: {
+		...props.fieldProps,
+
+		placeholder: {
+			type: String,
+			required: false
+		},
+
+		value: {
+			type: String,
+			required: true
+		}
+	},
 
 	computed: {
-
-		isFloating: function () {
-			return utils.isPropOn(this.floating)
-		},
-
-		isRounded: function () {
-			return utils.isPropOn(this.rounded)
-		},
 
 		isEmpty: function () {
 			return !this.value || !this.value.length
 		},
 
-		isDisabled: function () {
-			return !!utils.isPropOn(this.disabled)
-		},			
-
 		inputClass: function () {
-			let classes = ['trasparent']
-			if (this.isFloating)
+			let classes = ['transparent']
+			if (this.floating)
 				classes.push('floating')
-			if (this.isRounded)
+			if (this.rounded)
 				classes.push('rounded')
 			return classes.join(' ')
 		}
@@ -107,64 +106,5 @@ export default {
 input.transparent {
 	background-color: transparent;
 }
-
-/*
-input.dv-input-text {
-	box-sizing:border-box;
-    padding-left: 0.4em;
-    padding-right: 0.5em;
-    background-color: #fff;
-    color: #222;
-	border: 1px solid var(--border-color);    
-	border-radius: var (--border-radius);
-    min-width: 5em;
-    width: calc(100% - 0.1em);
-    line-height: 150%;
-    cursor: pointer;
-    user-select: none;
-    font-family: inherit;
-    font-size: var(--font-size);
-    height: var(--form-control-height);
-
-    &:disabled {
-    	opacity: 0.75;
-    	color: #606060;
-    }
-
-    &:hover:not(:disabled) {
-    	cursor:text;
-	}  
-
-	&:hover:disabled {
-		cursor: no-drop;
-	}		
-
-}  
-*/
-  
-/*
-input.dv-input-text:not(.floating).rounded {
-	border-radius: $border-radius-rounded;
-}
-  
-input.dv-input-text:not(.floating):focus {
-    outline: 2px solid $focus-color; 
-}  
-  
-input.dv-input-text.floating {
-	border: 1px solid transparent;
-	background-color: transparent;
-}
-
-input.dv-input-text.floating:focus {
-    outline: 2px solid transparent; 
-}  
-
-input.dv-input-text.rounded {
-	border-radius:8px;
-}
-*/
-
-
 
 </style>

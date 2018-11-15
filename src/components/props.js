@@ -36,6 +36,16 @@ export default {
 			required: false
 		},
 
+		label: {
+			type: String,
+			required: false
+		},
+
+		floating: {
+			type: Boolean,
+			default: false
+		}
+
 	}
 
 

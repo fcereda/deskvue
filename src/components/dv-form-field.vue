@@ -34,11 +34,6 @@ export default {
 	props: {
 		...props.fieldProps,
 
-		label: {
-			type: String,
-			required: false
-		},
-
 		placeholder: {
 			type: String,
 			required: false
