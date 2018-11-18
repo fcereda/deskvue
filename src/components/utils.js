@@ -51,9 +51,7 @@ export default {
 		return color
 	},
 
-	computeColorStyle (thisColor) {
-		if (!thisColor)
-			return ''
+	computeColorVar (thisColor) {
 		let color = this.correctColor(thisColor)
 		if (color) {
 			color = `var(--color-${color});`
@@ -61,10 +59,13 @@ export default {
 		else {
 			color = thisColor
 		}
-		/*	
-		return `--border-color:${color};
-				box-shadow: 0px 0px 1px 0.5px ${color};`
-		*/
+		return color
+	},
+
+	computeColorStyle (thisColor) {
+		if (!thisColor)
+			return ''
+		let color = this.computeColorVar(thisColor)
 		return `--border-color:${color};
 				--box-shadow-color:${color};
 				--focus-color:${color};`

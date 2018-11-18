@@ -21,6 +21,11 @@ export default {
 			default: false
 		},
 
+		required: {
+			type: Boolean,
+			default: false
+		},
+
 		rounded: {
 			type: Boolean,
 			default: false
@@ -44,7 +49,22 @@ export default {
 		floating: {
 			type: Boolean,
 			default: false
-		}
+		},
+
+		placeholder: {
+			type: String,
+			required: false
+		},
+
+		message: {
+			type: String,
+			required: false
+		},
+
+		floating: {
+			type: Boolean,
+			default: false
+		},		
 
 	}
 

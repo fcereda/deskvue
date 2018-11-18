@@ -62,6 +62,15 @@ body {
 	--color-dark: #{$color-dark};
 	--color-disabled: #{$color-disabled};
 
+	--bg-color-primary: #{$bg-color-primary};
+	--bg-color-secondary: #{$bg-color-secondary};
+	--bg-color-warning: #{$bg-color-warning};
+	--bg-color-danger: #{$bg-color-danger};
+	--bg-color-error: #{$bg-color-error};
+	--bg-color-success: #{$bg-color-success}; 
+	--bg-color-info: #{$bg-color-info}; 
+	--bg-color-dark: #{$bg-color-dark};
+
 	--border-color: #{$border-color};
 	--border-radius: #{$border-radius};
 	--box-shadow-color: transparent;

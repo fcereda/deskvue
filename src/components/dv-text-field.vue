@@ -4,10 +4,12 @@
 		:display="display"
 		:width="width"
 		:label="label"
+		:message="message"
 		:floating="floating"
 		:rounded="rounded"
 		:no-border="noBorder"
 		:disabled="disabled"
+		:required="required"
 		:color="color"
 		:is-empty="isEmpty"
 		@set-focus="setFocus"
@@ -45,11 +47,6 @@ export default {
 
 	props: {
 		...props.fieldProps,
-
-		placeholder: {
-			type: String,
-			required: false
-		},
 
 		value: {
 			type: String,

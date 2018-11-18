@@ -261,10 +261,12 @@
 			<br><br>
 			<dv-selectbox
 				label="Who was the best Brazilian driver of the 70s?"
+				message="Please select Wilson"
 				search
 				floating
 				rounded
-				color="danger"
+				required
+				color="success"
 				:value="myPilots"
 				style="float:left">
 				<option v-for="pilot in pilots">{{ pilot }}</option>				
@@ -273,7 +275,9 @@
 				label="Lotus" 
 				floating 
 				rounded 
-				color="success"
+				required
+				color="warning"
+				message="Who drove the Lotus 72D?"
 				v-model="text4"
 				style="float:left"
 			></dv-textbox>
@@ -288,7 +292,7 @@
 		<div style="text-align:left;">
 			<dv-textbox style="width:300px" label="First name" rounded placeholder="Type your first name right here" color="warning" v-model="text1"></dv-textbox>&nbsp;
 			<dv-textbox label="Last name" :disabled="true" rounded width="8em" rounded placeholder="Emerson" v-model="text2"></dv-textbox>&nbsp;
-			<dv-textbox label="Email" rounded placeholder="Please, no bogus addresses" v-model="text3"></dv-textbox>&nbsp;
+			<dv-textbox label="Email" rounded message="Please, no bogus addresses" v-model="text3"></dv-textbox>&nbsp;
 			<dv-textbox label="Lotus ppp" floating rounded placeholder="Type your first name here" v-model="text4"></dv-textbox>&nbsp;
 			<dv-textbox label="Ferrari qp" floating rounded inset placeholder="Type your last name" v-model="text5"></dv-textbox>&nbsp;
 			<dv-textbox style="width:300px;background-color:#e4e4e4;" no-border label="Brabham Gordon Murray" floating rounded placeholder="Please, no bogus addresses" v-model="text6"></dv-textbox>
@@ -724,7 +728,7 @@ import dvTextbox from './dv-text-field.vue'
 import dvToolbar from './dv-toolbar.vue'
 import dvToolbarSection from './dv-toolbar-section.vue'
 import dvToolbarSpacer from './dv-toolbar-spacer.vue'
-import dvSelectbox from './dv-selectbox.vue'
+import dvSelectbox from './dv-select-field.vue'
 
 
 import dvInputSelect from './dv-input-select.vue'

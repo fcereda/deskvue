@@ -224,7 +224,6 @@
 			label="Who was the best Brazilian driver of the 70s?"
 			search
 			floating
-			
 			:value="myPilots"
 			style="float:left">
 			<option v-for="pilot in pilots">{{ pilot }}</option>				
@@ -311,7 +310,7 @@ import dvInputNumber from './dv-input-number.vue'
 import dvInputText from './dv-input-text.vue'
 import dvLabel from './dv-label.vue'
 import dvTextbox from './dv-textbox.vue'
-import dvSelectbox from './dv-selectbox.vue'
+import dvSelectbox from './dv-select-field.vue'
 import dvSelectNative from './dv-select-native.vue'
 import dvInputSelect from './dv-input-select.vue'
 
