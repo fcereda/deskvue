@@ -65,7 +65,8 @@ export default {
 
 	methods: {
 		onFocusin: function (e) {
-			if (e.srcElement.nodeName == 'INPUT') {
+			let nodeName = e.srcElement.nodeName 
+			if (nodeName == 'INPUT' || nodeName == 'SELECT') {
 				this.hasFocus = true
 			}	
 		},
@@ -146,7 +147,8 @@ export default {
 		min-height: 31px;
 	}
 
-	& > input {
+	& > input,
+	& > select {
 		flex-grow: 2;
 		box-shadow: none !important;
 	}
@@ -202,7 +204,8 @@ export default {
 		line-height:100%;
 	}
 
-	& > input:focus {
+	& > input:focus,
+	& > select:focus {
 		outline: none !important;
 		box-shadow: none !important;
 	}
