@@ -18,7 +18,24 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['width', 'rounded', 'slim'],
+	props: {
+		width: {
+			type: String,
+			required: false
+		}, 
+		rounded: {
+			type: Boolean,
+			default: false
+		},
+		color: {
+			type: String,
+			required: false
+		}, 
+		slim: {
+			type: Boolean,
+			default: false
+		}
+	},	
 
 	data: function () {
 		return {
@@ -38,9 +55,10 @@ export default {
 		},
 
 		divStyle: function () {
+			let style = utils.computeColorStyle(this.color)
 			if (this.width)
-				return `width:${this.width};`
-			return ''
+				style += `width:${this.width};`
+			return style
 		}
 
 	},
@@ -68,14 +86,10 @@ export default {
 .dv-combo {
 	display: inline-flex;
 	align-items: center;
-
-	border: 1px solid $border-color; 
 	background-color: #fff;
 
-/*	
 	border: $border;
 	box-shadow: $box-shadow;
-*/
 	border-radius: $border-radius;
 
 	vertical-align: text-top;
@@ -109,8 +123,8 @@ export default {
 
 	&.focus {
 		z-index: 100 !important;
-		 		box-shadow: 0px 0px 1px 1px $focus-color; 
-		/* box-shadow: $box-shadow-focus; */
+		border: $border-focus;
+		box-shadow: $box-shadow-focus;
 	}
 
 	& > * {
@@ -134,6 +148,7 @@ export default {
 
 	& > input {
 		flex-grow: 2;
+		box-shadow: none !important;
 	}
 
 	&.has-width > input {
