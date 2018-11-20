@@ -51,7 +51,7 @@
 		Simple combo:<br>
 		<dv-combo>
 			<i class="material-icons" style="cursor:pointer">search</i>
-			<input class="dv-input-text" v-model="text2">
+			<dv-input-text v-model="text2"></dv-input-text>
 			<dv-iconbutton link>keyboard_arrow_up</dv-iconbutton>			
 			<dv-iconbutton flat>keyboard_arrow_down</dv-iconbutton>
 			<dv-button class="border">OK</dv-button>			
@@ -63,14 +63,14 @@
 		<br><br>    	
 		Search Google and any other sites you'd like:<br>
 		<div style="background-color:yellow;">
-			<dv-combo width="10em">
-				<input class="dv-input-text" v-model="text2">
+			<dv-combo>
+				<dv-input-text v-model="text2"></dv-input-text>
 				<dv-icon rotate="90deg">search</dv-icon>
 			</dv-combo>
 
 			<dv-combo width="10em">
 				<dv-icon>save</dv-icon>
-				<input class="dv-input-text" v-model="text2">
+				<dv-input-text v-model="text2"></dv-input-text>
 
 				<i class="material-icons">save</i>
 				<dv-iconbutton>search</dv-iconbutton>
@@ -78,7 +78,7 @@
 
 			<dv-combo width="15em">
 				<dv-button>save</dv-button>
-				<input class="dv-input-text" v-model="text2">
+				<dv-input-text v-model="text2"></dv-input-text>
 				<dv-iconbutton>search</dv-iconbutton>			
 			</dv-combo>
 		</div>	
@@ -309,7 +309,7 @@ import dvIconbutton from './dv-iconbutton.vue'
 import dvInputNumber from './dv-input-number.vue'
 import dvInputText from './dv-input-text.vue'
 import dvLabel from './dv-label.vue'
-import dvTextbox from './dv-textbox.vue'
+import dvTextbox from './dv-text-field.vue'
 import dvSelectbox from './dv-select-field.vue'
 import dvSelectNative from './dv-select-native.vue'
 import dvInputSelect from './dv-input-select.vue'

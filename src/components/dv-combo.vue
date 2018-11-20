@@ -32,7 +32,8 @@ export default {
 			return utils.computeClasses({
 				rounded: 'rounded',
 				focus: this.hasFocus,
-				slim: 'slim'
+				slim: 'slim',
+				'has-width': 'width'
 			}, this)
 		},
 
@@ -67,9 +68,16 @@ export default {
 .dv-combo {
 	display: inline-flex;
 	align-items: center;
-	border: 1px solid $border-color;
+
+	border: 1px solid $border-color; 
 	background-color: #fff;
+
+/*	
+	border: $border;
+	box-shadow: $box-shadow;
+*/
 	border-radius: $border-radius;
+
 	vertical-align: text-top;
 	position: relative;
 
@@ -101,7 +109,8 @@ export default {
 
 	&.focus {
 		z-index: 100 !important;
-		box-shadow: 0px 0px 1px 1px $focus-color;
+		 		box-shadow: 0px 0px 1px 1px $focus-color; 
+		/* box-shadow: $box-shadow-focus; */
 	}
 
 	& > * {
@@ -126,6 +135,11 @@ export default {
 	& > input {
 		flex-grow: 2;
 	}
+
+	&.has-width > input {
+		min-width: 1em;
+		width: auto;
+	}	
 
 	& > .dv-button {
 		align-self: stretch;
@@ -175,6 +189,7 @@ export default {
 
 	& > input:focus {
 		outline: none !important;
+		box-shadow: none !important;
 	}
 
 	& > .dv-icon,

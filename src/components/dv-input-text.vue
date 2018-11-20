@@ -75,9 +75,12 @@ input.__dv-input-text {
     padding-right: 0.5em;
     color: $text-color;
     background-color: transparent;
-	border: 1px solid $border-color;    
+
+	border: $border;    
 	border-radius: $border-radius;
+	box-shadow: $box-shadow;
 	outline:none;
+
     line-height: 150%;
     font-family: inherit;
     font-size: $font-size;
@@ -109,7 +112,9 @@ input.__dv-input-text {
 	}		
 
 	&:not(.no-border):focus {
-		box-shadow: 0px 0px 1px 1px $focus-color;	
+		border: $border-focus;
+		box-shadow: $box-shadow-focus;
+		/* box-shadow: 0px 0px 1px 1px $focus-color;*/	
 	  	z-index:100;
 	}	
 }  
