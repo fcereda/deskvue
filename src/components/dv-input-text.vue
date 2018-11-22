@@ -19,10 +19,34 @@
 
 <script>
 
+import props from './props.js'
 import utils from './utils.js'
 
 export default {
-	props: ['width', 'password', 'placeholder', 'disabled', 'rounded', 'noBorder', 'minlength', 'maxlength', 'pattern', 'color', 'mask', 'info', 'error', 'value'],
+	props: {
+		...props.inputProps,
+
+		password: {
+			type: Boolean,
+			default: false
+		}, 
+		minlength: {
+			type: [String, Number],
+			required: false
+		},
+		maxlength: {
+			type: [String, Number],
+			required: false
+		},
+		pattern: {
+			type: String,
+			required: false
+		},
+		value: {
+			type: String,
+			required: true
+		}
+	},	
 
 	data: function () {
 		return {}
@@ -92,6 +116,7 @@ input.__dv-input-text {
 
     &.no-border {
     	border: 1px solid transparent;
+    	box-shadow: none;
     }
 
     &.password {
@@ -114,7 +139,6 @@ input.__dv-input-text {
 	&:not(.no-border):focus {
 		border: $border-focus;
 		box-shadow: $box-shadow-focus;
-		/* box-shadow: 0px 0px 1px 1px $focus-color;*/	
 	  	z-index:100;
 	}	
 }  

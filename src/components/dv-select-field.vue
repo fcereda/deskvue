@@ -47,17 +47,8 @@ export default {
 	},
 
 	props: {
+		...props.selectProps,
 		...props.fieldProps,
-
-		multiple: {
-			type: Boolean,
-			default: false
-		},
-
-		search: {
-			type: Boolean,
-			default: false
-		},
 
 		value: {
 			type: [Array, Object, String],

@@ -140,6 +140,13 @@
 			<dv-button class="border" wide><dv-icon>cancel</dv-icon> Cancelar</dv-button>			
 		</dv-combo>
 
+
+		<br><br>
+
+		<dv-input-select search rounded color="danger">
+			<option v-for="pilot in currentPilots">{{ pilot }}</option>
+		</dv-input-select>
+
 		<br><br>Onde procurar:<br>
 
 		<dv-combo rounded>

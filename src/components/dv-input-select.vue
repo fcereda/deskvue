@@ -16,11 +16,18 @@
 <script>
 
 import Choice from 'choices.js'
+import props from './props.js'
 import utils from './utils.js'
 
 export default {
 
-	props: ['value', 'search', 'multiple', 'placeholder', 'rounded', 'no-border', 'width'],
+	props: {
+		...props.selectProps,
+
+		value: {
+			type: [Array, Object, String],
+		}
+	},	
 
 	data: function () {
 
@@ -40,9 +47,10 @@ export default {
 		},
 
 		divStyle: function () {
+			let style = utils.computeColorStyle(this.color)
 			if (this.width)
-				return `width:${this.width};`
-			return ''
+				style = style + `width:${this.width};`
+			return style
 		}
 
 	},
@@ -153,17 +161,11 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 @import './base.scss';
 
 .dv-select-container {
-/*
-	display:inline-block;
-*/	
 	width: 25em;
 	text-align:left;
 }
 
 .choices {
-/*
-	height: $form-control-height;
-*/	
 	margin-right:0;	
 }
 
@@ -172,18 +174,17 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 }
 
 .choices__inner {
-	min-height: inherit;
-	padding-left: 0.4em;
-	padding-right: 0;
-	
-	background-color: transparent;
-	box-sizing: border-box;
-	border-color: $border-color;
-
 	display: block;
+	min-height: inherit;
 
 	padding: 7.5px 5.5px 3.75px;
 	padding-bottom: 5.0px !important;
+	box-sizing: border-box;
+
+	background-color: transparent;
+	border: $border;
+	box-shadow: $box-shadow; 
+
 	overflow: inherit;
 }
 
@@ -211,13 +212,9 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 }
 
 .dv-select-container:not(.no-border) > .choices.is-focused > .choices__inner {
-	border-color: $focus-color;
-	box-shadow: 0px 0px 2px 0px $focus-color;	
+	border: $border-focus;
+	box-shadow: $box-shadow-focus;	
 }
-
-/* 
-.choices.is-open > ch
-*/
 
 .choices__list--single {
 	padding: 0 0 0 0;
@@ -231,10 +228,8 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	margin-bottom: 0;
 	padding-top: 0px;
 	padding-bottom:4px;
-	background-color: yellow;
 	max-width: unset;
 }
-
 
 .choices__inner-multiple {
 	padding-top:4px;
@@ -320,41 +315,30 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 	opacity: 1.0;
 }
 
-/*
-.choices__item.choices__item--selectable {
-	margin-bottom:0;
-	padding:0;.choices__list--multiple.choices__item {
-	background-color: firebrick;
-	margin-bottom: 0;
-	border-width: 0;
-	vertical-align: top;
-}
-}
-*/
+
 .dv-select {
-	
     padding-left: 0.4em;
     padding-right: 0.5em;
-    background-color: #fff;
-    color: #222;
+    background-color: var(--background-color);
+    color: var(--text-color);
     border: 1px solid rgba(0, 0, 0, 0.15);
     outline: 1px transparent;
-    min-width: 5em;
-    line-height: 150%;
     cursor: default;
     user-select: none;
     font-family: inherit;
+   	min-width: 5em;
+    line-height: 150%;
     height: 2.25em;
-
     width: 15em;
-}  
   
-.dv-select:hover {
-    cursor: pointer;
-}  
-  
-.dv-select:focus {
-    outline: 2px solid #1867c0;
-}    
+ 	&:hover {
+	    cursor: pointer;
+	}  
+	  
+	&:focus {
+	    outline: 2px solid #1867c0;
+	}    
+
+}
 
 </style>

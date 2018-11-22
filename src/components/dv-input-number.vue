@@ -4,6 +4,7 @@
 		class="dv-input-number"
 		:class="comboClass"
 		:width="width"
+		:color="color"
 	>
 
 		<dv-input-text
@@ -49,6 +50,10 @@ export default {
 		width: {
 			type: String,
 			default: ''
+		},
+		color: {
+			type: String,
+			required: false
 		},
 		min: {
 			type: [String, Number],
@@ -193,18 +198,16 @@ export default {
 	color: #606060;
 }
 
-
-/*
-.dv-input-number.focus > .dv-input-number-text {
-}
-*/
-
 .dv-input-number-error {
-	border-color: $color-error;
+	--border-color: #{$color-error};
+	--focus-color: #{$color-error};
 } 
 
 .focus.dv-input-number-error {
+	/*
 	box-shadow: 0px 0px 1px 1px $color-error;
+	*/
+	box-shadow: $box-shadow-focus;
 }
 
 

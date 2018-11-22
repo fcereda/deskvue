@@ -14,11 +14,19 @@
 
 <script>
 
+import props from './props.js'
 import utils from './utils.js'
 
 export default {
 
-	props: ['disabled', 'rounded', 'width', 'value'],
+	props: {
+		...props.selectProps,
+
+		value: {
+			type: [Array, Object, String],
+			required: false
+		}
+	}, 
 
 	data: function () {
 	    return {}
@@ -32,16 +40,16 @@ export default {
 		},
 
 		selectStyle: function () {
+			let styles = utils.computeColorStyle(this.color)
 			if (this.width)
-				return `width:${this.width};`
-			return ''
+				styles = styles + `width:${this.width};`
+			return styles
 		},
 
 	},
 
 	methods: {
 		onInput: function (e) {
-			console.log('entrou em onInput')
 			this.$emit('input', e.target.value)
 		}
 	}
@@ -59,8 +67,9 @@ select.dv-select {
     padding-left: 0.4em;
     padding-right: 0.5em;
     color: #222;
-	border: 1px solid $border-color;    
+	border: $border;    
 	border-radius: $border-radius;
+	box-shadow: $box-shadow;
     line-height: 150%;
     cursor: pointer;
     user-select: none;
@@ -75,7 +84,8 @@ select.dv-select {
 
     &:focus {
     	outline: none;
-    	box-shadow: 0px 0px 1px 1px $color-primary;
+    	border: $border-focus;
+    	box-shadow: $box-shadow-focus;
     	z-index: 100;
     }	
 

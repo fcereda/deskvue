@@ -8,6 +8,7 @@ $font-size: 14px;
 // Colors
 
 $text-color: #222;
+$background-color: #fff;
 
 $color-primary: #007bff;
 $color-secondary: #6c757d;
@@ -72,6 +73,9 @@ body {
 	--bg-color-success: #{$bg-color-success}; 
 	--bg-color-info: #{$bg-color-info}; 
 	--bg-color-dark: #{$bg-color-dark};
+
+	--background-color: #{$background-color};
+	--text-color: #{$text-color};
 
 	--border-color: #{$border-color};
 	--border-radius: #{$border-radius};
