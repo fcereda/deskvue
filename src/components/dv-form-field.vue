@@ -264,6 +264,7 @@ $focus-color: #1867c0;
 
 		&.no-border {
 			border-color: transparent;
+			box-shadow: none;
 		}
 
 		&.floating > .dv-input-label {

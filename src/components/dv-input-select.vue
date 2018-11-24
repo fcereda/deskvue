@@ -199,6 +199,7 @@ $choices-button-icon-path: "~choices.js/assets/icons";
 
 .dv-select-container.no-border > .choices > .choices__inner {
 	border: none;
+	box-shadow: none;
 }
 
 .dv-select-container.rounded > .choices > .choices__inner {
