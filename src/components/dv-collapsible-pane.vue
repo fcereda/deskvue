@@ -188,9 +188,9 @@ export default {
 
 @import './base.scss';
 
-.dv-collapsible-pane {
-	border: 1px solid $border-color;
-
+.dv-accordion > .dv-collapsible-pane {
+    border: 1px solid $border-color;
+	
 	&.rounded {
 		border-radius: 8px;
 		overflow: hidden;

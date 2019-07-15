@@ -15,7 +15,7 @@ import utils from './utils.js'
 
 export default {
 
-	props: ['rounded'],
+	props: ['rounded', 'no-border'],
 
 	data: function () {
 	    return {
@@ -26,9 +26,12 @@ export default {
 
 	computed: {
 		divClass: function () {
+			let classes = []
 			if (utils.isPropOn(this.rounded))
-				return 'rounded'
-			return ''
+				classes.push('rounded')
+			//if (utils.isPropOn(this.noBorder))
+			//	classes.push('no-border')
+			return classes.join(' ')
 		}
 	},
 
@@ -46,8 +49,11 @@ export default {
 
 		_addPane: function (pane) {
 			this.panes.push(pane)
-			pane.closePane()
 			pane.setRounded(this.rounded)
+			if (!pane.open) {
+				// console.log(`pane.open = ${pane.open}`)
+				pane.closePane()
+			}	
 			pane.$on('open', (openedPane) => {
 				this.panes.forEach((pane, index) => {
 					if (pane == openedPane) {
@@ -65,7 +71,6 @@ export default {
 		},
 
 		onKeydown: function (e) {
-			console.log(e)
 			const indexFocusedElement = this.panes.map(pane => pane.$el).indexOf(e.srcElement)
 			let index = indexFocusedElement
 			switch (e.key) {

@@ -326,6 +326,16 @@
 		<dv-checkbox v-model="checkbox2">Another multiple line checkbox</dv-checkbox>
 		</fieldset>
 
+
+		<fieldset style="width:10em;text-align:left;float:left;">
+			<legend>Switches</legend>
+			<dv-switch color="primary" v-model="toggle1">Switch this!</dv-switch><br>
+			<dv-switch color="warning" v-model="toggle2">Warning switch</dv-switch><br>
+			<dv-switch color="danger" v-model="toggle3">Warning switch</dv-switch><br>
+			<dv-switch color="success" v-model="toggle4">Warning switch</dv-switch><br>
+			<dv-switch color="error" v-model="toggle4">Warning switch</dv-switch><br>
+		</fieldset>
+
 		<fieldset style="width:10em;text-align:left;float:left;">
 			<legend>Left toggles</legend>
 			<dv-checkbox type="toggle" color="warning" v-model="toggle1">Toggle this!</dv-checkbox><br>
@@ -642,12 +652,21 @@
 		</dv-collapsible-pane>	
 	</dv-accordion>
 	<br>
-	<dv-collapsible-pane :open="true">
-		<template slot="head">
-			<div style="padding:0.5em">Another test</div>
-		</template>
-		<div v-for="pilot in pilots">{{ pilot }}</div>
-	</dv-collapsible-pane>	
+
+	<dv-accordion>
+		<dv-collapsible-pane :open="true" ref="pane1">
+			<template slot="head">
+				<div style="padding:0.5em">Coleções</div>
+			</template>
+			<div v-for="pilot in pilots">{{ pilot }}</div>
+		</dv-collapsible-pane>	
+		<dv-collapsible-pane>
+			<template slot="head">
+				<div style="padding:0.5em">Busca</div>
+			</template>
+			<div v-for="pilot in pilots">{{ pilot }}</div>
+		</dv-collapsible-pane>
+	</dv-accordion>
 
 	<h3>Lists</h3>
 
@@ -706,7 +725,7 @@ import dvBtnGroup from './dv-btn-group.vue'
 import dvCheckbox from './dv-checkbox.vue'
 import dvCollapsiblePane from './dv-collapsible-pane.vue'
 import dvCombo from './dv-combo.vue'
-import dvDialog from './dv-modal.vue'
+import dvDialog from './dv-modal.vue' 
 import dvDropdown from './dv-dropdown.vue'
 import dvIcon from './dv-icon.vue'
 import dvIconbutton from './dv-iconbutton.vue'
@@ -721,6 +740,7 @@ import dvPane from './dv-pane.vue'
 import dvPulldownMenu from './dv-pulldown-menu.vue'
 import dvRadio from './dv-radio.vue'
 import dvRadiogroup from './dv-radiogroup.vue'
+import dvSwitch from './dv-switch.vue'
 import dvTabs from './dv-tabs.vue'
 import dvTabItem from './dv-tab-item.vue'
 import dvTag from './dv-tag.vue'
@@ -768,6 +788,7 @@ export default {
     	dvRadio,
     	dvRadiogroup,
     	dvSelectbox,
+    	dvSwitch,
     	dvTabs,
     	dvTabItem,
     	dvTag,

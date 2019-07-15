@@ -2,7 +2,7 @@
 
 // Fonts
 
-$font-family: 'Roboto', 'Segoe UI', sans-serif;
+$font-family: -apple-system, 'Roboto', 'Segoe UI', sans-serif;
 $font-size: 14px;
 
 // Colors
@@ -51,7 +51,7 @@ $box-shadow-focus: 0px 0px 2px 0px var(--focus-color);
 /** Styles **/
 
 body {
-	font-family: 'San Francisco', 'Roboto', 'Segoe UI', sans-serif;
+	font-family: -apple-system, 'Roboto', 'Segoe UI', sans-serif;
 }
 
 :root {

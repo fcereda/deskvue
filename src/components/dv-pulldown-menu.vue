@@ -125,6 +125,7 @@ export default {
 			if (menuItem == this.currentActiveItem || !menuItem) {
 				// User clicked on an already open menu item,
 				// or menuItem == null
+				console.log('clicou de novo')
 				this.currentActiveItem = null
 				return
 			}
@@ -305,6 +306,7 @@ span.dv-icon-after {
 	padding: 4px;
 	padding-left: 4px;
 	padding-right: 4px;
+	margin-left: -1px;
 	border-left: 1px solid $border-color;
 	border-right: 1px solid $border-color;
 	border-bottom: 1px solid $border-color;
