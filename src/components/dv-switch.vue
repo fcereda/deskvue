@@ -67,9 +67,9 @@ export default {
       e.preventDefault()
       e.stopPropagation()
       switch (e.key) {
-        case 'ArrowLeft':
-          return this.$emit('input', true)
         case 'ArrowRight':
+          return this.$emit('input', true)
+        case 'ArrowLeft':
           return this.$emit('input', false)
         case ' ':
         case 'Enter':
@@ -110,12 +110,12 @@ div.switch {
   display: inline-block;
   position: relative;
   font-size: 16px;
-  --height: 1em;
-  width: 1.75em;
+  --height: 16px;
+  width: 28px;
   height: var(--height);
   text-align: center;
-  margin-top: 0.0625em;
-  margin-right: 0.5em;
+  margin-top: 1px;
+  margin-right: 8px;
   border-radius: calc(var(--height) / 2);
   background-color: #BDBDBD;
   outline: none;
@@ -126,14 +126,14 @@ div.switch {
 div.switch > span.switch-ball {
   display: inline-block;
   box-sizing: border-box;
-  width: 0.75em;
-  height: 0.75em;
-  margin: 0.1em;
+  width: 12px;
+  height: 12px;
+  margin: 2px;
   border-radius: 50%;
   border: 1px solid #a0a0a0;
   background-color: white;
   position: absolute;
-  left: .75em;
+  left: 0px;
   transition: all 0.2s;
 }
 
@@ -163,7 +163,7 @@ div.switch.on.success {
 }
 
 div.switch.on > span.switch-ball {
-  left: 0em;
+  left: 12px;
   border: 1px solid var(--background-color);
 }
 
