@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <dv-toolbar>
+    <dv-toolbar >
     	<dv-toolbar-section width="120px" align="left">
     		<dv-toolbar-spacer width="16px"></dv-toolbar-spacer>
     		<span style="font-size:24px; font-weight: 600;">DeskVue</span>

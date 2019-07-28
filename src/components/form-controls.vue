@@ -158,18 +158,6 @@
 			</dv-select-native>	
 		</dv-combo>
 
-<div style="position:absolute;
-	background-color:transparent;
-	top:100px;
-	left:100px;
-	width:100px;
-	height:200px;
-	border:4px solid rgba(128,128,128,0.75);
-	border-radius:0px;
-	border-bottom-left-radius:16px;
-	border-top:none;
-	border-right:none;"></div>
-
 		<br><br>
 
 		A native select component<br>
@@ -224,7 +212,7 @@
 		</dv-input-select>
 
 		<br><br>
-		<dv-selectbox
+		<dv-selectbox multiple rounded
 			label="Who was the best Brazilian driver of the 70s?"
 			search
 			floating

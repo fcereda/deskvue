@@ -2,7 +2,7 @@
 
 // Fonts
 
-$font-family: -apple-system, 'Roboto', 'Segoe UI', sans-serif;
+$font-family: --apple-system, BlinkMacSystemFont, 'Inter', Helvetica, Arial, sans-serif;
 $font-size: 14px;
 
 // Colors
@@ -51,7 +51,7 @@ $box-shadow-focus: 0px 0px 2px 0px var(--focus-color);
 /** Styles **/
 
 body {
-	font-family: -apple-system, 'Roboto', 'Segoe UI', sans-serif;
+	font-family: $font-family;
 }
 
 :root {

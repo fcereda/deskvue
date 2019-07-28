@@ -1,10 +1,9 @@
 <template>
 
-	<header :style="headerStyle">
-		<div class="dv-toolbar" :class="toolbarClass">
+
+		<div class="dv-toolbar" :class="toolbarClass" :style="headerStyle">
 			<slot></slot>
 		</div>
-	</header>
 
 </template>
 
@@ -13,7 +12,7 @@
 import utils from './utils.js'
 
 export default {
-	props: ['sticky', 'top', 'topbar'],
+	props: ['sticky', 'fixed', 'top', 'topbar'],
 
 	data: function () {
 	    return {}
@@ -24,6 +23,8 @@ export default {
 			let styles = []
 			if (utils.isPropOn(this.sticky))
 				styles.push(`position:sticky;`)
+			else if (utils.isPropOn(this.fixed))
+				styles.push(`position:fixed;`)
 			if (this.top)
 				styles.push(`top:${this.top};`)
 			return styles.join('')
@@ -57,6 +58,7 @@ header {
 	top: 0px;
 	left:0px;
 	right: 0px;
+	z-index: 1000;
 	border-bottom: 1px solid $border-color;
 	--topbar-color: firebrick;
 	text-align:left;
